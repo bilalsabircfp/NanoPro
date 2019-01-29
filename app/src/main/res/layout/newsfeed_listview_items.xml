@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:padding="10dp"
+        android:background="@drawable/dark_background"
+        android:layout_marginTop="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+
+                <ImageView
+                    android:id="@+id/profile_image"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+                    android:layout_width="80dp"
+                    android:scaleType="centerInside"
+                    android:layout_height="80dp"
+                    android:src="@drawable/car"
+                    />
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+
+
+
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/name"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:text="Admin Name"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+
+
+
+                <TextView
+                    android:layout_gravity="top"
+                    android:gravity="top"
+                    android:id="@+id/time"
+                    android:paddingRight="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:drawableRight="@drawable/clock"
+                    android:drawablePadding="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="12sp"
+                    android:text="12h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+
+
+
+            </LinearLayout>
+
+
+
+
+            <TextView
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:textAlignment="viewStart"
+                android:id="@+id/post"
+                android:padding="5dp"
+                android:layout_marginEnd="15dp"
+                android:textSize="14sp"
+                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesett"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+
+
+
+
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

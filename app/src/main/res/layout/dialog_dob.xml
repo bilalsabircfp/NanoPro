@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="320dp"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textSize="19dp"
+                android:textStyle="bold"
+                android:textColor="#fff"
+                android:paddingLeft="9dp"
+                android:gravity="center_vertical"
+                android:text="Select Date"
+                android:layout_margin="2dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="42dp"
+                android:id="@+id/textView" />
+
+
+            <Button
+                android:gravity="end|center_vertical"
+                android:layout_gravity="end"
+                android:layout_marginEnd="20dp"
+                android:id="@+id/cross"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="#fff"
+                android:text="X"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:padding="0dp"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+
+            <DatePicker
+                android:id="@+id/datePicker1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/btn"
+                android:layout_centerHorizontal="true" />
+
+
+            </LinearLayout>
+
+
+
+        <Button
+            android:background="@drawable/button_background"
+            android:padding="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/btn"
+            android:minWidth="150dp"
+            android:layout_gravity="center"
+            android:textAllCaps="false"
+            android:text="Submit"
+            android:textColor="#fff"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp" />
+
+
+    </LinearLayout>
+
+
+
+    </ScrollView>
+
+</LinearLayout>

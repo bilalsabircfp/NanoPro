@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+
+
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:background="@drawable/blue_app"
+        android:id="@+id/customer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+
+
+
+
+
+        <View
+            android:visibility="invisible"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="#abcbcbd1" />
+
+
+
+
+
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:id="@+id/car_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Toyota Premio F Model" />
+
+
+            <TextView
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/car_model"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="1998" />
+
+
+            <TextView
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/car_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Red" />
+
+
+            <TextView
+                android:visibility="gone"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="1/4/2018" />
+
+        </LinearLayout>
+
+
+
+
+        <View
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="#abcbcbd1" />
+
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_margin="5dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+
+            <TextView
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Maintenance date" />
+
+
+            <TextView
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/maint_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="1/4/2018" />
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+        <View
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="#abcbcbd1" />
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:id="@+id/customer_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Customer Name" />
+
+
+            <TextView
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:layout_marginTop="5dp"
+                android:id="@+id/customer_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="+923345516988" />
+
+
+            <Button
+                android:id="@+id/btn"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/button_background_red"
+                android:gravity="center"
+                android:text="Call"
+                android:textAllCaps="false"
+                android:textSize="10sp" />
+
+        </LinearLayout>
+
+
+
+
+
+
+        <View
+            android:visibility="invisible"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="#abcbcbd1" />
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

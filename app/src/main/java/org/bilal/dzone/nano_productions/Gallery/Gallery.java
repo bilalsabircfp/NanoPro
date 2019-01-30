@@ -82,8 +82,6 @@ public class Gallery extends AppCompatActivity {
         gridView.setAdapter(gridViewAdapter);
 
         max = ListSplittedImages.size();
-        Toast.makeText(this, max+"", Toast.LENGTH_SHORT).show();
-
 
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -98,7 +96,7 @@ public class Gallery extends AppCompatActivity {
 
 
                 Glide.with(Gallery.this)
-                        .load(Url.BaseUrl + ListSplittedImages.get(position) + "")
+                        .load(ListSplittedImages.get(position) + "")
                         .apply(new RequestOptions().placeholder(R.drawable.progress).error(R.drawable.ic_error))
                         .into(photoView);
 
@@ -223,7 +221,7 @@ public class Gallery extends AppCompatActivity {
                 if (pos >= 0) {
 
                     Glide.with(Gallery.this)
-                            .load(Url.BaseUrl + strings.get(pos) + "")
+                            .load( strings.get(pos) + "")
                             .apply(new RequestOptions().placeholder(R.drawable.progress).error(R.drawable.ic_error))
                             .into(photoView);
 
@@ -245,7 +243,7 @@ public class Gallery extends AppCompatActivity {
                 if (pos < max) {
 
                     Glide.with(Gallery.this)
-                            .load(Url.BaseUrl + strings.get(pos) + "")
+                            .load( strings.get(pos) + "")
                             .apply(new RequestOptions().placeholder(R.drawable.progress).error(R.drawable.ic_error))
                             .into(photoView);
 

@@ -46,7 +46,7 @@
 
 
             <TextView
-                android:textColor="#fff"
+                android:textColor="#000"
                 android:textSize="12sp"
                 android:id="@+id/car_name"
                 android:layout_width="match_parent"
@@ -56,7 +56,7 @@
 
 
             <TextView
-                android:textColor="#fff"
+                android:textColor="#000"
                 android:textSize="12sp"
                 android:layout_marginTop="5dp"
                 android:id="@+id/car_model"
@@ -67,7 +67,7 @@
 
 
             <TextView
-                android:textColor="#fff"
+                android:textColor="#000"
                 android:textSize="12sp"
                 android:layout_marginTop="5dp"
                 android:id="@+id/car_color"
@@ -79,7 +79,7 @@
 
             <TextView
                 android:visibility="gone"
-                android:textColor="#fff"
+                android:textColor="#000"
                 android:textSize="12sp"
                 android:layout_marginTop="5dp"
                 android:id="@+id/date"
@@ -118,7 +118,7 @@
 
 
             <TextView
-                android:textColor="#fff"
+                android:textColor="#000"
                 android:textSize="12sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
 
 
             <TextView
-                android:textColor="#fff"
+                android:textColor="#000"
                 android:textSize="12sp"
                 android:layout_marginTop="5dp"
                 android:id="@+id/maint_date"
@@ -168,7 +168,7 @@
 
 
             <TextView
-                android:textColor="#fff"
+                android:textColor="#000"
                 android:textSize="12sp"
                 android:id="@+id/customer_name"
                 android:layout_width="match_parent"
@@ -178,7 +178,7 @@
 
 
             <TextView
-                android:textColor="#fff"
+                android:textColor="#000"
                 android:textSize="12sp"
                 android:layout_marginTop="5dp"
                 android:id="@+id/customer_number"

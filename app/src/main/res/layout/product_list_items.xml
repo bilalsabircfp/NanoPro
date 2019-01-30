@@ -6,7 +6,8 @@
 
 
     <LinearLayout
-        android:background="@drawable/dark_background"
+        android:layout_marginTop="5dp"
+        android:background="#ededed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -46,6 +47,7 @@
 
 
                 <TextView
+                    android:textColor="#000"
                     android:id="@+id/ptitle"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="0dp"
@@ -59,6 +61,7 @@
 
 
                 <TextView
+                    android:textColor="#000"
                     android:id="@+id/edition"
                     android:layout_marginStart="0dp"
                     android:layout_width="match_parent"
@@ -70,6 +73,7 @@
 
 
                 <TextView
+                    android:textColor="#000"
                     android:maxLines="3"
                     android:id="@+id/features"
                     android:layout_marginTop="15dp"
@@ -83,6 +87,7 @@
 
 
                 <TextView
+                    android:textColor="#000"
                     android:ellipsize="end"
                     android:maxLines="3"
                     android:id="@+id/description"

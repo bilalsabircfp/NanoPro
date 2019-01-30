@@ -14,7 +14,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo_new" />
         <TextView
             android:textColor="#000"
             android:layout_marginTop="2dp"
@@ -27,12 +27,14 @@
             android:textSize="14dp"
             android:textStyle="bold"/>
         <ImageView
+            android:tint="#000"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             />
         <TextView
+            android:textColor="#000"
             android:visibility="gone"
             android:id="@+id/snippet"
             android:layout_width="wrap_content"

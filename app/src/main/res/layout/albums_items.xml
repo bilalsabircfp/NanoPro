@@ -32,14 +32,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/car"
-                android:scaleType="centerInside"
+                android:scaleType="center"
                 />
 
         </LinearLayout>
 
 
         <LinearLayout
-            android:background="#c8ffffff"
+            android:background="#ededed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >

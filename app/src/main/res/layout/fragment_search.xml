@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="#fff"
     android:id="@+id/lContainer"
     >
 
@@ -20,7 +20,7 @@
             android:layout_height="60dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo_new" />
 
 
 
@@ -45,6 +45,7 @@
 
 
             <ImageButton
+                android:backgroundTint="#000"
                 android:id="@+id/btnsearch"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -65,6 +66,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:textColorHint="#4d4d4d"
             android:hint="Type Something to Search!" />
 
 
@@ -77,6 +79,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="14dp"
+                android:backgroundTint="#000"
                 android:background="@drawable/settings" />
 
 

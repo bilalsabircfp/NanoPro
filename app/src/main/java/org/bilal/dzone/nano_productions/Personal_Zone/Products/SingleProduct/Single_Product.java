@@ -125,9 +125,9 @@ public class Single_Product extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                btn_safety.setBackgroundResource(R.drawable.sliver_app_light_sharp);
-                btn_how_to.setBackgroundResource(R.drawable.sliver_app_light_sharp);
-                btn_info.setBackgroundResource(R.drawable.sliver_app_light_sharp_light);
+                btn_safety.setBackgroundResource(R.drawable.grey_tab_dark);
+                btn_how_to.setBackgroundResource(R.drawable.grey_tab_dark);
+                btn_info.setBackgroundResource(R.drawable.grey_tab_light);
                 information_.setText(information);
             }
         });
@@ -137,9 +137,9 @@ public class Single_Product extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                btn_safety.setBackgroundResource(R.drawable.sliver_app_light_sharp_light);
-                btn_how_to.setBackgroundResource(R.drawable.sliver_app_light_sharp);
-                btn_info.setBackgroundResource(R.drawable.sliver_app_light_sharp);
+                btn_safety.setBackgroundResource(R.drawable.grey_tab_light);
+                btn_how_to.setBackgroundResource(R.drawable.grey_tab_dark);
+                btn_info.setBackgroundResource(R.drawable.grey_tab_dark);
                 information_.setText(safety);
             }
         });
@@ -149,9 +149,9 @@ public class Single_Product extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                btn_safety.setBackgroundResource(R.drawable.sliver_app_light_sharp);
-                btn_how_to.setBackgroundResource(R.drawable.sliver_app_light_sharp_light);
-                btn_info.setBackgroundResource(R.drawable.sliver_app_light_sharp);
+                btn_safety.setBackgroundResource(R.drawable.grey_tab_dark);
+                btn_how_to.setBackgroundResource(R.drawable.grey_tab_light);
+                btn_info.setBackgroundResource(R.drawable.grey_tab_dark);
 
                 information_.setText(use);
             }

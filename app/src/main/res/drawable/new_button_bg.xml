@@ -6,15 +6,15 @@
 
     <!-- view background color -->
     <solid
-        android:color="#b1ededed" >
+        android:color="#ededed" >
     </solid>
 
     <!-- view border color and width -->
     <stroke
         android:dashWidth="5dp"
         android:dashGap="0dp"
-        android:width="1dp"
-        android:color="#b71d1c1c" >
+        android:width="0.5dp"
+        android:color="#d6d6d6" >
     </stroke>
 
     <!-- If you want to add some padding -->
@@ -27,10 +27,10 @@
 
     <!-- Here is the corner radius -->
     <corners
-        android:bottomLeftRadius="10dp"
-        android:bottomRightRadius="10dp"
-        android:topLeftRadius="10dp"
-        android:topRightRadius="10dp"
+        android:bottomLeftRadius="80dp"
+        android:bottomRightRadius="80dp"
+        android:topLeftRadius="80dp"
+        android:topRightRadius="80dp"
         >
     </corners>
 

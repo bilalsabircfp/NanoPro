@@ -7,14 +7,14 @@
 
 
     <ScrollView
-        android:background="@color/colorPrimaryDark"
+        android:background="#fff"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
     <LinearLayout
         android:orientation="vertical"
-        android:background="@color/colorPrimaryDark"
+        android:background="#4b000000"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -27,7 +27,7 @@
             <TextView
                 android:textSize="19dp"
                 android:textStyle="bold"
-                android:textColor="#fff"
+                android:textColor="#000"
                 android:paddingLeft="9dp"
                 android:gravity="center_vertical"
                 android:text="Select Date"
@@ -45,8 +45,8 @@
                 android:id="@+id/cross"
                 android:textSize="30dp"
                 android:textStyle="bold"
-                android:background="@color/colorPrimaryDark"
-                android:textColor="#fff"
+                android:background="@android:color/transparent"
+                android:textColor="#000"
                 android:text="X"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
@@ -75,7 +75,7 @@
 
 
         <Button
-            android:background="@drawable/button_background"
+            android:background="@drawable/dark_background_grey"
             android:padding="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
@@ -84,7 +84,7 @@
             android:layout_gravity="center"
             android:textAllCaps="false"
             android:text="Submit"
-            android:textColor="#fff"
+            android:textColor="#000"
             android:layout_width="wrap_content"
             android:layout_height="50dp" />
 

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:fadingEdgeLength="0dp"
     android:fillViewport="true"
     android:focusable="false"
@@ -13,10 +12,11 @@
 
 
 <LinearLayout
+    android:paddingBottom="10dp"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg">
+    android:background="#fff">
 
 
     <RelativeLayout
@@ -31,9 +31,10 @@
             android:layout_height="70dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo_new" />
 
         <ImageView
+            android:tint="#000"
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,6 +71,7 @@
         android:text="Personal Zone :"
         android:textStyle="bold"
         android:textSize="16sp"
+        android:textColor="#000"
         android:textAllCaps="true"
         />
 
@@ -83,15 +85,15 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        android:background="@drawable/dark_background"
+        android:background="@drawable/dark_background_grey"
         android:id="@+id/pzone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:padding="10dp"
-        android:textColorHint="#eae9e9"
+        android:textColorHint="#000"
         android:hint="Login To See Details!"
-        android:textColor="#fff"
+        android:textColor="#000"
         />
 
 
@@ -285,6 +287,7 @@
 
 
         <ImageView
+            android:tint="#000"
             android:layout_marginStart="15dp"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -293,6 +296,7 @@
 
 
         <TextView
+            android:textColor="#000"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="15dp"
             android:gravity="center_vertical"

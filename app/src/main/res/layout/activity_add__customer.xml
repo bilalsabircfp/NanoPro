@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg"
+    android:background="#fff"
     tools:context="org.bilal.dzone.nano_productions.Personal_Zone.Detailer.Add_Customer">
 
 
@@ -36,9 +36,10 @@
             android:layout_height="70dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo_new" />
 
         <ImageView
+            android:tint="#000"
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,6 +99,7 @@
 
 
         <ImageView
+            android:tint="#000"
             android:layout_marginStart="15dp"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -106,6 +108,7 @@
 
 
         <TextView
+            android:textColor="#000"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="15dp"
             android:gravity="center_vertical"
@@ -159,6 +162,7 @@
 
 
         <ImageView
+            android:tint="#000"
             android:layout_marginStart="15dp"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -167,6 +171,7 @@
 
 
         <TextView
+            android:textColor="#000"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="15dp"
             android:gravity="center_vertical"
@@ -221,6 +226,7 @@
 
 
         <ImageView
+            android:tint="#000"
             android:layout_marginStart="15dp"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -229,6 +235,7 @@
 
 
         <TextView
+            android:textColor="#000"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="1dp"
             android:gravity="center_vertical"
@@ -285,6 +292,7 @@
 
 
         <ImageView
+            android:tint="#000"
             android:layout_marginStart="15dp"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -293,6 +301,7 @@
 
 
         <TextView
+            android:textColor="#000"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="15dp"
             android:gravity="center_vertical"
@@ -347,6 +356,7 @@
 
 
         <ImageView
+            android:tint="#000"
             android:layout_marginStart="15dp"
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -355,6 +365,7 @@
 
 
         <TextView
+            android:textColor="#000"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="15dp"
             android:gravity="center_vertical"
@@ -632,6 +643,7 @@
 
 
             <ImageView
+                android:tint="#000"
                 android:layout_marginStart="15dp"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -640,6 +652,7 @@
 
 
             <TextView
+                android:textColor="#000"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="15dp"
                 android:gravity="center_vertical"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="#fff"
     android:orientation="vertical"
     tools:context="org.bilal.dzone.nano_productions.Personal_Zone.Products.SingleProduct.Single_Product">
 
@@ -21,9 +21,10 @@
             android:layout_height="70dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo_new" />
 
         <ImageView
+            android:tint="#000"
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/dark_background"
+            android:background="@drawable/dark_background_grey"
             android:orientation="horizontal">
 
 
@@ -134,11 +135,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/dark_background"
+            android:background="@drawable/dark_background_grey"
             android:orientation="vertical">
 
 
             <TextView
+                android:textColor="#000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Features  :"
@@ -148,6 +150,7 @@
 
 
             <TextView
+                android:textColor="#000"
                 android:layout_marginTop="10dp"
                 android:id="@+id/features"
                 android:layout_width="match_parent"
@@ -165,11 +168,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:padding="10dp"
-            android:background="@drawable/dark_background"
+            android:background="@drawable/dark_background_grey"
             android:orientation="vertical">
 
 
             <TextView
+                android:textColor="#000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Technical data  :"
@@ -179,6 +183,7 @@
 
 
             <TextView
+                android:textColor="#000"
                 android:id="@+id/tech_data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -196,11 +201,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/dark_background"
+            android:background="@drawable/dark_background_grey"
             android:orientation="vertical">
 
 
             <TextView
+                android:textColor="#000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -220,31 +226,34 @@
 
 
                 <Button
+                    android:textColor="#000"
                     android:id="@+id/btn_info"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/sliver_app_light_sharp_light"
+                    android:background="@drawable/grey_tab_light"
                     android:text="information"
                     android:textAllCaps="true"
                     android:textSize="10sp" />
 
                 <Button
+                    android:textColor="#000"
                     android:id="@+id/btn_how"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/sliver_app_light_sharp"
+                    android:background="@drawable/grey_tab_dark"
                     android:text="how to use"
                     android:textAllCaps="true"
                     android:textSize="10sp" />
 
                 <Button
+                    android:textColor="#000"
                     android:id="@+id/btn_safety"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@drawable/sliver_app_light_sharp"
+                    android:background="@drawable/grey_tab_dark"
                     android:text="safety"
                     android:textAllCaps="true"
                     android:textSize="10sp" />
@@ -254,6 +263,7 @@
 
 
             <TextView
+                android:textColor="#000"
                 android:id="@+id/more_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

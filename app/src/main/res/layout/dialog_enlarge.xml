@@ -10,7 +10,7 @@
     <LinearLayout
         android:padding="10dp"
         android:orientation="vertical"
-        android:background="@color/colorPrimaryDark"
+        android:background="#fff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -24,7 +24,7 @@
                 android:visibility="invisible"
                 android:textSize="19dp"
                 android:textStyle="bold"
-                android:textColor="#fff"
+                android:textColor="#000"
                 android:paddingLeft="9dp"
                 android:gravity="center_vertical"
                 android:text="Select Date"
@@ -41,7 +41,8 @@
                 android:layout_marginEnd="10dp"
                 android:id="@+id/cross"
                 android:textSize="30dp"
-                android:background="@color/colorPrimaryDark"
+                android:textColor="#000"
+                android:background="#fff"
                 android:text="X"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
@@ -54,7 +55,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/logo"/>
+            android:src="@drawable/logo_new"/>
 
 
 
@@ -65,6 +66,7 @@
             android:textAlignment="center"
             android:gravity="center"
             android:textAllCaps="true"
+            android:textColor="#000"
             android:text="Nano Technology Israel (NANOPRO)"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -72,6 +74,7 @@
 
 
         <TextView
+            android:textColor="#000"
             android:layout_marginTop="10dp"
             android:textSize="16sp"
             android:textAlignment="center"
@@ -84,6 +87,7 @@
 
 
         <TextView
+            android:textColor="#000"
             android:layout_marginTop="10dp"
             android:textSize="16sp"
             android:textAlignment="center"
@@ -94,7 +98,7 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:background="@drawable/button_background_red"
+            android:background="@drawable/new_button_bg"
             android:padding="5dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
@@ -103,7 +107,7 @@
             android:layout_gravity="center"
             android:textAllCaps="false"
             android:text="Call"
-            android:textColor="#fff"
+            android:textColor="#000"
             android:layout_width="wrap_content"
             android:layout_height="35dp" />
 

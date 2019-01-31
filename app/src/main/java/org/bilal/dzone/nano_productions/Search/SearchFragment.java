@@ -248,6 +248,8 @@ public class SearchFragment extends Fragment {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Toast.makeText(getActivity(), "No Match Found", Toast.LENGTH_SHORT).show();
+
                 }
             }
         },
@@ -257,6 +259,7 @@ public class SearchFragment extends Fragment {
                     public void onErrorResponse(VolleyError error) {
 
                         awesomeInfoDialog.hide();
+                        Toast.makeText(getActivity(), "No Match Found", Toast.LENGTH_SHORT).show();
                         System.out.println(error.toString());
                     }
                 });
@@ -281,14 +284,16 @@ public class SearchFragment extends Fragment {
             public void onResponse(JSONObject response) {
                 Log.e("response", response + "");
                 awesomeInfoDialog.hide();
+
                 try {
                     Gson gson = new Gson();
-                    JSONArray jsonArray = response.getJSONArray("result");
 
                     //get single object
                     response_txt = response.getString("success");
                     Log.e("kss", response_txt + "");
 
+
+                    JSONArray jsonArray = response.getJSONArray("result");
 
                     for (int p = 0; p < jsonArray.length(); p++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(p);
@@ -300,6 +305,7 @@ public class SearchFragment extends Fragment {
 
                     product_adapter = new Product_Adapter(getActivity(), product_classArrayList);
                     recyclerView.setAdapter(product_adapter);
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -314,7 +320,8 @@ public class SearchFragment extends Fragment {
                     public void onErrorResponse(VolleyError error) {
 
                         awesomeInfoDialog.hide();
-                        System.out.println(error.toString());
+                        Toast.makeText(getActivity(), "No Match Found", Toast.LENGTH_SHORT).show();
+
                     }
                 });
 
@@ -369,6 +376,7 @@ public class SearchFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
+                        Toast.makeText(getActivity(), "No Match Found", Toast.LENGTH_SHORT).show();
                         awesomeInfoDialog.hide();
                         System.out.println(error.toString());
                     }
@@ -425,6 +433,7 @@ public class SearchFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
+                        Toast.makeText(getActivity(), "No Match Found", Toast.LENGTH_SHORT).show();
                         awesomeInfoDialog.hide();
                         System.out.println(error.toString());
                     }

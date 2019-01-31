@@ -13,7 +13,7 @@
     <stroke
         android:dashWidth="5dp"
         android:dashGap="0dp"
-        android:width="0.6dp"
+        android:width="0.5dp"
         android:color="#add7d0d0" >
     </stroke>
 

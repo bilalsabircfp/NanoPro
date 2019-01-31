@@ -157,7 +157,7 @@ public class HomeFragment extends Fragment {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 
         alertDialogBuilder.setTitle("Logout!");
-        alertDialogBuilder.setIcon(R.drawable.logo);
+        alertDialogBuilder.setIcon(R.drawable.logo_new);
         alertDialogBuilder.setMessage("Are you sure you want to logout?");
         alertDialogBuilder.setPositiveButton("Yes",
                 new DialogInterface.OnClickListener() {

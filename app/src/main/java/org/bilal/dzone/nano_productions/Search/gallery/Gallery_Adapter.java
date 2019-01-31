@@ -80,7 +80,7 @@ public class Gallery_Adapter extends RecyclerView.Adapter<Gallery_Adapter.RvView
 
         String imgUrl = modelClass.getImage();
         Glide.with(context)
-                .load("http://techeasesol.com/nano_production/"+imgUrl)
+                .load("http://www.nano.nanopro-group.com/"+imgUrl)
                 .into(holder.pic);
 
 
@@ -91,7 +91,7 @@ public class Gallery_Adapter extends RecyclerView.Adapter<Gallery_Adapter.RvView
 
                 Intent intent = new Intent(context, Gallery.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("id", modelClass.getId());
+                intent.putExtra("unSplittedImages", modelClass.getGallery_images());
 //                intent.putExtra("image", "http://techeasesol.com/nano_production/"+modelClass.getImage());
                 context.startActivity(intent);
 

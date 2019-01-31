@@ -121,7 +121,7 @@ public class PersonalFragment extends Fragment {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("title", name_[position]);
                 intent.putExtra("content", content[position]);
-                intent.putExtra("image", Url.BaseUrl + image[position]);
+                intent.putExtra("image",  image[position]);
                 getActivity().startActivity(intent);
 //                Toast.makeText(getActivity(), name_[position]+"", Toast.LENGTH_SHORT).show();
             }

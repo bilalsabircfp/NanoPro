@@ -47,7 +47,7 @@ public class Gallery extends AppCompatActivity {
     ImageView back;
     PhotoView photoView;
     int visible = 0, pos;
-    String id, unSplittedImages;
+    String id, unSplittedImages = "";
     ImageView left, right;
     int max;
     ArrayList<String> ListSplittedImages;
@@ -67,15 +67,16 @@ public class Gallery extends AppCompatActivity {
 
         ListSplittedImages = new ArrayList<String>();
 
-        id = getIntent().getStringExtra("id");
-        unSplittedImages =  getIntent().getStringExtra("unSplittedImages");
+
+        unSplittedImages = getIntent().getStringExtra("unSplittedImages");
+        Log.e("unSplittedImages", unSplittedImages);
 
 
         StringTokenizer stringTokenizer = new StringTokenizer(unSplittedImages, "|");
 
-        while (stringTokenizer.hasMoreElements()) {
-            Log.e("image", stringTokenizer.nextElement().toString());
-            ListSplittedImages.add(stringTokenizer.nextElement().toString());
+        while (stringTokenizer.hasMoreTokens()) {
+
+            ListSplittedImages.add(stringTokenizer.nextToken());
         }
 
         GridViewAdapter gridViewAdapter = new GridViewAdapter(Gallery.this, ListSplittedImages);
@@ -221,7 +222,7 @@ public class Gallery extends AppCompatActivity {
                 if (pos >= 0) {
 
                     Glide.with(Gallery.this)
-                            .load( strings.get(pos) + "")
+                            .load(ListSplittedImages.get(pos) + "")
                             .apply(new RequestOptions().placeholder(R.drawable.progress).error(R.drawable.ic_error))
                             .into(photoView);
 
@@ -243,7 +244,7 @@ public class Gallery extends AppCompatActivity {
                 if (pos < max) {
 
                     Glide.with(Gallery.this)
-                            .load( strings.get(pos) + "")
+                            .load(ListSplittedImages.get(pos) + "")
                             .apply(new RequestOptions().placeholder(R.drawable.progress).error(R.drawable.ic_error))
                             .into(photoView);
 

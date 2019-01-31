@@ -84,7 +84,7 @@ public class NewsFeed_Adapter extends RecyclerView.Adapter<NewsFeed_Adapter.RvVi
 
         String imgUrl = modelClass.getImage();
         Glide.with(context)
-                .load("http://techeasesol.com/nano_production/"+imgUrl)
+                .load("http://www.nano.nanopro-group.com/"+imgUrl)
                 .into(holder.pic);
 
 

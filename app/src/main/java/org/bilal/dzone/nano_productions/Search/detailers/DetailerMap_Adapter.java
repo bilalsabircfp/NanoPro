@@ -91,7 +91,7 @@ public class DetailerMap_Adapter extends RecyclerView.Adapter<DetailerMap_Adapte
 
         String imgUrl = modelClass.getImage();
         Glide.with(context)
-                .load("http://techeasesol.com/nano_production/" + imgUrl)
+                .load("http://www.nano.nanopro-group.com/" + imgUrl)
                 .apply(new RequestOptions().placeholder(R.drawable.loading_small).error(R.drawable.ic_error))
                 .into(holder.pic);
 

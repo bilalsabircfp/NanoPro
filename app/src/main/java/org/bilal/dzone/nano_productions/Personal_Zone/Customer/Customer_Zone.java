@@ -25,6 +25,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeErrorDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog;
@@ -32,12 +38,17 @@ import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
 import com.bumptech.glide.Glide;
 
 import org.bilal.dzone.nano_productions.Login.Login_Activity;
+import org.bilal.dzone.nano_productions.Personal_Zone.Detailer.Detailer_Adapter;
 import org.bilal.dzone.nano_productions.R;
 import org.bilal.dzone.nano_productions.URL.Url;
 import org.bilal.dzone.nano_productions.json.Check_internet_connection;
 import org.bilal.dzone.nano_productions.json.JsonParser;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Customer_Zone extends Fragment {
@@ -115,7 +126,15 @@ public class Customer_Zone extends Fragment {
 
         if (new Check_internet_connection(getActivity().getApplicationContext()).isNetworkAvailable()) {
 
-            new GetProfile().execute();
+            awesomeInfoDialog = new AwesomeProgressDialog(getActivity());
+            awesomeInfoDialog.setTitle("Loading!");
+            awesomeInfoDialog.setMessage("Please Wait..");
+            awesomeInfoDialog.setDialogBodyBackgroundColor(R.color.bottom_nav);
+            awesomeInfoDialog.setColoredCircle(R.color.dialogInfoBackgroundColor);
+            awesomeInfoDialog.setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white);
+            awesomeInfoDialog.setCancelable(false);
+            awesomeInfoDialog.show();
+            Load_data();
 
         } else {
 
@@ -129,146 +148,72 @@ public class Customer_Zone extends Fragment {
 
 
     String server_response = "0", server_response_text;
+    //server call
+    private void Load_data() {
+        String urlGetServerData = Url.BaseUrl+ "user/user-details";
+        System.out.print(urlGetServerData);
 
-    //ASYNTASK JSON//////////////////////////////////////////
-    public class GetProfile extends AsyncTask<String, Void, String> {
+        Map<String, String> postParam = new HashMap<String, String>();
+        postParam.put("api_token", api_token);
+        postParam.put("customer_id", customer_id);
 
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, urlGetServerData,
+                new JSONObject(postParam), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("response", response + "");
+                awesomeInfoDialog.hide();
+                try {
 
-        @Override
-        protected void onPreExecute() {
+                    jsonObj = new JSONObject(response.toString());
+                    server_response = response.getString("success");
 
-            awesomeInfoDialog = new AwesomeProgressDialog(getActivity());
-            awesomeInfoDialog.setTitle("Loading!");
-            awesomeInfoDialog.setMessage("Please Wait..");
-            awesomeInfoDialog.setDialogBodyBackgroundColor(R.color.bottom_nav);
-            awesomeInfoDialog.setColoredCircle(R.color.dialogInfoBackgroundColor);
-            awesomeInfoDialog.setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white);
-            awesomeInfoDialog.setCancelable(false);
-            awesomeInfoDialog.show();
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            try {
-
-                JSONObject obj = new JSONObject();
+                    if (server_response.equals("true")) {
 
 
-                obj.put("api_token", api_token);
-                obj.put("customer_id", customer_id);
+                        JSONObject object = jsonObj.getJSONObject("user");
+                        address = object.getString("addres");
+                        Myname = object.getString("name");
+                        Myemail = object.getString("phone_number");
+                        warranty_code = object.getString("warranty_code");
+                        phone = object.getString("phone_number");
+                        app_date = object.getString("done_date");
+                        license = object.getString("license_plate_no");
+                        model = object.getString("model");
+                        year = object.getString("year");
+                        color = object.getString("color");
+                        title = object.getString("title");
+                        edition = object.getString("edition");
+                        detailer_name = object.getString("detailer_name");
+                        detailer_img = object.getString("detailer_img");
+                        detailer_phn_nmbr = object.getString("detailer_phn_nmbr");
+                        detailer_email = object.getString("detailer_email");
 
 
-                String str_req = JsonParser.multipartFormRequestForFindFriends(Url.BaseUrl + "user/user-details", "UTF-8", obj, null);
+                        Log.e("results", Myname + "\n" + Myemail + "\n" + warranty_code);
 
-                jsonObj = new JSONObject(str_req);
-
-
-                String c1;
+                    }
 
 
-                c1 = jsonObj.getString("success");
+                    server_check = "true";
 
+                } catch (Exception e) {
+                    e.printStackTrace();
 
-                server_response = c1;
-
-
-                if (server_response.equals("true")) {
-
-
-                    JSONObject object = jsonObj.getJSONObject("user");
-                    address = object.getString("addres");
-                    Myname = object.getString("name");
-                    Myemail = object.getString("phone_number");
-                    warranty_code = object.getString("warranty_code");
-                    phone = object.getString("phone_number");
-                    app_date = object.getString("done_date");
-                    license = object.getString("license_plate_no");
-                    model = object.getString("model");
-                    year = object.getString("year");
-                    color = object.getString("color");
-                    title = object.getString("title");
-                    edition = object.getString("edition");
-                    detailer_name = object.getString("detailer_name");
-                    detailer_img = object.getString("detailer_img");
-                    detailer_phn_nmbr = object.getString("detailer_phn_nmbr");
-                    detailer_email = object.getString("detailer_email");
-
-
-                    Log.e("results", Myname + "\n" + Myemail + "\n" + warranty_code);
-
+                    //server response/////////////////////////
+                    server_check = "false";
                 }
 
 
-                server_check = "true";
-
-            } catch (Exception e) {
-                e.printStackTrace();
-
-                //server response/////////////////////////
-                server_check = "false";
-            }
-
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-
-
-            //check if server is ok
-            if (server_check.equals("false")) {
-
-                awesomeInfoDialog.hide();
-
-                new AwesomeErrorDialog(getActivity())
-                        .setTitle("Server Error!")
-                        .setMessage("No Customer Record Found.")
-                        .setDialogBodyBackgroundColor(R.color.bottom_nav)
-                        .setColoredCircle(R.color.dialogErrorBackgroundColor)
-                        .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
-                        .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
-                        .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
-                        .setButtonText(getString(R.string.dialog_ok_button))
-                        .setErrorButtonClick(new Closure() {
-                            @Override
-                            public void exec() {
-                                // click
-                            }
-                        })
-                        .show();
-            } else {
-
-
-                if (server_response.equals("true")) {
-
-                    awesomeInfoDialog.hide();
-
-                    coating.setText("1 X " + " \t " +title + " \t " + edition);
-                    year_.setText ("Year   :" + "  " +year);
-                    model_.setText("Model  :" + " " +model);
-                    color_.setText("Color  :" + "  " +color);
-                    plate_.setText(license);
-                    myName_.setText(Myname);
-                    myNumber_.setText(Myemail);
-                    app_date_.setText(app_date);
-                    warranty_.setText(warranty_code);
-                    detailer_email_.setText(address);
-                    detailer_phn_nmbr_.setText(detailer_phn_nmbr);
-                    detailer_name_.setText(detailer_name);
-                    Glide.with(getActivity()).load(Url.BaseUrl+detailer_img).into(detailer_img_);
-
-
-                } else {
+                //check if server is ok
+                if (server_check.equals("false")) {
 
                     awesomeInfoDialog.hide();
 
                     new AwesomeErrorDialog(getActivity())
-                            .setTitle("Timeout!")
+                            .setTitle("Server Error!")
+                            .setMessage("No Record Found.")
                             .setDialogBodyBackgroundColor(R.color.bottom_nav)
-                            .setMessage("Server Timeout..")
                             .setColoredCircle(R.color.dialogErrorBackgroundColor)
                             .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
                             .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
@@ -281,15 +226,86 @@ public class Customer_Zone extends Fragment {
                                 }
                             })
                             .show();
+                } else {
+
+
+                    if (server_response.equals("true")) {
+
+                        awesomeInfoDialog.hide();
+
+                        coating.setText("1 X " + " \t " +title + " \t " + edition);
+                        year_.setText ("Year   :" + "  " +year);
+                        model_.setText("Model  :" + " " +model);
+                        color_.setText("Color  :" + "  " +color);
+                        plate_.setText(license);
+                        myName_.setText(Myname);
+                        myNumber_.setText(Myemail);
+                        app_date_.setText(app_date);
+                        warranty_.setText(warranty_code);
+                        detailer_email_.setText(address);
+                        detailer_phn_nmbr_.setText(detailer_phn_nmbr);
+                        detailer_name_.setText(detailer_name);
+                        Glide.with(getActivity()).load(Url.BaseUrl+detailer_img).into(detailer_img_);
+
+
+                    } else {
+
+                        awesomeInfoDialog.hide();
+
+                        new AwesomeErrorDialog(getActivity())
+                                .setTitle("Timeout!")
+                                .setDialogBodyBackgroundColor(R.color.bottom_nav)
+                                .setMessage("Server Timeout..")
+                                .setColoredCircle(R.color.dialogErrorBackgroundColor)
+                                .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
+                                .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
+                                .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
+                                .setButtonText(getString(R.string.dialog_ok_button))
+                                .setErrorButtonClick(new Closure() {
+                                    @Override
+                                    public void exec() {
+                                        // click
+                                    }
+                                })
+                                .show();
+
+                    }
+
 
                 }
 
-
             }
+        },
+                new Response.ErrorListener() {
 
-        }
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        awesomeInfoDialog.hide();
+                        System.out.println(error.toString());
+
+                        new AwesomeErrorDialog(getActivity())
+                                .setTitle("Server Error!")
+                                .setMessage("No Response From Server.")
+                                .setDialogBodyBackgroundColor(R.color.bottom_nav)
+                                .setColoredCircle(R.color.dialogErrorBackgroundColor)
+                                .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
+                                .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
+                                .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
+                                .setButtonText(getString(R.string.dialog_ok_button))
+                                .setErrorButtonClick(new Closure() {
+                                    @Override
+                                    public void exec() {
+                                        // click
+                                    }
+                                })
+                                .show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(jsonObjectRequest);
     }
-
 
 
 

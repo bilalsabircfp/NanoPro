@@ -3,6 +3,7 @@
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="350dp"
+    android:background="#fff"
     android:layout_height="match_parent">
 
 
@@ -16,6 +17,7 @@
 
 
         <LinearLayout
+            android:background="#fff"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -44,7 +46,7 @@
                 android:textColor="#000"
                 android:background="#fff"
                 android:text="X"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
 

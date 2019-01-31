@@ -85,7 +85,7 @@ public class NewsfeedAdapter extends BaseAdapter {
         viewholder.time.setText(time[position]);
         viewholder.title.setText(title[position]);
         viewholder.content.setText(content[position]);
-        Glide.with(convertView).load(Url.BaseUrl+image[position]).into(viewholder.imageView);
+        Glide.with(convertView).load(image[position]).into(viewholder.imageView);
 
 
 

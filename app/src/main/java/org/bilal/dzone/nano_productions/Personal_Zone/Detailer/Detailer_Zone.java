@@ -69,7 +69,7 @@ public class Detailer_Zone extends Fragment {
     String server_check;
     String[] name, phone_number, done_date, model, year, color;
     String remainingSubscriptions;
-    String detailerSubscriptions, api_token, detailer_id, used_subs;
+    String detailerSubscriptions="", api_token, detailer_id, used_subs="";
     ListView listView;
     TextView subscriptions;
     String no_array = "", warranty_code, warranty_code_id;
@@ -107,7 +107,15 @@ public class Detailer_Zone extends Fragment {
 
         if (new Check_internet_connection(getActivity().getApplicationContext()).isNetworkAvailable()) {
 
-            new Load_Data().execute();
+            awesomeInfoDialog = new AwesomeProgressDialog(getActivity());
+            awesomeInfoDialog.setTitle("Loading!");
+            awesomeInfoDialog.setMessage("Please Wait..");
+            awesomeInfoDialog.setDialogBodyBackgroundColor(R.color.bottom_nav);
+            awesomeInfoDialog.setColoredCircle(R.color.dialogInfoBackgroundColor);
+            awesomeInfoDialog.setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white);
+            awesomeInfoDialog.setCancelable(false);
+            awesomeInfoDialog.show();
+            Load_data();
 
         } else {
 
@@ -130,7 +138,15 @@ public class Detailer_Zone extends Fragment {
 
                 if (new Check_internet_connection(getActivity().getApplicationContext()).isNetworkAvailable()) {
 
-                    new Load_Data().execute();
+                    awesomeInfoDialog = new AwesomeProgressDialog(getActivity());
+                    awesomeInfoDialog.setTitle("Loading!");
+                    awesomeInfoDialog.setMessage("Please Wait..");
+                    awesomeInfoDialog.setDialogBodyBackgroundColor(R.color.bottom_nav);
+                    awesomeInfoDialog.setColoredCircle(R.color.dialogInfoBackgroundColor);
+                    awesomeInfoDialog.setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white);
+                    awesomeInfoDialog.setCancelable(false);
+                    awesomeInfoDialog.show();
+                    Load_data();
                     swipeRefreshLayout.setRefreshing(false);
 
                 } else {
@@ -188,96 +204,188 @@ public class Detailer_Zone extends Fragment {
 
     String server_response = "0", server_response_text;
 
-    //ASYNTASK JSON//////////////////////////////////////////
-    public class Load_Data extends AsyncTask<String, Void, String> {
 
 
-        @Override
-        protected void onPreExecute() {
+    //server call
+    private void Load_data() {
+        String urlGetServerData = Url.BaseUrl+"user/applications-done";
+        System.out.print(urlGetServerData);
 
-            awesomeInfoDialog = new AwesomeProgressDialog(getActivity());
-            awesomeInfoDialog.setTitle("Loading!");
-            awesomeInfoDialog.setMessage("Please Wait..");
-            awesomeInfoDialog.setDialogBodyBackgroundColor(R.color.bottom_nav);
-            awesomeInfoDialog.setColoredCircle(R.color.dialogInfoBackgroundColor);
-            awesomeInfoDialog.setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white);
-            awesomeInfoDialog.setCancelable(false);
-            awesomeInfoDialog.show();
-        }
+        Map<String, String> postParam = new HashMap<String, String>();
+        postParam.put("api_token", api_token);
+        postParam.put("detailer_id", detailer_id);
 
-        @Override
-        protected String doInBackground(String... params) {
-
-            try {
-
-                JSONObject obj = new JSONObject();
-
-                obj.put("api_token", api_token);
-                obj.put("detailer_id", detailer_id);
-
-                String str_req = JsonParser.multipartFormRequestForFindFriends(Url.BaseUrl + "user/applications-done", "UTF-8", obj, null);
-
-                jsonObj = new JSONObject(str_req);
-                Log.e("JObject", str_req);
-
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, urlGetServerData,
+                new JSONObject(postParam), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("response", response + "");
+                awesomeInfoDialog.hide();
                 try {
 
-                    jsonArray = jsonObj.getJSONArray("applications_done");
-                } catch (JSONException e) {
-                    no_array = "no_array";
-                    Log.e("Error", "no array");
-                }
+                    server_response = response.getString("success");
+
+                    jsonObj = new JSONObject(response.toString());
+                    Log.e("JObject", response.toString());
+
+                    try {
+
+                        jsonArray = jsonObj.getJSONArray("applications_done");
+                    } catch (JSONException e) {
+                        no_array = "no_array";
+                        Log.e("Error", "no array");
+                    }
 
 
-                server_response = jsonObj.getString("success");
+                    server_response = jsonObj.getString("success");
 
-                Log.e("kka", server_response);
+                    Log.e("kka", server_response);
 
-                JSONObject c;
-
-
-                name = new String[(jsonArray.length())];
-                phone_number = new String[(jsonArray.length())];
-                done_date = new String[(jsonArray.length())];
-                model = new String[(jsonArray.length())];
-                year = new String[(jsonArray.length())];
-                color = new String[(jsonArray.length())];
+                    JSONObject c;
 
 
-                JSONObject StringObj = jsonObj.getJSONObject("subscriptions");
-
-                String sub;
-                sub = jsonObj.getString("subscriptions");
-                if (sub.equals("No Records Found")) {
-                    Toast.makeText(getActivity(), "No record", Toast.LENGTH_SHORT).show();
-                }
-
-                remainingSubscriptions = StringObj.getString("remaining_subscriptions");
-                detailerSubscriptions = StringObj.getString("detailer_subscriptions");
-                used_subs = StringObj.getString("used_subscriptions");
-
-                Log.e("subscriptions", remainingSubscriptions + "\n" + detailerSubscriptions);
+                    name = new String[(jsonArray.length())];
+                    phone_number = new String[(jsonArray.length())];
+                    done_date = new String[(jsonArray.length())];
+                    model = new String[(jsonArray.length())];
+                    year = new String[(jsonArray.length())];
+                    color = new String[(jsonArray.length())];
 
 
-                if (server_response.equals("true")) {
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject StringObj = jsonObj.getJSONObject("subscriptions");
 
-                        c = jsonArray.getJSONObject(i);
+                    String sub;
+                    sub = jsonObj.getString("subscriptions");
+                    if (sub.equals("No Records Found")) {
+                        Toast.makeText(getActivity(), "No record", Toast.LENGTH_SHORT).show();
+                    }
 
-                        //news feed array
-                        if (c.length() > 0) {
+                    remainingSubscriptions = StringObj.getString("remaining_subscriptions");
+                    detailerSubscriptions = StringObj.getString("detailer_subscriptions");
+                    used_subs = StringObj.getString("used_subscriptions");
 
-                            name[i] = c.getString("name");
-                            phone_number[i] = c.getString("phone_number");
-                            model[i] = c.getString("model");
-                            year[i] = c.getString("year");
-                            color[i] = c.getString("color");
-                            done_date[i] = c.getString("done_date");
+                    Log.e("subscriptions", remainingSubscriptions + "\n" + detailerSubscriptions);
 
-                            Log.e("array1", name[i] + "\n" + phone_number[i] + "\n" +
-                                    model[i] + "\n" + year[i]);
+
+                    if (server_response.equals("true")) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+
+                            c = jsonArray.getJSONObject(i);
+
+                            //news feed array
+                            if (c.length() > 0) {
+
+                                name[i] = c.getString("name");
+                                phone_number[i] = c.getString("phone_number");
+                                model[i] = c.getString("model");
+                                year[i] = c.getString("year");
+                                color[i] = c.getString("color");
+                                done_date[i] = c.getString("done_date");
+
+                                Log.e("array1", name[i] + "\n" + phone_number[i] + "\n" +
+                                        model[i] + "\n" + year[i]);
+
+                            }
 
                         }
+
+
+                    }
+
+
+                    server_check = "true";
+
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    server_check = "false";
+                }
+
+
+
+                //check if server is ok
+                if (server_check.equals("false")) {
+
+                    awesomeInfoDialog.hide();
+
+                    if (no_array.equals("") || no_array.equals("no_array")) {
+
+                        new AwesomeErrorDialog(getActivity())
+                                .setTitle("Empty List!")
+                                .setMessage("No Customer Record Found.")
+                                .setDialogBodyBackgroundColor(R.color.bottom_nav)
+                                .setColoredCircle(R.color.dialogErrorBackgroundColor)
+                                .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
+                                .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
+                                .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
+                                .setButtonText(getString(R.string.dialog_ok_button))
+                                .setErrorButtonClick(new Closure() {
+                                    @Override
+                                    public void exec() {
+                                        // click
+                                    }
+                                })
+                                .show();
+
+                    } else {
+
+                        new AwesomeErrorDialog(getActivity())
+                                .setTitle("Server Error!")
+                                .setMessage("No Server Response.")
+                                .setDialogBodyBackgroundColor(R.color.bottom_nav)
+                                .setColoredCircle(R.color.dialogErrorBackgroundColor)
+                                .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
+                                .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
+                                .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
+                                .setButtonText(getString(R.string.dialog_ok_button))
+                                .setErrorButtonClick(new Closure() {
+                                    @Override
+                                    public void exec() {
+                                        // click
+                                    }
+                                })
+                                .show();
+
+                    }
+
+                } else {
+
+
+                    if (server_response.equals("true")) {
+
+                        awesomeInfoDialog.hide();
+
+
+                        subscriptions.setText("Subscriptions" + " " + used_subs + " " + "/"
+                                + " " + detailerSubscriptions);
+
+                        final Detailer_Adapter adapter = new Detailer_Adapter(getActivity()
+                                , name, phone_number, done_date, model, year, color);
+                        listView.setAdapter(adapter);
+
+
+                    } else {
+
+                        awesomeInfoDialog.hide();
+
+                        new AwesomeErrorDialog(getActivity())
+                                .setMessage("Request Timeout Slow Internet Connection!")
+                                .setTitle("Timeout!")
+                                .setDialogBodyBackgroundColor(R.color.bottom_nav)
+                                .setColoredCircle(R.color.dialogErrorBackgroundColor)
+                                .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
+                                .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
+                                .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
+                                .setButtonText(getString(R.string.dialog_ok_button))
+                                .setErrorButtonClick(new Closure() {
+                                    @Override
+                                    public void exec() {
+                                        // click
+                                    }
+                                })
+                                .show();
 
                     }
 
@@ -285,112 +393,42 @@ public class Detailer_Zone extends Fragment {
                 }
 
 
-                server_check = "true";
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-
-                server_check = "false";
             }
+        },
+                new Response.ErrorListener() {
 
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-            return null;
-        }
+                        awesomeInfoDialog.hide();
+                        System.out.println(error.toString());
 
+                        new AwesomeErrorDialog(getActivity())
+                                .setTitle("Server Error!")
+                                .setMessage("No Response From Server.")
+                                .setDialogBodyBackgroundColor(R.color.bottom_nav)
+                                .setColoredCircle(R.color.dialogErrorBackgroundColor)
+                                .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
+                                .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
+                                .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
+                                .setButtonText(getString(R.string.dialog_ok_button))
+                                .setErrorButtonClick(new Closure() {
+                                    @Override
+                                    public void exec() {
+                                        // click
+                                    }
+                                })
+                                .show();
+                    }
+                });
 
-        @Override
-        protected void onPostExecute(String s) {
-
-            //check if server is ok
-            if (server_check.equals("false")) {
-
-                awesomeInfoDialog.hide();
-
-                if (no_array.equals("") || no_array.equals("no_array")) {
-
-                    new AwesomeErrorDialog(getActivity())
-                            .setTitle("Empty List!")
-                            .setMessage("No Customer Record Found.")
-                            .setDialogBodyBackgroundColor(R.color.bottom_nav)
-                            .setColoredCircle(R.color.dialogErrorBackgroundColor)
-                            .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
-                            .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
-                            .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
-                            .setButtonText(getString(R.string.dialog_ok_button))
-                            .setErrorButtonClick(new Closure() {
-                                @Override
-                                public void exec() {
-                                    // click
-                                }
-                            })
-                            .show();
-
-                } else {
-
-                    new AwesomeErrorDialog(getActivity())
-                            .setTitle("Server Error!")
-                            .setMessage("No Server Response.")
-                            .setDialogBodyBackgroundColor(R.color.bottom_nav)
-                            .setColoredCircle(R.color.dialogErrorBackgroundColor)
-                            .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
-                            .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
-                            .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
-                            .setButtonText(getString(R.string.dialog_ok_button))
-                            .setErrorButtonClick(new Closure() {
-                                @Override
-                                public void exec() {
-                                    // click
-                                }
-                            })
-                            .show();
-
-                }
-
-            } else {
-
-
-                if (server_response.equals("true")) {
-
-                    awesomeInfoDialog.hide();
-
-
-                    subscriptions.setText("Subscriptions" + " " + used_subs + " " + "/"
-                            + " " + detailerSubscriptions);
-
-                    final Detailer_Adapter adapter = new Detailer_Adapter(getActivity()
-                            , name, phone_number, done_date, model, year, color);
-                    listView.setAdapter(adapter);
-
-
-                } else {
-
-                    awesomeInfoDialog.hide();
-
-                    new AwesomeErrorDialog(getActivity())
-                            .setMessage("Request Timeout Slow Internet Connection!")
-                            .setTitle("Timeout!")
-                            .setDialogBodyBackgroundColor(R.color.bottom_nav)
-                            .setColoredCircle(R.color.dialogErrorBackgroundColor)
-                            .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
-                            .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
-                            .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
-                            .setButtonText(getString(R.string.dialog_ok_button))
-                            .setErrorButtonClick(new Closure() {
-                                @Override
-                                public void exec() {
-                                    // click
-                                }
-                            })
-                            .show();
-
-                }
-
-
-            }
-
-        }
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(jsonObjectRequest);
     }
+
+
+
+
 
 
 

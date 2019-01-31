@@ -2,9 +2,9 @@
 <resources>
     <color name="colorPrimary">#ededed</color>
     <color name="colorPrimaryDark">#ededed</color>
-    <color name="colorAccent">#2bc4ee</color>
+    <color name="colorAccent">#8b8b8b</color>
 
-    <color name="bottom_nav">#14324b</color>
+    <color name="bottom_nav">#4d4a4a</color>
     <color name="red">#e21515</color>
 
 </resources>

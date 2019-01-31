@@ -8,6 +8,7 @@
 
 
     <RelativeLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -195,6 +196,7 @@
 
 
         <CheckBox
+            android:buttonTint="#000"
             android:visibility="invisible"
             android:id="@+id/remember_me"
             android:layout_marginTop="10dp"

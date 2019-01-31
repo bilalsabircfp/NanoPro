@@ -13,8 +13,8 @@
     <stroke
         android:dashWidth="5dp"
         android:dashGap="0dp"
-        android:width="1dp"
-        android:color="#b71d1c1c" >
+        android:width="0.3dp"
+        android:color="#cecece" >
     </stroke>
 
     <!-- If you want to add some padding -->

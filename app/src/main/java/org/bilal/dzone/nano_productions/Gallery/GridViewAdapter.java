@@ -41,7 +41,7 @@ public class GridViewAdapter extends BaseAdapter {
     ArrayList<String> modelClasses;
 
 
-    public GridViewAdapter (Activity con, ArrayList<String> modelClasses){
+    public GridViewAdapter(Activity con, ArrayList<String> modelClasses) {
         //Getting all the values
         this.con = con;
         this.modelClasses = modelClasses;
@@ -82,7 +82,7 @@ public class GridViewAdapter extends BaseAdapter {
             viewholder = new Viewholder();
             convertView = inflater.inflate(R.layout.gallery_itemsa, null);
 
-            viewholder.imageView =  convertView.findViewById(R.id.image1);
+            viewholder.imageView = convertView.findViewById(R.id.image1);
 
             convertView.setTag(viewholder);
 
@@ -98,47 +98,4 @@ public class GridViewAdapter extends BaseAdapter {
 
         return convertView;
     }
-
-
-
-
-
-//    @Override
-//    public View getView(final int position, View convertView, ViewGroup parent) {
-//        //Creating a linear layout
-//        LinearLayout linearLayout = new LinearLayout(context);
-//        linearLayout.setOrientation(LinearLayout.VERTICAL);
-//
-//        //NetworkImageView
-//        final NetworkImageView networkImageView = new NetworkImageView(context);
-//
-//        //Initializing ImageLoader
-//        imageLoader = CustomVolleyRequest.getInstance(context).getImageLoader();
-//        imageLoader.get("http://techeasesol.com/nano_production/"+modelClasses.get(position),
-//                ImageLoader.getImageListener(networkImageView, R.drawable.progress,
-//                        R.drawable.progress));
-//
-//        //Setting the image url to load
-//        networkImageView.setImageUrl("http://techeasesol.com/nano_production/"+modelClasses.
-//                get(position),imageLoader);
-//
-//        //Creating a textview to show the title
-//        TextView textView = new TextView(context);
-////        textView.setText("bunn");
-//
-//        //Scaling the imageview
-////        networkImageView.setScaleType(ImageView.ScaleType.CENTER);
-//        networkImageView.setLayoutParams(new GridView.LayoutParams(420,250));
-////        networkImageView.setPadding(0,0,0,0);
-//
-//
-//        //Adding views to the layout
-////        linearLayout.addView(textView);
-//        linearLayout.addView(networkImageView);
-//
-//
-//
-//        //Returnint the layout
-//        return linearLayout;
-//    }
 }

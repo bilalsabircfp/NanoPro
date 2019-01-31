@@ -27,12 +27,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
 
         <ImageView
-            android:layout_width="60dp"
+            android:layout_width="90dp"
             android:layout_height="70dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
@@ -67,6 +67,7 @@
 
 
         <Button
+            android:textColor="#000"
             android:text="Coating"
             android:background="@drawable/tab_button_dark"
             android:layout_width="0dp"
@@ -77,6 +78,7 @@
 
 
         <Button
+            android:textColor="#000"
             android:id="@+id/maint"
             android:text="Maintenance"
             android:background="@drawable/tab_button_light"
@@ -143,9 +145,9 @@
         android:layout_height="wrap_content"
         android:textSize="12sp"
         android:padding="15dp"
-        android:textColorHint="#eae9e9"
+        android:textColorHint="#b9b7b7"
         android:hint="Enter Warranty Number"
-        android:textColor="#fff"
+        android:textColor="#000"
         />
 
 
@@ -206,9 +208,9 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:padding="15dp"
-            android:textColorHint="#eae9e9"
             android:hint="Enter Customer Name"
-            android:textColor="#fff"
+            android:textColorHint="#b1b0b0"
+            android:textColor="#000"
             />
 
 
@@ -271,9 +273,9 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:padding="15dp"
-            android:textColorHint="#eae9e9"
             android:hint="Enter Phone number"
-            android:textColor="#fff"
+            android:textColorHint="#b1b0b0"
+            android:textColor="#000"
             />
 
 
@@ -337,9 +339,9 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:padding="15dp"
-            android:textColorHint="#eae9e9"
+            android:textColorHint="#b1b0b0"
             android:hint="Enter Application Due Date"
-            android:textColor="#fff"
+            android:textColor="#000"
             />
 
 
@@ -411,7 +413,7 @@
                 android:paddingStart="5dp"
                 android:paddingEnd="0dp"
                 android:layout_margin="5dp"
-                android:textColor="#fff"
+                android:textColor="#000"
                 android:textSize="14sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -436,9 +438,9 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:padding="15dp"
-                    android:textColorHint="#eae9e9"
+                    android:textColorHint="#bfffffff"
                     android:hint="eg 62-255-69"
-                    android:textColor="#fff"
+                    android:textColor="#000"
                     />
 
 
@@ -461,7 +463,7 @@
 
             <TextView
                 android:layout_margin="5dp"
-                android:textColor="#fff"
+                android:textColor="#000"
                 android:textSize="14sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -486,9 +488,9 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:padding="15dp"
-                    android:textColorHint="#eae9e9"
+                    android:textColorHint="#bfffffff"
                     android:hint="eg Mercedes Benz"
-                    android:textColor="#fff"
+                    android:textColor="#000"
                     />
 
 
@@ -530,7 +532,7 @@
                         android:paddingEnd="0dp"
                         android:paddingStart="5dp"
                         android:layout_margin="5dp"
-                        android:textColor="#fff"
+                        android:textColor="#000"
                         android:textSize="14sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -555,9 +557,9 @@
                             android:layout_height="wrap_content"
                             android:textSize="12sp"
                             android:padding="15dp"
-                            android:textColorHint="#eae9e9"
+                            android:textColorHint="#bfffffff"
                             android:hint="eg 2017"
-                            android:textColor="#fff"
+                            android:textColor="#000"
                             />
 
 
@@ -580,7 +582,7 @@
 
                     <TextView
                         android:layout_margin="5dp"
-                        android:textColor="#fff"
+                        android:textColor="#000"
                         android:textSize="14sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -605,9 +607,9 @@
                             android:layout_height="wrap_content"
                             android:textSize="12sp"
                             android:padding="15dp"
-                            android:textColorHint="#eae9e9"
+                            android:textColorHint="#bfffffff"
                             android:hint="eg Black"
-                            android:textColor="#fff"
+                            android:textColor="#000"
                             />
 
 
@@ -699,8 +701,9 @@
                     android:layout_height="match_parent">
 
                 <RadioButton
+                    android:buttonTint="#000"
                     android:id="@+id/black"
-                    android:textColor="#fff"
+                    android:textColor="#000"
                     android:textSize="14sp"
                     android:text="PRO9H Black EDITION"
                     android:textAllCaps="true"
@@ -710,8 +713,9 @@
 
 
                 <RadioButton
+                    android:buttonTint="#000"
                     android:id="@+id/silver"
-                    android:textColor="#fff"
+                    android:textColor="#000"
                     android:textSize="14sp"
                     android:text="PRO9H SILVER TITANIUM"
                     android:layout_width="match_parent"
@@ -720,8 +724,9 @@
 
 
                 <RadioButton
+                    android:buttonTint="#000"
                     android:id="@+id/red"
-                    android:textColor="#fff"
+                    android:textColor="#000"
                     android:textSize="14sp"
                     android:text="PRO9H RED ROSE"
                     android:layout_width="match_parent"
@@ -746,7 +751,8 @@
 
 
                 <CheckBox
-                    android:textColor="#fff"
+                    android:buttonTint="#000"
+                    android:textColor="#000"
                     android:layout_gravity="center"
                     android:id="@+id/top"
                     android:text="PRO FEATHER TOP COAT"

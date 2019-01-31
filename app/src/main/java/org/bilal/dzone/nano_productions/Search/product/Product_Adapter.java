@@ -112,7 +112,7 @@ public class Product_Adapter extends RecyclerView.Adapter<Product_Adapter.RvView
 
         String imgUrl = modelClass.getImage();
         Glide.with(context)
-                .load("http://techeasesol.com/nano_production/"+imgUrl)
+                .load("http://www.nano.nanopro-group.com/"+imgUrl)
                 .apply(new RequestOptions().placeholder(R.drawable.loading_small).error(R.drawable.ic_error))
                 .into(holder.pic);
 

@@ -156,7 +156,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
                 image = all_info[3];
 
 
-                marker_dialog(name_, num_, email, image);
+                marker_dialog(name_, num_, email,  "http://www.nano.nanopro-group.com/"+image);
 
             }
         });
@@ -206,8 +206,9 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
         tv_num.setText(number);
         tv_blood.setText(email);
 
-        Glide.with(getActivity()).load("http://techeasesol.com/nano_production/"
-                +image).into(img);
+        Log.e("ImagePath", image);
+
+        Glide.with(getActivity()).load(image).into(img);
 
         call.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,8 +251,8 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
             d_name = after_split[0];
             d_image = after_split[1];
 
-            TextView tvTitle = ((TextView) myContentsView.findViewById(R.id.title));
-            final ImageView imageView = ((ImageView) myContentsView.findViewById(R.id.img));
+            TextView tvTitle = ( myContentsView.findViewById(R.id.title));
+            final ImageView imageView = ( myContentsView.findViewById(R.id.img));
 
             Glide.with(myContentsView).load(R.drawable.logo);
 

@@ -171,7 +171,7 @@
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:layout_below="@id/car"
-                android:text="2018 product line"
+                android:text="2019 product line"
                 android:textAllCaps="true"
                 android:id="@+id/cars_txt"
                 android:layout_width="match_parent"

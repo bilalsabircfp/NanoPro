@@ -16,6 +16,8 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,6 +28,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -57,6 +60,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,16 +71,24 @@ public class Detailer_Zone extends Fragment {
     JSONObject jsonObj;
     JSONArray jsonArray;
     String server_check;
-    String[] name, phone_number, done_date, model, year, color;
+    String[] name, phone_number, done_date, model, year, color,title,
+            edition,
+            email,
+            warranty_code,
+            license_plate_no;
     String remainingSubscriptions;
     String detailerSubscriptions="", api_token, detailer_id, used_subs="";
     ListView listView;
     TextView subscriptions;
-    String no_array = "", warranty_code, warranty_code_id;
+    String no_array = "";
     Button enlarge;
     FloatingActionButton add;
     SwipeRefreshLayout swipeRefreshLayout;
     ImageView back;
+    EditText etSearch;
+    Detailer_Adapter adapter;
+    DetailerModelClass detailerModelClass;
+    ArrayList<DetailerModelClass> detailerArrayList = new ArrayList<>();
 
     @Nullable
     @Override
@@ -95,6 +107,7 @@ public class Detailer_Zone extends Fragment {
         swipeRefreshLayout = v.findViewById(R.id.swiperefresh);
         back = v.findViewById(R.id.imageView);
         back.setVisibility(View.INVISIBLE);
+        etSearch = v.findViewById(R.id.et_search);
 
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -185,6 +198,26 @@ public class Detailer_Zone extends Fragment {
         });
 
 
+
+//        // Add Text Change Listener to EditText
+//        etSearch.addTextChangedListener(new TextWatcher() {
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                // Call back the Adapter with current character to Filter
+//                adapter.getFilter().filter(s.toString());
+//            }
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count,int after) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            }
+//        });
+
+
         return v;
     }
 
@@ -250,6 +283,11 @@ public class Detailer_Zone extends Fragment {
                     model = new String[(jsonArray.length())];
                     year = new String[(jsonArray.length())];
                     color = new String[(jsonArray.length())];
+                    title = new String[(jsonArray.length())];
+                    edition = new String[(jsonArray.length())];
+                    email = new String[(jsonArray.length())];
+                    warranty_code = new String[(jsonArray.length())];
+                    license_plate_no = new String[(jsonArray.length())];;
 
 
                     JSONObject StringObj = jsonObj.getJSONObject("subscriptions");
@@ -281,6 +319,11 @@ public class Detailer_Zone extends Fragment {
                                 year[i] = c.getString("year");
                                 color[i] = c.getString("color");
                                 done_date[i] = c.getString("done_date");
+                                title[i] = c.getString("title");
+                                edition[i] = c.getString("edition");
+                                email[i] = c.getString("email");
+                                warranty_code[i] = c.getString("warranty_code");
+                                license_plate_no[i] = c.getString("license_plate_no");
 
                                 Log.e("array1", name[i] + "\n" + phone_number[i] + "\n" +
                                         model[i] + "\n" + year[i]);
@@ -289,6 +332,28 @@ public class Detailer_Zone extends Fragment {
 
                         }
 
+
+
+                        //setting values to array-list
+                        for (int k = 0; k < name.length; k++) {
+                            detailerModelClass = new DetailerModelClass(name[k],
+                                    phone_number[k], done_date[k], model[k], year[k], color[k],
+                                    title[k], edition[k], email[k], warranty_code[k],
+                                    license_plate_no[k]);
+                            detailerModelClass.setName(name[k]);
+                            detailerModelClass.setPhone_number(phone_number[k]);
+                            detailerModelClass.setDone_date(done_date[k]);
+                            detailerModelClass.setModel(model[k]);
+                            detailerModelClass.setYear(year[k]);
+                            detailerModelClass.setColor(color[k]);
+                            detailerModelClass.setTitle(title[k]);
+                            detailerModelClass.setEdition(edition[k]);
+                            detailerModelClass.setEmail(email[k]);
+                            detailerModelClass.setWarranty_code(warranty_code[k]);
+                            detailerModelClass.setLicense_plate_no(license_plate_no[k]);
+
+                            detailerArrayList.add(detailerModelClass);
+                        }
 
                     }
 
@@ -361,9 +426,29 @@ public class Detailer_Zone extends Fragment {
                         subscriptions.setText("Subscriptions" + " " + used_subs + " " + "/"
                                 + " " + detailerSubscriptions);
 
-                        final Detailer_Adapter adapter = new Detailer_Adapter(getActivity()
-                                , name, phone_number, done_date, model, year, color);
+                        adapter = new Detailer_Adapter(getActivity()
+                                , detailerArrayList);
                         listView.setAdapter(adapter);
+
+
+                        // Add Text Change Listener to EditText
+                        etSearch.addTextChangedListener(new TextWatcher() {
+
+                            @Override
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                // Call back the Adapter with current character to Filter
+                                adapter.getFilter().filter(s.toString());
+                            }
+
+                            @Override
+                            public void beforeTextChanged(CharSequence s, int start, int count,int after) {
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable s) {
+                            }
+                        });
+
 
 
                     } else {
@@ -491,4 +576,21 @@ public class Detailer_Zone extends Fragment {
     }
 
 
+
+    public void filter(String text) {
+        ArrayList<DetailerModelClass> complaintsListCopy = new ArrayList<DetailerModelClass>
+                (detailerArrayList);
+        detailerArrayList.clear();
+        if(text.isEmpty()){
+            detailerArrayList.addAll(complaintsListCopy);
+        } else {
+            text = text.toLowerCase();
+            for(DetailerModelClass item: complaintsListCopy){
+                if(item.getName().toLowerCase().contains(text)){
+                    detailerArrayList.add(item);
+                }
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
 }

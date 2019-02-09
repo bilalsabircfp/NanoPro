@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,40 +16,41 @@ import android.widget.Toast;
 
 import org.bilal.dzone.nano_productions.R;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by Bilal on 17-Feb-17.
  */
 
-public class Detailer_Adapter extends BaseAdapter {
+public class Detailer_Adapter extends BaseAdapter implements Filterable {
 
     Activity con;
-    String[] name, phone_number, done_date, model, year, color;
+    private ArrayList<DetailerModelClass> mOriginalValues; // Original Values
+    private ArrayList<DetailerModelClass> mDisplayedValues;    // Values to be displayed
 
-    public Detailer_Adapter(Activity con, String[] name, String[] phone_number, String[] done_date, String[] model, String[] year, String[] color) {
+
+    public Detailer_Adapter(Activity con, ArrayList<DetailerModelClass> detailerArrayList) {
         this.con = con;
-        this.name = name;
-        this.phone_number = phone_number;
-        this.done_date = done_date;
-        this.model = model;
-        this.year = year;
-        this.color = color;
+        this.mDisplayedValues = detailerArrayList;
+        this.mOriginalValues = detailerArrayList;
     }
 
     @Override
     public int getCount() {
-        return name.length;
+        return mDisplayedValues.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return position;
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
+
 
     private class Viewholder {
 
@@ -95,28 +98,101 @@ public class Detailer_Adapter extends BaseAdapter {
         });
 
 
-        viewholder.name_.setText(name[position]);
-        viewholder.phone_number_.setText(phone_number[position]);
-        viewholder.done_date_.setText(done_date[position]);
-        viewholder.model_.setText(model[position]);
-        viewholder.year_.setText(year[position]);
-        viewholder.color_.setText(color[position]);
+        viewholder.name_.setText(mDisplayedValues.get(position).getName());
+        viewholder.phone_number_.setText(mDisplayedValues.get(position).getPhone_number());
+        viewholder.done_date_.setText(mDisplayedValues.get(position).getDone_date());
+        viewholder.model_.setText(mDisplayedValues.get(position).getModel());
+        viewholder.year_.setText(mDisplayedValues.get(position).getYear());
+        viewholder.color_.setText(mDisplayedValues.get(position).getColor());
 
 
-        if (color[position].equals("red") || color[position].equals("Red")) {
+        if (mDisplayedValues.get(position).getColor().equals("red") ||
+                mDisplayedValues.get(position).getColor().equals("Red")) {
             viewholder.customer_app.setBackgroundResource(R.drawable.red_app);
-        } else if (color[position].equals("silver") || color[position].equals("Silver")) {
+        } else if (mDisplayedValues.get(position).getColor().equals("silver") ||
+                mDisplayedValues.get(position).getColor().equals("Silver")) {
             viewholder.customer_app.setBackgroundResource(R.drawable.sliver_app);
-        } else if (color[position].equals("green")) {
+        } else if (mDisplayedValues.get(position).getColor().equals("green")) {
             viewholder.customer_app.setBackgroundResource(R.drawable.sliver_app);
-        } else if (color[position].equals("black") || color[position].equals("Black")) {
+        } else if (mDisplayedValues.get(position).getColor().equals("black") ||
+                mDisplayedValues.get(position).getColor().equals("Black")) {
             viewholder.customer_app.setBackgroundResource(R.drawable.black_app);
-        } else if (color[position].equals("white")) {
+        } else if (mDisplayedValues.get(position).getColor().equals("white")) {
             viewholder.customer_app.setBackgroundResource(R.drawable.sliver_app);
         }else
             viewholder.customer_app.setBackgroundResource(R.drawable.blue_app);
 
 
         return convertView;
+    }
+
+
+    //filter arraylist
+    @Override
+    public Filter getFilter() {
+
+        Filter filter = new Filter() {
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+
+                mDisplayedValues = (ArrayList<DetailerModelClass>) results.values; // has the filtered values
+                notifyDataSetChanged();  // notifies the data with new filtered values
+
+            }
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
+                ArrayList<DetailerModelClass> FilteredArrList = new ArrayList<>();
+
+                if (mOriginalValues == null) {
+                    mOriginalValues = new ArrayList<>(mDisplayedValues); // saves the original data in mOriginalValues
+                }
+
+                /********
+                 *
+                 *  If constraint(CharSequence that is received) is null returns the mOriginalValues(Original) values
+                 *  else does the Filtering and returns FilteredArrList(Filtered)
+                 *
+                 ********/
+                if (constraint == null || constraint.length() == 0) {
+
+                    // set the Original result to return
+                    results.count = mOriginalValues.size();
+                    results.values = mOriginalValues;
+
+                } else {
+                    constraint = constraint.toString().toLowerCase();
+                    for (int i = 0; i < mOriginalValues.size(); i++) {
+                        String data = mOriginalValues.get(i).getName();
+                        String data2 = mOriginalValues.get(i).getModel();
+                        if (data.toLowerCase().startsWith(constraint.toString())
+                                || data2.toLowerCase().startsWith(constraint.toString())) {
+
+                            FilteredArrList.add(new DetailerModelClass(mOriginalValues.get(i).getName()
+                                    ,mOriginalValues.get(i).getPhone_number()
+                                    ,mOriginalValues.get(i).getDone_date()
+                                    ,mOriginalValues.get(i).getModel()
+                                    ,mOriginalValues.get(i).getYear()
+                                    ,mOriginalValues.get(i).getColor()
+                                    ,mOriginalValues.get(i).getTitle()
+                                    ,mOriginalValues.get(i).getEdition()
+                                    ,mOriginalValues.get(i).getEmail()
+                                    ,mOriginalValues.get(i).getWarranty_code()
+                                    ,mOriginalValues.get(i).getLicense_plate_no()));
+
+
+                        }
+                    }
+                    // set the Filtered result to return
+                    results.count = FilteredArrList.size();
+                    results.values = FilteredArrList;
+                }
+                return results;
+            }
+        };
+        return filter;
     }
 }

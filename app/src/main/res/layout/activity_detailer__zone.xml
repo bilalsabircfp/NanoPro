@@ -38,6 +38,7 @@
 
 
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -99,6 +100,55 @@
     </LinearLayout>
 
 
+
+    <RelativeLayout
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:padding="10dp"
+        android:layout_below="@+id/header"
+        android:background="@drawable/search_box"
+        android:id="@+id/r1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+
+        <EditText
+            android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:background="@android:color/transparent"
+            android:layout_toLeftOf="@+id/btnfilter"
+            android:id="@+id/et_search"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:textColorHint="#a1a1a1"
+            android:textColor="#000"
+            android:hint="Type Something to Search!" />
+
+
+
+        <ImageButton
+            android:id="@+id/btnfilter"
+            android:layout_marginEnd="5dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="14dp"
+            android:backgroundTint="#000"
+            android:background="@drawable/settings" />
+
+
+
+
+    </RelativeLayout>
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -152,9 +202,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
-            app:backgroundTint="#ee2b4c"
+            app:backgroundTint="#5e5a5a"
             app:fabSize="normal"
-            app:rippleColor="#ee2b4c"
+            app:rippleColor="#5e5a5a"
             app:srcCompat="@drawable/ic_add" />
     </FrameLayout>
 

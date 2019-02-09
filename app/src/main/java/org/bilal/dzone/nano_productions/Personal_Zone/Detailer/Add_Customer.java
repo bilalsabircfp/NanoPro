@@ -2,6 +2,7 @@ package org.bilal.dzone.nano_productions.Personal_Zone.Detailer;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -11,12 +12,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +40,12 @@ import com.github.thunder413.datetimeutils.DateTimeUtils;
 import com.google.gson.Gson;
 
 import org.bilal.dzone.nano_productions.Login.Login_Activity;
+import org.bilal.dzone.nano_productions.Personal_Zone.CoatingAdapter;
+import org.bilal.dzone.nano_productions.Personal_Zone.Customer.CoatingModel;
+import org.bilal.dzone.nano_productions.Personal_Zone.NewsfeedAdapter;
+import org.bilal.dzone.nano_productions.Personal_Zone.NonScrollListView;
 import org.bilal.dzone.nano_productions.R;
+import org.bilal.dzone.nano_productions.Search.FullScreen;
 import org.bilal.dzone.nano_productions.URL.Url;
 import org.bilal.dzone.nano_productions.json.Check_internet_connection;
 import org.bilal.dzone.nano_productions.json.JsonParser;
@@ -44,9 +53,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -60,14 +71,20 @@ public class Add_Customer extends AppCompatActivity {
     String w_code;
     String api_token, detailer_id,
             warranty_, name_, number_, due_date_, plate_, model_, year_, color_,
-            server_response, server_response_text, server_check, cal_age, bottom_coat_title = "",
+            cal_age, bottom_coat_title = "",
             bottom_coat_edition = "", top_coat_title = "", top_coat_edition = "";
-    JSONObject jsonObj;
-    int daysBetween, checked = 0;
     DatePicker datePicker;
     RadioButton red, silver, black;
     CheckBox top;
     ImageView back;
+    Spinner prepSpinner, coatStatus;
+    List<String> status = new ArrayList<String>();
+    String PrepStatus="InProgress", CoatStatus="InProgress";
+    int daysBetween;
+    NonScrollListView nonScrollListView;
+    private  String[] Coatinglist = new String[]{"Lion", "Tiger", "Leopard", "Cat"};
+    private ArrayList<CoatingModel> modelArrayList;
+    CoatingAdapter coatingAdapter;
 
 
     @Override
@@ -83,6 +100,7 @@ public class Add_Customer extends AppCompatActivity {
         Log.e("token", api_token + "\n" + detailer_id);
 
 
+        nonScrollListView = findViewById(R.id.lv_nonscroll_list);
         back = findViewById(R.id.imageView);
         maintenance = findViewById(R.id.maint);
         add = findViewById(R.id.add);
@@ -94,10 +112,29 @@ public class Add_Customer extends AppCompatActivity {
         year = findViewById(R.id.year);
         color = findViewById(R.id.color);
         plate = findViewById(R.id.plate);
-        red = findViewById(R.id.red);
-        silver = findViewById(R.id.silver);
-        black = findViewById(R.id.black);
-        top = findViewById(R.id.top);
+//        red = findViewById(R.id.red);
+//        silver = findViewById(R.id.silver);
+//        black = findViewById(R.id.black);
+//        top = findViewById(R.id.top);
+
+
+        // Spinner element
+        coatStatus = findViewById(R.id.spinner_coat);
+        prepSpinner= findViewById(R.id.spinner_prep);
+
+
+        //initialize the spinners
+        init();
+
+
+        //listview click listner
+        nonScrollListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Toast.makeText(Add_Customer.this, position+"", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         if (new Check_internet_connection(this.getApplicationContext()).isNetworkAvailable()) {
@@ -127,53 +164,53 @@ public class Add_Customer extends AppCompatActivity {
 
 
 
-        red.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                bottom_coat_edition = "RED ROSE";
-                bottom_coat_title = "PRO9H";
-            }
-        });
-
-
-        black.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                bottom_coat_edition = "BLACK EDITION";
-                bottom_coat_title = "PRO9H";
-            }
-        });
-
-        silver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                bottom_coat_edition = "SILVER TITANIUM";
-                bottom_coat_title = "PRO9H";
-            }
-        });
-
-
-        top.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if(checked == 0){
-                    checked = 1;
-                    top_coat_edition = "TOP COAT";
-                    top_coat_title = "PRO FEATHER";
-                }
-                else if(checked == 1){
-                    checked = 0;
-                    top_coat_edition = "";
-                    top_coat_title = "";
-                }
-
-
-            }
-        });
+//        red.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                bottom_coat_edition = "RED ROSE";
+//                bottom_coat_title = "PRO9H";
+//            }
+//        });
+//
+//
+//        black.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                bottom_coat_edition = "BLACK EDITION";
+//                bottom_coat_title = "PRO9H";
+//            }
+//        });
+//
+//        silver.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                bottom_coat_edition = "SILVER TITANIUM";
+//                bottom_coat_title = "PRO9H";
+//            }
+//        });
+//
+//
+//        top.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                if(checked == 0){
+//                    checked = 1;
+//                    top_coat_edition = "TOP COAT";
+//                    top_coat_title = "PRO FEATHER";
+//                }
+//                else if(checked == 1){
+//                    checked = 0;
+//                    top_coat_edition = "";
+//                    top_coat_title = "";
+//                }
+//
+//
+//            }
+//        });
 
 
         maintenance.setOnClickListener(new View.OnClickListener() {
@@ -187,6 +224,15 @@ public class Add_Customer extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                //get Selected checkboxes
+                for (int i = 0; i < CoatingAdapter.modelArrayList.size(); i++){
+                    if(CoatingAdapter.modelArrayList.get(i).getSelected()) {
+                        Toast.makeText(Add_Customer.this, CoatingAdapter.modelArrayList.get(i).getTitle(), Toast.LENGTH_LONG).show();
+                    }
+                }
+
 
                 warranty_ = warranty.getText().toString().trim();
                 name_ = name.getText().toString().trim();
@@ -352,6 +398,15 @@ public class Add_Customer extends AppCompatActivity {
                             warranty.setText(w_code);
 
 
+                            nonScrollListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+                            nonScrollListView.setFocusable(false);
+
+
+                            modelArrayList = getModel(false);
+                            coatingAdapter = new CoatingAdapter(Add_Customer.this,modelArrayList);
+                            nonScrollListView.setAdapter(coatingAdapter);
+
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -483,5 +538,81 @@ public class Add_Customer extends AppCompatActivity {
 
         return cal_age;
     }
+
+
+
+    public void init(){
+
+        status.add("InProgress");
+        status.add("Completed");
+        // Creating adapter for spinner
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, status);
+        // Drop down layout style - list view with radio button
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // attaching data adapter to spinner
+        prepSpinner.setAdapter(dataAdapter);
+        coatStatus.setAdapter(dataAdapter);
+
+        prepSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+
+                if (position == 0){
+                    PrepStatus = "InProgress";
+                }
+                else if (position == 1){
+                    PrepStatus = "Completed";
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+
+        });
+
+
+
+        coatStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+
+                if (position == 0){
+                    CoatStatus = "InProgress";
+                }
+                else if (position == 1){
+                    CoatStatus = "Completed";
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+
+        });
+
+    }
+
+
+
+    //
+    private ArrayList<CoatingModel> getModel(boolean isSelect){
+        ArrayList<CoatingModel> list = new ArrayList<>();
+        for(int i = 0; i < 4; i++){
+
+            CoatingModel coatingModel = new CoatingModel();
+            coatingModel.setSelected(isSelect);
+            coatingModel.setTitle(Coatinglist[i]);
+            list.add(coatingModel);
+        }
+        return list;
+    }
+
+
+
 
 }

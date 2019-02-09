@@ -40,7 +40,7 @@
             <Button
                 android:gravity="end|center_vertical"
                 android:layout_gravity="end"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="15dp"
                 android:id="@+id/cross"
                 android:textSize="30dp"
                 android:textColor="#000"
@@ -100,7 +100,7 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:background="@drawable/new_button_bg"
+            android:background="@drawable/button_background_red"
             android:padding="5dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
@@ -109,7 +109,7 @@
             android:layout_gravity="center"
             android:textAllCaps="false"
             android:text="Call"
-            android:textColor="#000"
+            android:textColor="#fff"
             android:layout_width="wrap_content"
             android:layout_height="35dp" />
 

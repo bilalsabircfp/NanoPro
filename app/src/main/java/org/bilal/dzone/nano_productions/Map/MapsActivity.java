@@ -254,7 +254,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
             TextView tvTitle = ( myContentsView.findViewById(R.id.title));
             final ImageView imageView = ( myContentsView.findViewById(R.id.img));
 
-            Glide.with(myContentsView).load(R.drawable.logo);
+            Glide.with(myContentsView).load(R.drawable.logo_new);
 
 
 

@@ -68,13 +68,24 @@
         <activity
             android:name=".Gallery.FullScreenImage"
             android:screenOrientation="portrait" />
-        <activity android:name=".Search.FullScreen"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".Gallery.albums.Album"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Search.FullScreen"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Gallery.albums.Album"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Personal_Zone.Detailer.Edit_Customer"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Personal_Zone.Detailer.Maintain_Customer"
+            android:screenOrientation="portrait" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="f6be19f0dd38c1a4b5d774d9fa906f8b7d108859" />
+
+        <activity android:name=".Personal_Zone.Importer.Add_Detailer"></activity>
     </application>
 
 </manifest>

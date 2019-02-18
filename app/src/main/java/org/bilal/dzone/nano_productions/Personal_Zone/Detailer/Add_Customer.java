@@ -1,14 +1,21 @@
 package org.bilal.dzone.nano_productions.Personal_Zone.Detailer;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -19,7 +26,10 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +48,7 @@ import com.github.chrisbanes.photoview.PhotoView;
 import com.github.thunder413.datetimeutils.DateTimeUnits;
 import com.github.thunder413.datetimeutils.DateTimeUtils;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 import org.bilal.dzone.nano_productions.Login.Login_Activity;
 import org.bilal.dzone.nano_productions.Personal_Zone.CoatingAdapter;
@@ -49,6 +60,7 @@ import org.bilal.dzone.nano_productions.Search.FullScreen;
 import org.bilal.dzone.nano_productions.URL.Url;
 import org.bilal.dzone.nano_productions.json.Check_internet_connection;
 import org.bilal.dzone.nano_productions.json.JsonParser;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -64,13 +76,13 @@ import java.util.Map;
 public class Add_Customer extends AppCompatActivity {
 
     AwesomeProgressDialog awesomeInfoDialog;
-    Button maintenance, add;
-    EditText warranty, name, number, plate, model, year, color;
+    Button maintenance, add, coating;
+    EditText warranty, name, number, plate, model, year, color, email;
     TextView due_date;
     String w_code_id;
     String w_code;
     String api_token, detailer_id,
-            warranty_, name_, number_, due_date_, plate_, model_, year_, color_,
+            warranty_, name_, number_, due_date_, plate_, model_, year_, color_, email_,
             cal_age, bottom_coat_title = "",
             bottom_coat_edition = "", top_coat_title = "", top_coat_edition = "";
     DatePicker datePicker;
@@ -85,6 +97,11 @@ public class Add_Customer extends AppCompatActivity {
     private  String[] Coatinglist = new String[]{"Lion", "Tiger", "Leopard", "Cat"};
     private ArrayList<CoatingModel> modelArrayList;
     CoatingAdapter coatingAdapter;
+    ScrollView scrollView;
+    ListView list;
+    EditText etSearch;
+    LinearLayout linearLayout;
+    SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -100,6 +117,8 @@ public class Add_Customer extends AppCompatActivity {
         Log.e("token", api_token + "\n" + detailer_id);
 
 
+        etSearch = findViewById(R.id.et_search);
+        linearLayout = findViewById(R.id.l1);
         nonScrollListView = findViewById(R.id.lv_nonscroll_list);
         back = findViewById(R.id.imageView);
         maintenance = findViewById(R.id.maint);
@@ -112,10 +131,16 @@ public class Add_Customer extends AppCompatActivity {
         year = findViewById(R.id.year);
         color = findViewById(R.id.color);
         plate = findViewById(R.id.plate);
+        scrollView = findViewById(R.id.scrollView);
+        coating = findViewById(R.id.coating);
+        swipeRefreshLayout = findViewById(R.id.swiperefresh);
+        list = findViewById(R.id.list);
+        email = findViewById(R.id.email);
 //        red = findViewById(R.id.red);
 //        silver = findViewById(R.id.silver);
 //        black = findViewById(R.id.black);
 //        top = findViewById(R.id.top);
+
 
 
         // Spinner element
@@ -125,6 +150,35 @@ public class Add_Customer extends AppCompatActivity {
 
         //initialize the spinners
         init();
+
+
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                if (new Check_internet_connection(Add_Customer.this.getApplicationContext()).isNetworkAvailable()) {
+
+                    awesomeInfoDialog = new AwesomeProgressDialog(Add_Customer.this);
+                    awesomeInfoDialog.setTitle("Loading!");
+                    awesomeInfoDialog.setMessage("Please Wait..");
+                    awesomeInfoDialog.setDialogBodyBackgroundColor(R.color.bottom_nav);
+                    awesomeInfoDialog.setColoredCircle(R.color.dialogInfoBackgroundColor);
+                    awesomeInfoDialog.setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white);
+                    awesomeInfoDialog.setCancelable(false);
+                    awesomeInfoDialog.show();
+                    Load_data();
+                    swipeRefreshLayout.setRefreshing(false);
+
+                } else {
+
+                    Toast.makeText(Add_Customer.this.getApplicationContext(),
+                            "Check your Internet Connection", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+
 
 
         //listview click listner
@@ -216,7 +270,50 @@ public class Add_Customer extends AppCompatActivity {
         maintenance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(Add_Customer.this, "Coming Soon!", Toast.LENGTH_SHORT).show();
+
+                linearLayout.setVisibility(View.VISIBLE);
+                list.setVisibility(View.VISIBLE);
+                scrollView.setVisibility(View.GONE);
+                maintenance.setBackgroundResource(R.drawable.tab_dark_right);
+                coating.setBackgroundResource(R.drawable.tab_light_left);
+                Load_data();
+            }
+        });
+
+
+        coating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                list.setVisibility(View.GONE);
+                linearLayout.setVisibility(View.GONE);
+                scrollView.setVisibility(View.VISIBLE);
+                maintenance.setBackgroundResource(R.drawable.tab_button_light);
+                coating.setBackgroundResource(R.drawable.tab_button_dark);
+            }
+        });
+
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+
+                listview_click(id,position);
+
+                Intent intent = new Intent(Add_Customer.this, Maintain_Customer.class);
+                intent.putExtra("name", Sname[position]);
+                intent.putExtra("phone_number", Sphone_number[position]);
+                intent.putExtra("done_date", Sdone_date[position]);
+                intent.putExtra("model", Smodel[position]);
+                intent.putExtra("year", Syear[position]);
+                intent.putExtra("color", Scolor[position]);
+                intent.putExtra("title", Stitle[position]);
+                intent.putExtra("edition", Sedition[position]);
+                intent.putExtra("email", Semail[position]);
+                intent.putExtra("warranty_code", w_code);
+                intent.putExtra("license_plate_no", Slicense_plate_no[position]);
+                startActivity(intent);
+
             }
         });
 
@@ -242,6 +339,7 @@ public class Add_Customer extends AppCompatActivity {
                 model_ = model.getText().toString().trim();
                 year_ = year.getText().toString().trim();
                 color_ = color.getText().toString().trim();
+                email_ = email.getText().toString().trim();
 
 
                 if (warranty_.equals("")) {
@@ -259,6 +357,11 @@ public class Add_Customer extends AppCompatActivity {
                     number.setFocusableInTouchMode(true);
                     number.setFocusable(true);
                     number.requestFocus();
+                }else if (email_.equals("")) {
+                    email.setError("Enter Customer Email");
+                    email.setFocusableInTouchMode(true);
+                    email.setFocusable(true);
+                    email.requestFocus();
                 } else if (due_date_.equals("")) {
                     due_date.setError("Enter Due Date");
                     due_date.setFocusableInTouchMode(true);
@@ -366,6 +469,18 @@ public class Add_Customer extends AppCompatActivity {
     }
 
 
+
+    public void listview_click(long id,int position) {
+
+        if (id == 999111) {
+
+            make_call(Sphone_number[position]);
+
+        }
+    }
+
+
+    //get user
     public void getServerData() {
         String urlGetServerData = Url.BaseUrl+"user/getWarantyCode";
         System.out.print(urlGetServerData);
@@ -428,7 +543,7 @@ public class Add_Customer extends AppCompatActivity {
 
 
 
-
+    //add customer
     public void SendData() {
         String urlGetServerData = Url.BaseUrl+"user/register";
         System.out.print(urlGetServerData);
@@ -446,6 +561,8 @@ public class Add_Customer extends AppCompatActivity {
         obj.put("color", color_);
         obj.put("api_token", api_token);
         obj.put("detailer_id", detailer_id);
+        obj.put("cust_email", email_);
+
 
         if (top_coat_edition.equals("")){
             obj.put("title",  bottom_coat_title);
@@ -500,6 +617,283 @@ public class Add_Customer extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
     }
 
+
+
+    //get all applications done
+    String server_response = "0", no_array= "", server_check;
+    JSONObject jsonObj;  JSONArray jsonArray;
+    String[] Sname, Sphone_number, Sdone_date, Smodel, Syear, Scolor,Stitle,
+            Sedition,
+            Semail,
+            Swarranty_code,
+            Slicense_plate_no;
+    Detailer_Adapter adapter;
+    DetailerModelClass detailerModelClass;
+    ArrayList<DetailerModelClass> detailerArrayList = new ArrayList<>();
+
+
+    //server call
+    private void Load_data() {
+        String urlGetServerData = Url.BaseUrl+"user/applications-done";
+        System.out.print(urlGetServerData);
+
+        Map<String, String> postParam = new HashMap<String, String>();
+        postParam.put("api_token", api_token);
+        postParam.put("detailer_id", detailer_id);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, urlGetServerData,
+                new JSONObject(postParam), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("response", response + "");
+                awesomeInfoDialog.hide();
+                try {
+
+                    server_response = response.getString("success");
+
+                    jsonObj = new JSONObject(response.toString());
+                    Log.e("JObject", response.toString());
+
+                    try {
+
+                        jsonArray = jsonObj.getJSONArray("applications_done");
+                    } catch (JSONException e) {
+                        no_array = "no_array";
+                        Log.e("Error", "no array");
+                    }
+
+
+                    server_response = jsonObj.getString("success");
+
+                    Log.e("kka", server_response);
+
+                    JSONObject c;
+
+
+                    Sname = new String[(jsonArray.length())];
+                    Sphone_number = new String[(jsonArray.length())];
+                    Sdone_date = new String[(jsonArray.length())];
+                    Smodel = new String[(jsonArray.length())];
+                    Syear = new String[(jsonArray.length())];
+                    Scolor = new String[(jsonArray.length())];
+                    Stitle = new String[(jsonArray.length())];
+                    Sedition = new String[(jsonArray.length())];
+                    Semail = new String[(jsonArray.length())];
+                    Swarranty_code = new String[(jsonArray.length())];
+                    Slicense_plate_no = new String[(jsonArray.length())];;
+
+
+
+                    String sub;
+                    sub = jsonObj.getString("subscriptions");
+                    if (sub.equals("No Records Found")) {
+                        Toast.makeText(Add_Customer.this, "No record", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                    if (server_response.equals("true")) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+
+                            c = jsonArray.getJSONObject(i);
+
+                            //news feed array
+                            if (c.length() > 0) {
+
+                                Sname[i] = c.getString("name");
+                                Sphone_number[i] = c.getString("phone_number");
+                                Smodel[i] = c.getString("model");
+                                Syear[i] = c.getString("year");
+                                Scolor[i] = c.getString("color");
+                                Sdone_date[i] = c.getString("done_date");
+                                Stitle[i] = c.getString("title");
+                                Sedition[i] = c.getString("edition");
+                                Semail[i] = c.getString("email");
+                                Swarranty_code[i] = c.getString("warranty_code");
+                                Slicense_plate_no[i] = c.getString("license_plate_no");
+
+
+
+                            }
+
+                        }
+
+
+                        detailerArrayList.clear();
+
+                        //setting values to array-list
+                        for (int k = 0; k < Sname.length; k++) {
+                            detailerModelClass = new DetailerModelClass(Sname[k],
+                                    Sphone_number[k], Sdone_date[k], Smodel[k], Syear[k], Scolor[k],
+                                    Stitle[k],Sedition[k], Semail[k], Swarranty_code[k],
+                                    Slicense_plate_no[k]);
+                            detailerModelClass.setName(Sname[k]);
+                            detailerModelClass.setPhone_number(Sphone_number[k]);
+                            detailerModelClass.setDone_date(Sdone_date[k]);
+                            detailerModelClass.setModel(Smodel[k]);
+                            detailerModelClass.setYear(Syear[k]);
+                            detailerModelClass.setColor(Scolor[k]);
+                            detailerModelClass.setTitle(Stitle[k]);
+                            detailerModelClass.setEdition(Sedition[k]);
+                            detailerModelClass.setEmail(Semail[k]);
+                            detailerModelClass.setWarranty_code(Swarranty_code[k]);
+                            detailerModelClass.setLicense_plate_no(Slicense_plate_no[k]);
+
+                            detailerArrayList.add(detailerModelClass);
+                        }
+
+                    }
+
+
+                    server_check = "true";
+
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    server_check = "false";
+                }
+
+
+
+                //check if server is ok
+                if (server_check.equals("false")) {
+
+                    awesomeInfoDialog.hide();
+
+                    if (no_array.equals("") || no_array.equals("no_array")) {
+
+                        new AwesomeErrorDialog(Add_Customer.this)
+                                .setTitle("Empty List!")
+                                .setMessage("No Customer Record Found.")
+                                .setDialogBodyBackgroundColor(R.color.bottom_nav)
+                                .setColoredCircle(R.color.dialogErrorBackgroundColor)
+                                .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
+                                .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
+                                .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
+                                .setButtonText(getString(R.string.dialog_ok_button))
+                                .setErrorButtonClick(new Closure() {
+                                    @Override
+                                    public void exec() {
+                                        // click
+                                    }
+                                })
+                                .show();
+
+                    } else {
+
+                        new AwesomeErrorDialog(Add_Customer.this)
+                                .setTitle("Server Error!")
+                                .setMessage("No Server Response.")
+                                .setDialogBodyBackgroundColor(R.color.bottom_nav)
+                                .setColoredCircle(R.color.dialogErrorBackgroundColor)
+                                .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
+                                .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
+                                .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
+                                .setButtonText(getString(R.string.dialog_ok_button))
+                                .setErrorButtonClick(new Closure() {
+                                    @Override
+                                    public void exec() {
+                                        // click
+                                    }
+                                })
+                                .show();
+
+                    }
+
+                } else {
+
+
+                    if (server_response.equals("true")) {
+
+                        awesomeInfoDialog.hide();
+
+
+
+                        adapter = new Detailer_Adapter(Add_Customer.this
+                                , detailerArrayList);
+                        list.setAdapter(adapter);
+
+
+                        // Add Text Change Listener to EditText
+                        etSearch.addTextChangedListener(new TextWatcher() {
+
+                            @Override
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                                // Call back the Adapter with current character to Filter
+                                adapter.getFilter().filter(s.toString());
+                            }
+
+                            @Override
+                            public void beforeTextChanged(CharSequence s, int start, int count,int after) {
+                            }
+
+                            @Override
+                            public void afterTextChanged(Editable s) {
+                            }
+                        });
+
+
+
+                    } else {
+
+                        awesomeInfoDialog.hide();
+
+                        new AwesomeErrorDialog(Add_Customer.this)
+                                .setMessage("Request Timeout Slow Internet Connection!")
+                                .setTitle("Timeout!")
+                                .setDialogBodyBackgroundColor(R.color.bottom_nav)
+                                .setColoredCircle(R.color.dialogErrorBackgroundColor)
+                                .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
+                                .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
+                                .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
+                                .setButtonText(getString(R.string.dialog_ok_button))
+                                .setErrorButtonClick(new Closure() {
+                                    @Override
+                                    public void exec() {
+                                        // click
+                                    }
+                                })
+                                .show();
+
+                    }
+
+
+                }
+
+
+            }
+        },
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        awesomeInfoDialog.hide();
+                        System.out.println(error.toString());
+
+                        new AwesomeErrorDialog(Add_Customer.this)
+                                .setTitle("Server Error!")
+                                .setMessage("No Response From Server.")
+                                .setDialogBodyBackgroundColor(R.color.bottom_nav)
+                                .setColoredCircle(R.color.dialogErrorBackgroundColor)
+                                .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
+                                .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
+                                .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
+                                .setButtonText(getString(R.string.dialog_ok_button))
+                                .setErrorButtonClick(new Closure() {
+                                    @Override
+                                    public void exec() {
+                                        // click
+                                    }
+                                })
+                                .show();
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(Add_Customer.this);
+        requestQueue.add(jsonObjectRequest);
+    }
 
 
     //set dob to textview
@@ -613,6 +1007,26 @@ public class Add_Customer extends AppCompatActivity {
     }
 
 
+
+    public void make_call(String number) {
+
+        if (ActivityCompat.checkSelfPermission(Add_Customer.this, Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Check Permissions Now
+            ActivityCompat.requestPermissions(Add_Customer.this,
+                    new String[]{Manifest.permission.CALL_PHONE},
+                    1);
+        } else {
+            // permission has been granted, continue as usual
+//            Toast.makeText(this, "accessed", Toast.LENGTH_SHORT).show();
+
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:" + number));
+
+            startActivity(callIntent);
+        }
+
+    }
 
 
 }

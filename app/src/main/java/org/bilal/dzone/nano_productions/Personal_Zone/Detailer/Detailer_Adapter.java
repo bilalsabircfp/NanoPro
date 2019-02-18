@@ -93,7 +93,7 @@ public class Detailer_Adapter extends BaseAdapter implements Filterable {
             @Override
             public void onClick(View v) {
 
-                ((ListView) parent).performItemClick(v, position, 1);
+                ((ListView) parent).performItemClick(v, position, 999111);
             }
         });
 
@@ -168,8 +168,16 @@ public class Detailer_Adapter extends BaseAdapter implements Filterable {
                     for (int i = 0; i < mOriginalValues.size(); i++) {
                         String data = mOriginalValues.get(i).getName();
                         String data2 = mOriginalValues.get(i).getModel();
+                        String data3 = mOriginalValues.get(i).getLicense_plate_no();
+                        String data4 = mOriginalValues.get(i).getEdition();
+                        String data5 = mOriginalValues.get(i).getEmail();
+                        String data6 = mOriginalValues.get(i).getPhone_number();
                         if (data.toLowerCase().startsWith(constraint.toString())
-                                || data2.toLowerCase().startsWith(constraint.toString())) {
+                                || data2.toLowerCase().startsWith(constraint.toString())
+                                || data3.toLowerCase().startsWith(constraint.toString())
+                                || data4.toLowerCase().startsWith(constraint.toString())
+                                || data5.toLowerCase().startsWith(constraint.toString())
+                                || data6.toLowerCase().startsWith(constraint.toString())) {
 
                             FilteredArrList.add(new DetailerModelClass(mOriginalValues.get(i).getName()
                                     ,mOriginalValues.get(i).getPhone_number()

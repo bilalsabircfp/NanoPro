@@ -57,7 +57,6 @@ public class Login_Fragment extends Fragment {
     Button signin;
     String id, email_, name, server_response, server_response_text, pass_, server_check, api_token,
             user_type = "";
-    JSONObject jsonObj;
     CheckBox remember_me;
     RadioButton detailer, customer;
     int checked = 0;

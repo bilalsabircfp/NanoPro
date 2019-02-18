@@ -190,6 +190,7 @@
 
             <Button
                 android:id="@+id/btn"
+                android:focusable="false"
                 android:layout_width="80dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_horizontal"

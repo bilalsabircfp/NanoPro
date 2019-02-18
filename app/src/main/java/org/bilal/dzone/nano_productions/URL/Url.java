@@ -6,5 +6,6 @@ package org.bilal.dzone.nano_productions.URL;
 
 public class Url {
 
-    public static final String BaseUrl = "http://www.nano.nanopro-group.com/";
+//    public static final String BaseUrl = "http://www.nano.nanopro-group.com/";
+    public static final String BaseUrl = "http://nano.techeasesol.com/";
 }

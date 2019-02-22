@@ -2,13 +2,10 @@ package org.bilal.dzone.nano_productions.Login;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,17 +26,13 @@ import com.android.volley.toolbox.Volley;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeErrorDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
-import com.google.gson.Gson;
 
 import org.bilal.dzone.nano_productions.Personal_Zone.Customer.Customer_Zone;
 import org.bilal.dzone.nano_productions.Personal_Zone.Detailer.Detailer_Zone;
+import org.bilal.dzone.nano_productions.Personal_Zone.Importer.Importer_Zone;
 import org.bilal.dzone.nano_productions.R;
-import org.bilal.dzone.nano_productions.Search.newsfeed.NewsFeed_Adapter;
-import org.bilal.dzone.nano_productions.Search.newsfeed.NewsFeed_Model;
-import org.bilal.dzone.nano_productions.URL.Url;
+import org.bilal.dzone.nano_productions.Utils.Url;
 import org.bilal.dzone.nano_productions.json.Check_internet_connection;
-import org.bilal.dzone.nano_productions.json.JsonParser;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -247,7 +240,6 @@ public class Login_Fragment extends Fragment {
                             editor.putString("user_type", user_type);
                             editor.putString("name", name);
                             editor.putString("id", id);
-                            editor.putString("user_type", user_type);
                             editor.putString("token", api_token);
 
                             editor.apply();
@@ -260,6 +252,11 @@ public class Login_Fragment extends Fragment {
                             else if (user_type.equals("detailer")){
 
                                 fragment = new Detailer_Zone();
+                                loadFragment(fragment);
+                            }
+                            else if (user_type.equals("importer")){
+
+                                fragment = new Importer_Zone();
                                 loadFragment(fragment);
                             }
 

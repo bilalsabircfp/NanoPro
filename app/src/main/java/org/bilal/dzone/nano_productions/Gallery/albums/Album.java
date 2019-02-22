@@ -17,17 +17,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.github.chrisbanes.photoview.PhotoView;
 import com.google.gson.Gson;
 
 import org.bilal.dzone.nano_productions.Gallery.Gallery;
-import org.bilal.dzone.nano_productions.Gallery.GalleryAdapter;
-import org.bilal.dzone.nano_productions.Gallery.GridViewAdapter;
 import org.bilal.dzone.nano_productions.R;
 import org.bilal.dzone.nano_productions.Search.gallery.Gallery_Model;
-import org.bilal.dzone.nano_productions.URL.Url;
+import org.bilal.dzone.nano_productions.Utils.Url;
 import org.bilal.dzone.nano_productions.json.Check_internet_connection;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -107,7 +102,7 @@ public class Album extends AppCompatActivity {
 
 
     private void getServerData() {
-        String urlGetServerData = "http://www.nano.nanopro-group.com/albums";
+        String urlGetServerData = Url.BaseUrl+ "albums";
         System.out.print(urlGetServerData);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlGetServerData, null,

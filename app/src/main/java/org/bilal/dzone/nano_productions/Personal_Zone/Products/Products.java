@@ -1,9 +1,6 @@
 package org.bilal.dzone.nano_productions.Personal_Zone.Products;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,14 +18,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog;
 import com.google.gson.Gson;
 
-import org.bilal.dzone.nano_productions.Login.Login_Activity;
-import org.bilal.dzone.nano_productions.Personal_Zone.PersonalFragment;
-import org.bilal.dzone.nano_productions.Personal_Zone.Products.SingleProduct.Single_Product;
 import org.bilal.dzone.nano_productions.R;
+import org.bilal.dzone.nano_productions.Utils.Url;
 import org.bilal.dzone.nano_productions.json.Check_internet_connection;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -109,7 +103,7 @@ public class Products extends AppCompatActivity {
 
     //server call
     public void getServerData() {
-        String urlGetServerData = "http://www.nano.nanopro-group.com/product/show";
+        String urlGetServerData = Url.BaseUrl+ "product/show";
         System.out.print(urlGetServerData);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlGetServerData, null,

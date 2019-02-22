@@ -6,9 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -19,19 +17,15 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,20 +37,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeErrorDialog;
-import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
-import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 
-import org.bilal.dzone.nano_productions.Login.Login_Activity;
-import org.bilal.dzone.nano_productions.Personal_Zone.Customer.Customer_Zone;
-import org.bilal.dzone.nano_productions.Personal_Zone.Products.Adapter_Class;
-import org.bilal.dzone.nano_productions.Personal_Zone.Products.Model_Class;
 import org.bilal.dzone.nano_productions.R;
-import org.bilal.dzone.nano_productions.URL.Url;
+import org.bilal.dzone.nano_productions.Utils.Url;
 import org.bilal.dzone.nano_productions.json.Check_internet_connection;
-import org.bilal.dzone.nano_productions.json.JsonParser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -302,7 +288,7 @@ public class Detailer_Zone extends Fragment {
                     email = new String[(jsonArray.length())];
                     warranty_code = new String[(jsonArray.length())];
                     license_plate_no = new String[(jsonArray.length())];
-                    ;
+
 
 
                     JSONObject StringObj = jsonObj.getJSONObject("subscriptions");

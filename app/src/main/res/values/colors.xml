@@ -6,5 +6,6 @@
 
     <color name="bottom_nav">#4d4a4a</color>
     <color name="red">#e21515</color>
+    <color name="colorlistbg">#f3f3f3</color>
 
 </resources>

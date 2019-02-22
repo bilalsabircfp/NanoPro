@@ -1,14 +1,9 @@
 package org.bilal.dzone.nano_productions.Personal_Zone.Detailer;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -39,7 +34,7 @@ import org.bilal.dzone.nano_productions.Personal_Zone.CoatingAdapter;
 import org.bilal.dzone.nano_productions.Personal_Zone.Customer.CoatingModel;
 import org.bilal.dzone.nano_productions.Personal_Zone.NonScrollListView;
 import org.bilal.dzone.nano_productions.R;
-import org.bilal.dzone.nano_productions.URL.Url;
+import org.bilal.dzone.nano_productions.Utils.Url;
 import org.bilal.dzone.nano_productions.json.Check_internet_connection;
 import org.json.JSONException;
 import org.json.JSONObject;

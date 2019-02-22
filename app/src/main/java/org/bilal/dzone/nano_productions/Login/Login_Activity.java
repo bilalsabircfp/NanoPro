@@ -1,19 +1,12 @@
 package org.bilal.dzone.nano_productions.Login;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -28,16 +21,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeErrorDialog;
-import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
 
-import org.bilal.dzone.nano_productions.Personal_Zone.Customer.Customer_Zone;
-import org.bilal.dzone.nano_productions.Personal_Zone.Detailer.Detailer_Zone;
 import org.bilal.dzone.nano_productions.R;
-import org.bilal.dzone.nano_productions.URL.Url;
+import org.bilal.dzone.nano_productions.Utils.Url;
 import org.bilal.dzone.nano_productions.json.Check_internet_connection;
-import org.bilal.dzone.nano_productions.json.JsonParser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -55,7 +44,6 @@ public class Login_Activity extends AppCompatActivity {
     Button signin;
     String id, email_, name, server_response, server_response_text, pass_, server_check, api_token,
             user_type = "";
-    JSONObject jsonObj;
     CheckBox remember_me;
     RadioButton detailer, customer;
     int checked = 0;

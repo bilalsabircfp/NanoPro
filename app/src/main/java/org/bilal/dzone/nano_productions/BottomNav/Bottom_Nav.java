@@ -22,6 +22,7 @@ import org.bilal.dzone.nano_productions.Login.Login_Fragment;
 import org.bilal.dzone.nano_productions.Map.MapsActivity;
 import org.bilal.dzone.nano_productions.Personal_Zone.Customer.Customer_Zone;
 import org.bilal.dzone.nano_productions.Personal_Zone.Detailer.Detailer_Zone;
+import org.bilal.dzone.nano_productions.Personal_Zone.Importer.Importer_Zone;
 import org.bilal.dzone.nano_productions.Personal_Zone.PersonalFragment;
 import org.bilal.dzone.nano_productions.R;
 import org.bilal.dzone.nano_productions.Search.SearchFragment;
@@ -112,6 +113,12 @@ public class Bottom_Nav extends AppCompatActivity implements BottomNavigationVie
                         case "customer":
 
                             fragment = new Customer_Zone();
+                            myFragments.put(4, fragment);
+                            loadFragment(fragment);
+                            break;
+                        case "importer":
+
+                            fragment = new Importer_Zone();
                             myFragments.put(4, fragment);
                             loadFragment(fragment);
                             break;

@@ -3,7 +3,6 @@ package org.bilal.dzone.nano_productions.Personal_Zone;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,35 +22,23 @@ import android.widget.Toast;
 
 
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeErrorDialog;
-import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.crashlytics.android.Crashlytics;
 
-import org.bilal.dzone.nano_productions.Gallery.Gallery;
 import org.bilal.dzone.nano_productions.Gallery.albums.Album;
-import org.bilal.dzone.nano_productions.Home.HomeFragment;
-import org.bilal.dzone.nano_productions.Login.Login_Activity;
 import org.bilal.dzone.nano_productions.Personal_Zone.Customer.Customer_Zone;
 import org.bilal.dzone.nano_productions.Personal_Zone.Detailer.Detailer_Zone;
 import org.bilal.dzone.nano_productions.Personal_Zone.Products.Products;
 import org.bilal.dzone.nano_productions.R;
-import org.bilal.dzone.nano_productions.ResizableCustomView;
 import org.bilal.dzone.nano_productions.Search.FullScreen;
-import org.bilal.dzone.nano_productions.URL.Url;
+import org.bilal.dzone.nano_productions.Utils.Url;
 import org.bilal.dzone.nano_productions.json.Check_internet_connection;
 import org.bilal.dzone.nano_productions.json.JsonParser;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.StringTokenizer;
-
-import io.fabric.sdk.android.Fabric;
 
 
 public class PersonalFragment extends Fragment {

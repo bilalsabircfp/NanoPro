@@ -1,8 +1,5 @@
 package org.bilal.dzone.nano_productions.Gallery;
 
-import android.content.Intent;
-import android.media.Image;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +7,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -25,18 +21,14 @@ import com.bumptech.glide.request.RequestOptions;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.gson.Gson;
 
-import org.bilal.dzone.nano_productions.Personal_Zone.Products.Model_Class;
-import org.bilal.dzone.nano_productions.Personal_Zone.Products.Products;
 import org.bilal.dzone.nano_productions.R;
-import org.bilal.dzone.nano_productions.URL.Url;
+import org.bilal.dzone.nano_productions.Utils.Url;
 import org.bilal.dzone.nano_productions.json.Check_internet_connection;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.StringTokenizer;
 
 public class Gallery extends AppCompatActivity {

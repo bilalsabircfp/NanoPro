@@ -38,7 +38,7 @@ import org.bilal.dzone.nano_productions.Search.newsfeed.NewsFeed_Adapter;
 import org.bilal.dzone.nano_productions.Search.newsfeed.NewsFeed_Model;
 import org.bilal.dzone.nano_productions.Search.product.Product_Adapter;
 import org.bilal.dzone.nano_productions.Search.product.Product_Model;
-import org.bilal.dzone.nano_productions.URL.Url;
+import org.bilal.dzone.nano_productions.Utils.Url;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -38,13 +38,10 @@ import com.android.volley.toolbox.Volley;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeErrorDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
+import com.google.gson.Gson;
 
-import org.bilal.dzone.nano_productions.Personal_Zone.Detailer.Add_Customer;
-import org.bilal.dzone.nano_productions.Personal_Zone.Detailer.DetailerModelClass;
-import org.bilal.dzone.nano_productions.Personal_Zone.Detailer.Detailer_Adapter;
-import org.bilal.dzone.nano_productions.Personal_Zone.Detailer.Edit_Customer;
 import org.bilal.dzone.nano_productions.R;
-import org.bilal.dzone.nano_productions.URL.Url;
+import org.bilal.dzone.nano_productions.Utils.Url;
 import org.bilal.dzone.nano_productions.json.Check_internet_connection;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,17 +54,20 @@ import java.util.Map;
 
 public class Importer_Zone extends Fragment {
 
+    String newSubs;
     AwesomeProgressDialog awesomeInfoDialog;
     JSONObject jsonObj;
     JSONArray jsonArray;
     String server_check;
-    String[] name, phone_number, done_date, model, year, color, title,
-            edition,
+    String[] name,
             email,
-            warranty_code,
-            license_plate_no;
+            phone_number,
+            detailer_id,
+            latitude,
+            longitude,
+            address, detailer_subscriptions, used_subscriptions;
     String remainingSubscriptions;
-    String detailerSubscriptions = "", api_token, detailer_id, used_subs = "";
+    String detailerSubscriptions = "", api_token, importerID, used_subs = "";
     ListView listView;
     TextView subscriptions;
     String no_array = "";
@@ -76,9 +76,9 @@ public class Importer_Zone extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
     ImageView back;
     EditText etSearch;
-    Detailer_Adapter adapter;
-    DetailerModelClass detailerModelClass;
-    ArrayList<DetailerModelClass> detailerArrayList = new ArrayList<>();
+    Importer_Adapter adapter;
+    ImporterModelClass importerModelClass;
+    ArrayList<ImporterModelClass> detailerArrayList = new ArrayList<>();
 
 
     @Nullable
@@ -87,9 +87,11 @@ public class Importer_Zone extends Fragment {
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("DataStore", Context.MODE_PRIVATE);
         api_token = sharedPreferences.getString("token", "");
-        detailer_id = sharedPreferences.getString("id", "");
+        importerID = sharedPreferences.getString("id", "");
 
-        View v = inflater.inflate(R.layout.activity_detailer__zone, container, false);
+        View v = inflater.inflate(R.layout.activity_importer__zone, container, false);
+
+        Log.e("Fragment", "importerFragment");
 
         listView = v.findViewById(R.id.list);
         subscriptions = v.findViewById(R.id.subscriptions);
@@ -134,19 +136,19 @@ public class Importer_Zone extends Fragment {
 
                 listview_click(id, position);
 
-                Intent intent = new Intent(getActivity(), Edit_Customer.class);
-                intent.putExtra("name", name[position]);
-                intent.putExtra("phone_number", phone_number[position]);
-                intent.putExtra("done_date", done_date[position]);
-                intent.putExtra("model", model[position]);
-                intent.putExtra("year", year[position]);
-                intent.putExtra("color", color[position]);
-                intent.putExtra("title", title[position]);
-                intent.putExtra("edition", edition[position]);
-                intent.putExtra("email", email[position]);
-                intent.putExtra("warranty_code", warranty_code[position]);
-                intent.putExtra("license_plate_no", license_plate_no[position]);
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), Edit_Customer.class);
+//                intent.putExtra("name", name[position]);
+//                intent.putExtra("phone_number", phone_number[position]);
+//                intent.putExtra("done_date", done_date[position]);
+//                intent.putExtra("model", model[position]);
+//                intent.putExtra("year", year[position]);
+//                intent.putExtra("color", color[position]);
+//                intent.putExtra("title", title[position]);
+//                intent.putExtra("edition", edition[position]);
+//                intent.putExtra("email", email[position]);
+//                intent.putExtra("warranty_code", warranty_code[position]);
+//                intent.putExtra("license_plate_no", license_plate_no[position]);
+//                startActivity(intent);
             }
         });
 
@@ -187,7 +189,7 @@ public class Importer_Zone extends Fragment {
                     Toast.makeText(getActivity(), "Buy Subscriptions To Continue", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Intent intent = new Intent(getActivity(), Add_Customer.class);
+                    Intent intent = new Intent(getActivity(), Add_Detailer.class);
                     startActivity(intent);
                 }
 
@@ -217,6 +219,19 @@ public class Importer_Zone extends Fragment {
             make_call(phone_number[position]);
 
         }
+        else if (id == 999222) {
+
+            SubsDialog( name[position],
+                     email[position],
+                      phone_number[position],
+                     detailer_id[position],
+                     latitude[position],
+                      longitude[position],
+                      address[position], detailer_subscriptions[position]);
+
+
+
+        }
 
 
     }
@@ -226,12 +241,11 @@ public class Importer_Zone extends Fragment {
 
     //server call
     private void Load_data() {
-        String urlGetServerData = Url.BaseUrl + "user/applications-done";
+        String urlGetServerData = Url.BaseUrl + "user/importer_detailer";
         System.out.print(urlGetServerData);
 
         Map<String, String> postParam = new HashMap<String, String>();
         postParam.put("api_token", api_token);
-        postParam.put("detailer_id", detailer_id);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, urlGetServerData,
                 new JSONObject(postParam), new Response.Listener<JSONObject>() {
@@ -248,7 +262,7 @@ public class Importer_Zone extends Fragment {
 
                     try {
 
-                        jsonArray = jsonObj.getJSONArray("applications_done");
+                        jsonArray = jsonObj.getJSONArray("detailers");
                     } catch (JSONException e) {
                         no_array = "no_array";
                         Log.e("Error", "no array");
@@ -262,18 +276,16 @@ public class Importer_Zone extends Fragment {
                     JSONObject c;
 
 
+
                     name = new String[(jsonArray.length())];
                     phone_number = new String[(jsonArray.length())];
-                    done_date = new String[(jsonArray.length())];
-                    model = new String[(jsonArray.length())];
-                    year = new String[(jsonArray.length())];
-                    color = new String[(jsonArray.length())];
-                    title = new String[(jsonArray.length())];
-                    edition = new String[(jsonArray.length())];
+                    detailer_id = new String[(jsonArray.length())];
+                    latitude = new String[(jsonArray.length())];
+                    longitude = new String[(jsonArray.length())];
+                    address = new String[(jsonArray.length())];
                     email = new String[(jsonArray.length())];
-                    warranty_code = new String[(jsonArray.length())];
-                    license_plate_no = new String[(jsonArray.length())];
-                    ;
+                    used_subscriptions = new String[(jsonArray.length())];
+                    detailer_subscriptions = new String[(jsonArray.length())];
 
 
                     JSONObject StringObj = jsonObj.getJSONObject("subscriptions");
@@ -285,13 +297,13 @@ public class Importer_Zone extends Fragment {
                     }
 
                     remainingSubscriptions = StringObj.getString("remaining_subscriptions");
-                    detailerSubscriptions = StringObj.getString("detailer_subscriptions");
+                    detailerSubscriptions = StringObj.getString("importer_subscriptions");
                     used_subs = StringObj.getString("used_subscriptions");
 
                     Log.e("subscriptions", remainingSubscriptions + "\n" + detailerSubscriptions);
 
 
-                    if (server_response.equals("true")) {
+                    if (server_response.equals("ture")) {
                         for (int i = 0; i < jsonArray.length(); i++) {
 
                             c = jsonArray.getJSONObject(i);
@@ -301,18 +313,16 @@ public class Importer_Zone extends Fragment {
 
                                 name[i] = c.getString("name");
                                 phone_number[i] = c.getString("phone_number");
-                                model[i] = c.getString("model");
-                                year[i] = c.getString("year");
-                                color[i] = c.getString("color");
-                                done_date[i] = c.getString("done_date");
-                                title[i] = c.getString("title");
-                                edition[i] = c.getString("edition");
                                 email[i] = c.getString("email");
-                                warranty_code[i] = c.getString("warranty_code");
-                                license_plate_no[i] = c.getString("license_plate_no");
+                                detailer_id[i] = c.getString("detailer_id");
+                                latitude[i] = c.getString("latitude");
+                                longitude[i] = c.getString("longitude");
+                                address[i] = c.getString("address");
+                                used_subscriptions[i] = c.getString("used_subscriptions");
+                                detailer_subscriptions[i] = c.getString("detailer_subscriptions");
 
-                                Log.e("array1", name[i] + "\n" + phone_number[i] + "\n" +
-                                        model[i] + "\n" + year[i]);
+                                Log.e("array1", name[i] + "\n" + phone_number[i]
+                                       );
 
                             }
 
@@ -323,23 +333,25 @@ public class Importer_Zone extends Fragment {
 
                         //setting values to array-list
                         for (int k = 0; k < name.length; k++) {
-                            detailerModelClass = new DetailerModelClass(name[k],
-                                    phone_number[k], done_date[k], model[k], year[k], color[k],
-                                    title[k], edition[k], email[k], warranty_code[k],
-                                    license_plate_no[k]);
-                            detailerModelClass.setName(name[k]);
-                            detailerModelClass.setPhone_number(phone_number[k]);
-                            detailerModelClass.setDone_date(done_date[k]);
-                            detailerModelClass.setModel(model[k]);
-                            detailerModelClass.setYear(year[k]);
-                            detailerModelClass.setColor(color[k]);
-                            detailerModelClass.setTitle(title[k]);
-                            detailerModelClass.setEdition(edition[k]);
-                            detailerModelClass.setEmail(email[k]);
-                            detailerModelClass.setWarranty_code(warranty_code[k]);
-                            detailerModelClass.setLicense_plate_no(license_plate_no[k]);
+                            importerModelClass = new ImporterModelClass(name[k],
+                                    email[k],
+                                    phone_number[k],
+                                    detailer_id[k],
+                                    latitude[k],
+                                    longitude[k],
+                                    address[k], detailer_subscriptions[k],
+                                    used_subscriptions[k]);
+                            importerModelClass.setName(name[k]);
+                            importerModelClass.setEmail(email[k]);
+                            importerModelClass.setPhone_number(phone_number[k]);
+                            importerModelClass.setDetailer_id(detailer_id[k]);
+                            importerModelClass.setLatitude(latitude[k]);
+                            importerModelClass.setLongitude(longitude[k]);
+                            importerModelClass.setAddress(address[k]);
+                            importerModelClass.setDetailer_subscriptions(detailer_subscriptions[k]);
+                            importerModelClass.setUsed_subscriptions(used_subscriptions[k]);
 
-                            detailerArrayList.add(detailerModelClass);
+                            detailerArrayList.add(importerModelClass);
                         }
 
                     }
@@ -402,7 +414,7 @@ public class Importer_Zone extends Fragment {
                 } else {
 
 
-                    if (server_response.equals("true")) {
+                    if (server_response.equals("ture")) {
 
                         awesomeInfoDialog.hide();
 
@@ -410,10 +422,11 @@ public class Importer_Zone extends Fragment {
                         subscriptions.setText("Subscriptions" + " " + used_subs + " " + "/"
                                 + " " + detailerSubscriptions);
 
-                        adapter = new Detailer_Adapter(getActivity()
+                        adapter = new Importer_Adapter(getActivity()
                                 , detailerArrayList);
                         listView.setAdapter(adapter);
 
+                        Log.e("listSize", detailerArrayList.size()+"");
 
                         // Add Text Change Listener to EditText
                         etSearch.addTextChangedListener(new TextWatcher() {
@@ -495,6 +508,84 @@ public class Importer_Zone extends Fragment {
     }
 
 
+
+
+    public void SendData(String name,
+                         String email,
+                         String  phone_number,
+                         String detailer_id,
+                         String latitude,
+                         String  longitude,
+                         String  address, String detailerSubscriptions) {
+
+        String urlGetServerData = Url.BaseUrl+"user/edit_detailer";
+        System.out.print(urlGetServerData);
+
+        int dSubscriptions = Integer.parseInt(detailerSubscriptions) + Integer.parseInt(newSubs);
+
+
+        Map<String, String> obj = new HashMap<String, String>();
+
+        obj.put("name", name);
+        obj.put("email", email);
+        obj.put("ph_no", phone_number);
+        obj.put("lat", latitude);
+        obj.put("log", longitude);
+        obj.put("address", address);
+        obj.put("subscription", dSubscriptions+"");
+        obj.put("api_token", api_token);
+        obj.put("id", detailer_id);
+
+
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, urlGetServerData,
+                new JSONObject(obj),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        awesomeInfoDialog.hide();
+                        Log.e("response", response + "");
+                        try {
+                            Gson gson = new Gson();
+
+                            //get single object
+                            String kss = response.getString("success");
+                            Log.e("kss", kss + "");
+
+                            Toast.makeText(getActivity(),
+                                    "Subscriptions Added", Toast.LENGTH_SHORT).show();
+
+                            dialog.dismiss();
+                            Load_data();
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        awesomeInfoDialog.hide();
+                        System.out.println(error.toString());
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(jsonObjectRequest);
+    }
+
+
+
+
+
+
+
     public void make_call(String number) {
 
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE)
@@ -554,15 +645,91 @@ public class Importer_Zone extends Fragment {
     }
 
 
+
+    public void SubsDialog(final String name,
+                           final String email,
+                           final String  phone_number,
+                           final String detailer_id,
+                           final String latitude,
+                           final String  longitude,
+                           final String  address, final String  detailerSubscriptions) {
+
+
+        dialog = new Dialog(getActivity());
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog.setContentView(R.layout.dialog_subscription);
+
+        Button cross, submit; final EditText subs_;
+        subs_ = dialog.findViewById(R.id.subs);
+        cross = dialog.findViewById(R.id.cross);
+        submit = dialog.findViewById(R.id.btn);
+
+
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                newSubs = subs_.getText().toString().trim();
+
+                if (newSubs.equals("") || newSubs.equals("0")) {
+
+                    Toast.makeText(getActivity(), "Cannot Be Empty", Toast.LENGTH_SHORT).show();
+
+                }
+                else if (Integer.parseInt(newSubs) > Integer.parseInt(detailerSubscriptions) ){
+
+                    Toast.makeText(getActivity(), "You have"+" "+remainingSubscriptions +
+                         " "+   "Subscriptions Remaining", Toast.LENGTH_SHORT).show();
+                }
+                else {
+
+                    awesomeInfoDialog = new AwesomeProgressDialog(getActivity());
+                    awesomeInfoDialog.setTitle("Adding Subscriptions..");
+                    awesomeInfoDialog.setMessage("Please Wait..");
+                    awesomeInfoDialog.setDialogBodyBackgroundColor(R.color.bottom_nav);
+                    awesomeInfoDialog.setColoredCircle(R.color.dialogInfoBackgroundColor);
+                    awesomeInfoDialog.setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white);
+                    awesomeInfoDialog.setCancelable(false);
+                    awesomeInfoDialog.show();
+
+                    SendData(name,
+                            email,
+                            phone_number,
+                            detailer_id,
+                            latitude,
+                            longitude,
+                            address, detailerSubscriptions);
+                }
+
+            }
+        });
+
+
+        cross.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dialog.dismiss();
+            }
+        });
+
+
+        dialog.show();
+    }
+
+
     public void filter(String text) {
-        ArrayList<DetailerModelClass> complaintsListCopy = new ArrayList<DetailerModelClass>
+        ArrayList<ImporterModelClass> complaintsListCopy = new ArrayList<ImporterModelClass>
                 (detailerArrayList);
         detailerArrayList.clear();
         if (text.isEmpty()) {
             detailerArrayList.addAll(complaintsListCopy);
         } else {
             text = text.toLowerCase();
-            for (DetailerModelClass item : complaintsListCopy) {
+            for (ImporterModelClass item : complaintsListCopy) {
                 if (item.getName().toLowerCase().contains(text)) {
                     detailerArrayList.add(item);
                 }

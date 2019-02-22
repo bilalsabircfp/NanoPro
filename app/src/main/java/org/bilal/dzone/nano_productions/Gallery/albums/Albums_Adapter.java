@@ -1,21 +1,18 @@
 package org.bilal.dzone.nano_productions.Gallery.albums;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
-import org.bilal.dzone.nano_productions.Gallery.GalleryAdapter;
 import org.bilal.dzone.nano_productions.R;
 import org.bilal.dzone.nano_productions.Search.gallery.Gallery_Model;
-import org.bilal.dzone.nano_productions.URL.Url;
+import org.bilal.dzone.nano_productions.Utils.Url;
 
 import java.util.ArrayList;
 

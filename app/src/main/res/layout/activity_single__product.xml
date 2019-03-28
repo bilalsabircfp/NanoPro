@@ -70,16 +70,16 @@
                     android:layout_height="match_parent"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
-                    android:background="#f7f9fc">
+                  >
 
 
                     <ImageView
                         android:id="@+id/pimage"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerInside"
                         android:layout_width="match_parent"
-                        android:layout_height="140dp"
+                        android:layout_height="120dp"
+                        android:layout_margin="2dp"
                         android:layout_gravity="center_vertical"
-                        android:layout_margin="5dp"
                         android:src="@drawable/home" />
 
                 </LinearLayout>
@@ -102,9 +102,9 @@
                             android:id="@+id/ptitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="0dp"
+                            android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
-                            android:gravity="center_horizontal"
+                            android:gravity="start"
                             android:text="Product title"
                             android:textColor="#000"
                             android:textSize="22sp"
@@ -115,8 +115,8 @@
                             android:id="@+id/edition"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="0dp"
-                            android:gravity="center_horizontal"
+                            android:layout_marginStart="10dp"
+                            android:gravity="start"
                             android:text="Product edition"
                             android:textColor="#000"
                             android:textSize="18sp" />

@@ -8,7 +8,7 @@ public class DetailerModelClass {
     model,
     year,
     color,
-    //
+    remarks,
     title,
     edition,
     email,
@@ -16,13 +16,14 @@ public class DetailerModelClass {
     license_plate_no;
 
 
-    public DetailerModelClass(String name, String phone_number, String done_date, String model, String year, String color, String title, String edition, String email, String warranty_code, String license_plate_no) {
+    public DetailerModelClass(String name, String phone_number, String done_date, String model, String year, String color, String remarks, String title, String edition, String email, String warranty_code, String license_plate_no) {
         this.name = name;
         this.phone_number = phone_number;
         this.done_date = done_date;
         this.model = model;
         this.year = year;
         this.color = color;
+        this.remarks = remarks;
         this.title = title;
         this.edition = edition;
         this.email = email;
@@ -30,28 +31,13 @@ public class DetailerModelClass {
         this.license_plate_no = license_plate_no;
     }
 
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getWarranty_code() {
-        return warranty_code;
-    }
-
-    public void setWarranty_code(String warranty_code) {
-        this.warranty_code = warranty_code;
     }
 
     public String getPhone_number() {
@@ -68,14 +54,6 @@ public class DetailerModelClass {
 
     public void setDone_date(String done_date) {
         this.done_date = done_date;
-    }
-
-    public String getLicense_plate_no() {
-        return license_plate_no;
-    }
-
-    public void setLicense_plate_no(String license_plate_no) {
-        this.license_plate_no = license_plate_no;
     }
 
     public String getModel() {
@@ -102,6 +80,14 @@ public class DetailerModelClass {
         this.color = color;
     }
 
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -116,5 +102,29 @@ public class DetailerModelClass {
 
     public void setEdition(String edition) {
         this.edition = edition;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getWarranty_code() {
+        return warranty_code;
+    }
+
+    public void setWarranty_code(String warranty_code) {
+        this.warranty_code = warranty_code;
+    }
+
+    public String getLicense_plate_no() {
+        return license_plate_no;
+    }
+
+    public void setLicense_plate_no(String license_plate_no) {
+        this.license_plate_no = license_plate_no;
     }
 }

@@ -26,6 +26,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import org.bilal.dzone.nano_productions.Map.Maps_ModelClass;
 import org.bilal.dzone.nano_productions.R;
+import org.bilal.dzone.nano_productions.Utils.Url;
 
 import java.util.ArrayList;
 
@@ -91,7 +92,7 @@ public class DetailerMap_Adapter extends RecyclerView.Adapter<DetailerMap_Adapte
 
         String imgUrl = modelClass.getImage();
         Glide.with(context)
-                .load("http://www.nano.nanopro-group.com/" + imgUrl)
+                .load(Url.BaseUrl + imgUrl)
                 .apply(new RequestOptions().placeholder(R.drawable.loading_small).error(R.drawable.ic_error))
                 .into(holder.pic);
 

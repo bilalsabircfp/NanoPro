@@ -6,7 +6,7 @@
     android:background="#fff"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="org.bilal.dzone.nano_productions.Gallery.FullScreenImage">
+    tools:context=".Personal_Zone.FullImage">
 
     <LinearLayout
         android:id="@+id/kk"
@@ -57,9 +57,9 @@
         android:layout_gravity="center"
         android:src="@drawable/loading_small"
         android:layout_centerInParent="true"
-        android:scaleType="centerInside"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:scaleType="fitCenter"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
 
 
 

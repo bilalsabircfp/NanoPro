@@ -271,6 +271,7 @@
                     android:padding="15dp"
                     android:singleLine="true"
                     android:textColor="#000"
+                    android:inputType="number"
                     android:textColorHint="#b9b7b7"
                     android:textSize="12sp" />
 
@@ -377,14 +378,12 @@
                 android:orientation="vertical">
 
 
-                <TextView
-                    android:editable="false"
+                <EditText
                     android:id="@+id/location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:hint="Enter Location"
-                    android:inputType="textPassword"
+                    android:hint="Enter Complete address with city and country name"
                     android:padding="15dp"
                     android:singleLine="true"
                     android:textColor="#000"

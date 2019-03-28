@@ -15,6 +15,7 @@
 
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -62,7 +63,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             >
 
 
@@ -120,7 +121,7 @@
             android:layout_height="35dp"
             android:layout_gravity="center"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/button_background_red"
             android:minWidth="150dp"
             android:padding="5dp"

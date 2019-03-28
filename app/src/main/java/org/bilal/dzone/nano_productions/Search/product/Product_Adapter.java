@@ -20,6 +20,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import org.bilal.dzone.nano_productions.Personal_Zone.Products.SingleProduct.Single_Product;
 import org.bilal.dzone.nano_productions.R;
+import org.bilal.dzone.nano_productions.Utils.Url;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -112,7 +113,7 @@ public class Product_Adapter extends RecyclerView.Adapter<Product_Adapter.RvView
 
         String imgUrl = modelClass.getImage();
         Glide.with(context)
-                .load("http://www.nano.nanopro-group.com/"+imgUrl)
+                .load(Url.BaseUrl + imgUrl)
                 .apply(new RequestOptions().placeholder(R.drawable.loading_small).error(R.drawable.ic_error))
                 .into(holder.pic);
 

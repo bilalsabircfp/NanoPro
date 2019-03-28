@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="350dp"
+    android:layout_width="280dp"
     android:background="#fff"
-    android:layout_height="match_parent">
+    android:layout_gravity="center"
+    android:layout_height="wrap_content">
 
 
 
@@ -15,40 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
-        <LinearLayout
-            android:background="#fff"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:visibility="invisible"
-                android:textSize="19dp"
-                android:textStyle="bold"
-                android:textColor="#000"
-                android:paddingLeft="9dp"
-                android:gravity="center_vertical"
-                android:text="Select Date"
-                android:layout_margin="2dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="42dp"
-                android:id="@+id/textView" />
-
-
-            <Button
-                android:gravity="end|center_vertical"
-                android:layout_gravity="end"
-                android:layout_marginEnd="15dp"
-                android:id="@+id/cross"
-                android:textSize="30dp"
-                android:textColor="#000"
-                android:background="#fff"
-                android:text="X"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
 
 
 
@@ -64,12 +31,12 @@
 
         <TextView
             android:layout_marginTop="10dp"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textAlignment="center"
             android:gravity="center"
             android:textAllCaps="true"
             android:textColor="#000"
-            android:text="Nano Technology Israel (NANOPRO)"
+            android:text="GOOD JOB!"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -78,11 +45,10 @@
         <TextView
             android:textColor="#000"
             android:layout_marginTop="10dp"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:textAlignment="center"
             android:gravity="center"
-            android:textAllCaps="true"
-            android:text="Address: P.o.box 5212 rishon le zion"
+            android:text="You have reached your subscription limit."
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -91,13 +57,57 @@
         <TextView
             android:textColor="#000"
             android:layout_marginTop="10dp"
-            android:textSize="16sp"
+            android:textSize="12sp"
             android:textAlignment="center"
             android:gravity="center"
-            android:textAllCaps="true"
-            android:text="Number: 7515101"
+            android:text="Please contact NANOPRO Headquarters or your local importer to purchase more subscriptions."
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+
+
+
+        <TextView
+            android:id="@+id/link1"
+            android:textColor="#2196F3"
+            android:layout_marginTop="10dp"
+            android:textSize="10sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:text="@string/link1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
+        <TextView
+            android:id="@+id/link2"
+            android:textColor="#2196F3"
+            android:layout_marginTop="5dp"
+            android:textSize="10sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:text="@string/link2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
+
+        <TextView
+            android:id="@+id/link3"
+            android:textColor="#2196F3"
+            android:layout_marginTop="5dp"
+            android:textSize="10sp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:text="@string/link3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+
+
 
         <Button
             android:background="@drawable/button_background_red"
@@ -108,7 +118,7 @@
             android:minWidth="150dp"
             android:layout_gravity="center"
             android:textAllCaps="false"
-            android:text="Call"
+            android:text="Close"
             android:textColor="#fff"
             android:layout_width="wrap_content"
             android:layout_height="35dp" />

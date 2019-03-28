@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@drawable/dark_blue_app"
-    android:layout_width="350dp"
+    android:layout_width="match_parent"
+    android:layout_margin="10dp"
     android:layout_gravity="center_horizontal"
     android:layout_height="match_parent">
     
@@ -188,6 +189,7 @@
 
 
                     <Button
+                        android:visibility="gone"
                         android:background="#fff"
                         android:id="@+id/cross"
                         android:layout_width="match_parent"

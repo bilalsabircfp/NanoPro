@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,9 @@ import com.android.volley.toolbox.Volley;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeErrorDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.bilal.dzone.nano_productions.Personal_Zone.Customer.Customer_Zone;
 import org.bilal.dzone.nano_productions.Personal_Zone.Detailer.Detailer_Zone;
@@ -49,7 +53,7 @@ public class Login_Fragment extends Fragment {
     EditText num, pass;
     Button signin;
     String id, email_, name, server_response, server_response_text, pass_, server_check, api_token,
-            user_type = "";
+            user_type = "", FbToken = "";
     CheckBox remember_me;
     RadioButton detailer, customer;
     int checked = 0;
@@ -71,6 +75,16 @@ public class Login_Fragment extends Fragment {
         customer = v.findViewById(R.id.customer);
         detailer = v.findViewById(R.id.detailer);
         back = v.findViewById(R.id.imageView);
+
+
+        //get token firebase
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(getActivity(), new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                FbToken = instanceIdResult.getToken();
+                Log.e("Token", FbToken);
+            }
+        });
 
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -160,9 +174,6 @@ public class Login_Fragment extends Fragment {
     }
 
 
-
-
-
     private void loadFragment(Fragment fragment) {
 
         //switching fragment
@@ -174,14 +185,17 @@ public class Login_Fragment extends Fragment {
     }
 
 
-
     AwesomeProgressDialog awesomeInfoDialog;
+
     //server call
     private void getUser() {
-        String urlGetServerData = Url.BaseUrl+"user/login";
+        String urlGetServerData = Url.BaseUrl + "user/login";
         System.out.print(urlGetServerData);
 
         Map<String, String> postParam = new HashMap<String, String>();
+
+        postParam.put("fb_token", FbToken);
+
         if (user_type.equals("customer")) {
             postParam.put("phone_number", pass_);
             postParam.put("warranty_code", email_);
@@ -214,8 +228,6 @@ public class Login_Fragment extends Fragment {
                         Log.e("results", name + "\n" + email_ + "\n" + id);
 
 
-
-
                         Toast.makeText(getActivity(), "Welcome" + " " + name, Toast.LENGTH_SHORT).show();
 
                         if (checked == 1) {
@@ -244,17 +256,33 @@ public class Login_Fragment extends Fragment {
 
                             editor.apply();
 
-                            if (user_type.equals("customer")){
+                            if (user_type.equals("customer")) {
+
+                                //remove fragments from backstack
+                                FragmentManager fm = getActivity().getSupportFragmentManager();
+                                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                                    fm.popBackStack();
+                                }
 
                                 fragment = new Customer_Zone();
                                 loadFragment(fragment);
-                            }
-                            else if (user_type.equals("detailer")){
+                            } else if (user_type.equals("detailer")) {
+
+                                //remove fragments from backstack
+                                FragmentManager fm = getActivity().getSupportFragmentManager();
+                                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                                    fm.popBackStack();
+                                }
 
                                 fragment = new Detailer_Zone();
                                 loadFragment(fragment);
-                            }
-                            else if (user_type.equals("importer")){
+                            } else if (user_type.equals("importer")) {
+
+                                //remove fragments from backstack
+                                FragmentManager fm = getActivity().getSupportFragmentManager();
+                                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                                    fm.popBackStack();
+                                }
 
                                 fragment = new Importer_Zone();
                                 loadFragment(fragment);
@@ -264,10 +292,7 @@ public class Login_Fragment extends Fragment {
                         }
 
 
-
-
-                    }
-                    else if (server_response.equals("false")) {
+                    } else if (server_response.equals("false")) {
 
                         new AwesomeErrorDialog(getActivity())
                                 .setMessage("Invalid Credentials!")
@@ -286,7 +311,6 @@ public class Login_Fragment extends Fragment {
                                 })
                                 .show();
                     }
-
 
 
                 } catch (JSONException e) {
@@ -324,7 +348,6 @@ public class Login_Fragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(jsonObjectRequest);
     }
-
 
 
 }

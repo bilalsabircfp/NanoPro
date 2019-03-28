@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
 import org.bilal.dzone.nano_productions.R;
+import org.bilal.dzone.nano_productions.Utils.Url;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -117,7 +118,7 @@ public class Single_Product extends AppCompatActivity {
 
 
 
-        Glide.with(this).load("http://www.nano.nanopro-group.com/"+image)
+        Glide.with(this).load(Url.BaseUrl +image)
                 .apply(new RequestOptions().placeholder(R.drawable.loading_small).error(R.drawable.ic_error))
                 .into(imageView);
 

@@ -39,6 +39,7 @@ import com.android.volley.toolbox.Volley;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeErrorDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
+import com.bumptech.glide.Glide;
 
 import org.bilal.dzone.nano_productions.R;
 import org.bilal.dzone.nano_productions.Utils.Url;
@@ -58,20 +59,20 @@ public class Detailer_Zone extends Fragment {
     JSONObject jsonObj;
     JSONArray jsonArray;
     String server_check;
-    String[] name, phone_number, done_date, model, year, color, title,
-            edition,
-            email,
+    String[] name, phone_number, done_date, model, year, color, title, remarks,
+            edition, car_details_id,
+            email, cust_id, images, after_images,
             warranty_code,
-            license_plate_no;
-    String remainingSubscriptions;
+            license_plate_no, coat, preparation;
+    String remainingSubscriptions, addedByName, addedByEmail, addedByAddress, addedByNumber, addedByImage;
     String detailerSubscriptions = "", api_token, detailer_id, used_subs = "";
     ListView listView;
-    TextView subscriptions;
+    TextView subscriptions, name_, address, number;
     String no_array = "";
-    Button enlarge;
+    Button enlarge, call;
     FloatingActionButton add;
     SwipeRefreshLayout swipeRefreshLayout;
-    ImageView back;
+    ImageView back, profileImage;
     EditText etSearch;
     Detailer_Adapter adapter;
     DetailerModelClass detailerModelClass;
@@ -96,6 +97,24 @@ public class Detailer_Zone extends Fragment {
         back = v.findViewById(R.id.imageView);
         back.setVisibility(View.INVISIBLE);
         etSearch = v.findViewById(R.id.et_search);
+        name_ = v.findViewById(R.id.name);
+        address = v.findViewById(R.id.address);
+        number = v.findViewById(R.id.number);
+        profileImage = v.findViewById(R.id.profile_image);
+        call = v.findViewById(R.id.call);
+
+
+
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!addedByNumber.equals("")){
+                    make_call(addedByNumber);
+                }
+            }
+        });
+
 
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -141,8 +160,15 @@ public class Detailer_Zone extends Fragment {
                 intent.putExtra("title", title[position]);
                 intent.putExtra("edition", edition[position]);
                 intent.putExtra("email", email[position]);
+                intent.putExtra("remarks", remarks[position]);
+                intent.putExtra("cust_id", cust_id[position]);
                 intent.putExtra("warranty_code", warranty_code[position]);
                 intent.putExtra("license_plate_no", license_plate_no[position]);
+                intent.putExtra("car_details_id", car_details_id[position]);
+                intent.putExtra("images", images[position]);
+                intent.putExtra("after_images", after_images[position]);
+                intent.putExtra("coating", coat[position]);
+                intent.putExtra("preparation", preparation[position]);
                 startActivity(intent);
             }
         });
@@ -288,7 +314,13 @@ public class Detailer_Zone extends Fragment {
                     email = new String[(jsonArray.length())];
                     warranty_code = new String[(jsonArray.length())];
                     license_plate_no = new String[(jsonArray.length())];
-
+                    remarks = new String[(jsonArray.length())];
+                    cust_id = new String[(jsonArray.length())];
+                    car_details_id = new String[(jsonArray.length())];
+                    images = new String[(jsonArray.length())];
+                    after_images = new String[(jsonArray.length())];
+                    coat = new String[(jsonArray.length())];
+                    preparation = new String[(jsonArray.length())];
 
 
                     JSONObject StringObj = jsonObj.getJSONObject("subscriptions");
@@ -306,6 +338,28 @@ public class Detailer_Zone extends Fragment {
                     Log.e("subscriptions", remainingSubscriptions + "\n" + detailerSubscriptions);
 
 
+                    JSONObject deatialsObj = jsonObj.getJSONObject("user_details");
+                    addedByName = deatialsObj.getString("user_name");
+                    addedByEmail = deatialsObj.getString("user_email");
+                    addedByNumber = deatialsObj.getString("user_phn_nmbr");
+                    addedByAddress = deatialsObj.getString("user_address");
+                    addedByImage = deatialsObj.getString("user_img");
+
+                    if (addedByName.equals("Admin")) {
+                        address.setText("info@NANOPRO-Group.com");
+                    }else {
+                        address.setText(addedByEmail);
+                    }
+
+                    name_.setText(addedByName);
+                    number.setText(addedByNumber);
+                    if (addedByName.equals("Admin")) {
+                        profileImage.setImageResource(R.drawable.logo_new);
+                    } else {
+                        Glide.with(getActivity()).load(Url.BaseUrl+addedByImage).into(profileImage);
+                    }
+
+
                     if (server_response.equals("true")) {
                         for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -314,6 +368,8 @@ public class Detailer_Zone extends Fragment {
                             //news feed array
                             if (c.length() > 0) {
 
+                                car_details_id[i] = c.getString("car_details_id");
+                                remarks[i] = c.getString("remarks");
                                 name[i] = c.getString("name");
                                 phone_number[i] = c.getString("phone_number");
                                 model[i] = c.getString("model");
@@ -322,9 +378,14 @@ public class Detailer_Zone extends Fragment {
                                 done_date[i] = c.getString("done_date");
                                 title[i] = c.getString("title");
                                 edition[i] = c.getString("edition");
-                                email[i] = c.getString("email");
+                                email[i] = c.getString("cust_email");
+                                cust_id[i] = c.getString("customer_id");
                                 warranty_code[i] = c.getString("warranty_code");
                                 license_plate_no[i] = c.getString("license_plate_no");
+                                images[i] = c.getString("before_img");
+                                after_images[i] = c.getString("after_img");
+                                coat[i] = c.getString("coating");
+                                preparation[i] = c.getString("preparation");
 
                                 Log.e("array1", name[i] + "\n" + phone_number[i] + "\n" +
                                         model[i] + "\n" + year[i]);
@@ -340,7 +401,7 @@ public class Detailer_Zone extends Fragment {
                         for (int k = 0; k < name.length; k++) {
                             detailerModelClass = new DetailerModelClass(name[k],
                                     phone_number[k], done_date[k], model[k], year[k], color[k],
-                                    title[k], edition[k], email[k], warranty_code[k],
+                                    remarks[k], title[k], edition[k], email[k], warranty_code[k],
                                     license_plate_no[k]);
                             detailerModelClass.setName(name[k]);
                             detailerModelClass.setPhone_number(phone_number[k]);
@@ -348,6 +409,7 @@ public class Detailer_Zone extends Fragment {
                             detailerModelClass.setModel(model[k]);
                             detailerModelClass.setYear(year[k]);
                             detailerModelClass.setColor(color[k]);
+                            detailerModelClass.setColor(remarks[k]);
                             detailerModelClass.setTitle(title[k]);
                             detailerModelClass.setEdition(edition[k]);
                             detailerModelClass.setEmail(email[k]);
@@ -542,24 +604,52 @@ public class Detailer_Zone extends Fragment {
 
         dialog.setContentView(R.layout.dialog_enlarge);
 
-        Button cross, call;
-        cross = dialog.findViewById(R.id.cross);
+        Button call;
+        TextView link1, link2, link3;
         call = dialog.findViewById(R.id.btn);
+        link1 = dialog.findViewById(R.id.link1);
+        link2 = dialog.findViewById(R.id.link2);
+        link3 = dialog.findViewById(R.id.link3);
+
+        link1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://www.NANOPRO-Group.com/subscriptions"));
+                startActivity(browserIntent);
+            }
+        });
+
+
+        link2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("ttp://www.NANOPRO-Group.com/importers"));
+                startActivity(browserIntent);
+            }
+        });
+
+
+        link3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("plain/text");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"info@NANOPRO-Group.com"});
+                startActivity(Intent.createChooser(intent, ""));
+            }
+        });
 
 
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                make_call("7515101");
-            }
-        });
-
-
-        cross.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
+//                make_call("7515101");
                 dialog.dismiss();
             }
         });
@@ -584,5 +674,32 @@ public class Detailer_Zone extends Fragment {
             }
         }
         adapter.notifyDataSetChanged();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!used_subs.equals("")) {
+            if (new Check_internet_connection(getActivity().getApplicationContext()).isNetworkAvailable()) {
+
+                awesomeInfoDialog = new AwesomeProgressDialog(getActivity());
+                awesomeInfoDialog.setTitle("Loading!");
+                awesomeInfoDialog.setMessage("Please Wait..");
+                awesomeInfoDialog.setDialogBodyBackgroundColor(R.color.bottom_nav);
+                awesomeInfoDialog.setColoredCircle(R.color.dialogInfoBackgroundColor);
+                awesomeInfoDialog.setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white);
+                awesomeInfoDialog.setCancelable(false);
+                awesomeInfoDialog.show();
+                Load_data();
+                swipeRefreshLayout.setRefreshing(false);
+
+            } else {
+
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "Check your Internet Connection", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

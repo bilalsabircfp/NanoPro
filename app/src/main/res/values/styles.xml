@@ -31,4 +31,9 @@
 
     </style>
 
+
+    <style name="SwitchTheme" parent="Theme.AppCompat.Light">
+        <item name="android:colorControlActivated">#000</item>
+    </style>
+
 </resources>

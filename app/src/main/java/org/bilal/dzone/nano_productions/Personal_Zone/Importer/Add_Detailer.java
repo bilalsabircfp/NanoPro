@@ -8,8 +8,11 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,9 +31,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.bilal.dzone.nano_productions.Personal_Zone.Detailer.Add_Customer;
 import org.bilal.dzone.nano_productions.R;
 import org.bilal.dzone.nano_productions.Utils.API.UploadApi;
 import org.bilal.dzone.nano_productions.Utils.FileUtils;
@@ -44,8 +50,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
@@ -61,11 +70,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Add_Detailer extends AppCompatActivity {
 
-    EditText EtName, EtNumber, EtEmail, EtSubs, EtPassword;
-    TextView TvLocation;
-    String Sname, Snumber, Semail, Ssubs, Spassword, Slocation, api_token;
+    AwesomeProgressDialog awesomeInfoDialog;
+    EditText EtName, EtNumber, EtEmail, EtSubs, EtPassword, TvLocation;
+    String Sname, Snumber, Semail, Ssubs, Spassword, Slocation = "", api_token;
     CircleImageView imageView;
-    Button submit; ImageView back;
+    Button submit;
+    ImageView back;
+    double longitude = 0.0;
+    double latitude = 0.0;
 
     private static final int GALLERY1 = 300;
     private static final int MY_PERMISSIONS_REQUEST_IMAGE1 = 0x1;
@@ -121,57 +133,73 @@ public class Add_Detailer extends AppCompatActivity {
                 Spassword = EtPassword.getText().toString().trim();
                 Ssubs = EtSubs.getText().toString().trim();
                 Slocation = TvLocation.getText().toString().trim();
-                
-                if (Sname.equals("")){
+
+                if (Sname.equals("")) {
                     EtName.setFocusable(true);
                     EtName.setError("Enter Name");
-                }
-                else if (Snumber.equals("")){
+                } else if (Snumber.equals("")) {
                     EtNumber.setFocusable(true);
                     EtNumber.setError("Enter Number");
-                }
-                else if (Semail.equals("")){
+                } else if (Semail.equals("")) {
                     EtEmail.setFocusable(true);
                     EtEmail.setError("Enter Email");
-                }
-                else if (Spassword.equals("")){
+                } else if (!Semail.matches("[a-zA-Z0-9._-]+@[a-z]+.[a-z]+")
+                        && !Semail.matches("[a-zA-Z0-9._-]+@[a-z]+.[a-z]+.[a-z]+")) {
+                    EtEmail.setError("Invalid Email Address");
+                } else if (Spassword.equals("")) {
                     EtPassword.setFocusable(true);
                     EtPassword.setError("Enter Password");
-                }
-                else if (Ssubs.equals("")){
+                } else if (Ssubs.equals("")) {
                     EtSubs.setFocusable(true);
                     EtSubs.setError("Enter Subscriptions");
-                }
-                else if (Slocation.equals("")){
+                } else if (Slocation.equals("")) {
                     TvLocation.setFocusable(true);
                     TvLocation.setError("Enter Location");
-                }
-                else if (flag.equals("false")){
+                } else if (flag.equals("false") || fileParts.size() == 0) {
                     Snackbar snackbar = Snackbar
                             .make(mainLayout, "Select an Image", Snackbar.LENGTH_LONG);
-                    snackbar.show();                }
-                else {
+                    snackbar.show();
+                } else {
 
-                    UploadCode();
+
+                    if (latitude == 0.0) {
+                        getLocationAndSend(Slocation);
+                    } else {
+
+                        awesomeInfoDialog = new AwesomeProgressDialog(Add_Detailer.this);
+                        awesomeInfoDialog.setTitle("Adding Record!");
+                        awesomeInfoDialog.setMessage("Please Wait..");
+                        awesomeInfoDialog.setDialogBodyBackgroundColor(R.color.bottom_nav);
+                        awesomeInfoDialog.setColoredCircle(R.color.dialogInfoBackgroundColor);
+                        awesomeInfoDialog.setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white);
+                        awesomeInfoDialog.setCancelable(false);
+                        awesomeInfoDialog.show();
+                        UploadCode();
+                    }
+
                 }
 
             }
         });
 
 
-
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                fileParts.clear();
                 flag = "true";
-                
+                Slocation = TvLocation.getText().toString().trim();
+                if (!Slocation.equals("")) {
+                    getLocation(Slocation);
+                }
+
                 if (ActivityCompat.checkSelfPermission(Add_Detailer.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ActivityCompat.checkSelfPermission(Add_Detailer.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
                         ActivityCompat.checkSelfPermission(Add_Detailer.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                     openImageDialog1();
 
-                }else {
+                } else {
                     ActivityCompat.requestPermissions(Add_Detailer.this,
                             new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                             MY_PERMISSIONS_REQUEST_IMAGE1);
@@ -182,23 +210,21 @@ public class Add_Detailer extends AppCompatActivity {
     }
 
 
-
-
-
     private void UploadCode() {
+
         HashMap<String, RequestBody> map = new HashMap<>();
 
         map.put("name", createPartFromString(Sname));
         map.put("email", createPartFromString(Semail));
         map.put("ph_no", createPartFromString(Snumber));
-        map.put("lat", createPartFromString(""));
-        map.put("log", createPartFromString("shahzaib"));
+        map.put("lat", createPartFromString(latitude + ""));
+        map.put("log", createPartFromString(longitude + ""));
         map.put("pass", createPartFromString(Spassword));
-        map.put("address", createPartFromString(""));
+        map.put("address", createPartFromString(Slocation));
         map.put("subscription", createPartFromString(Ssubs));
         map.put("api_token", createPartFromString(api_token));
 
-        Log.e("TAG", "dataUpload: "+map.toString() );
+        Log.e("TAG", "dataUpload: " + map.toString());
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -214,21 +240,32 @@ public class Add_Detailer extends AppCompatActivity {
                 .build();
 
 
-
-
         UploadApi rest = retrofit.create(UploadApi.class);
-        Log.e("TAG", "fileParts: "+fileParts.toString() );
-        Call<ResponseData> call =  rest.uploadData(map, fileParts);
+        Log.e("TAG", "fileParts: " + fileParts.toString());
+        Call<ResponseData> call = rest.uploadData(map, fileParts);
         call.enqueue(new Callback<ResponseData>() {
             @Override
             public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
 
-                Log.e("ServerResponse", response.body().getSuccess()+"/"+response.body().getStatus()
-                        +"/"+response.body().getMessage());
+                Log.e("ServerResponse", response.body().getSuccess() + "/" + response.body().getStatus()
+                        + "/" + response.body().getMessage());
+                Log.e("ServerResponse", response.toString());
 
                 if (response.isSuccessful()) {
-                    Toast.makeText(Add_Detailer.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                }else {
+                    awesomeInfoDialog.hide();
+
+
+                    if (response.body().getSuccess() != null &&
+                            response.body().getMessage().equals("Please Review for All Fields")) {
+                        Toast.makeText(Add_Detailer.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(Add_Detailer.this, "Detailer Created Succssfully", Toast.LENGTH_SHORT).show();
+                        Add_Detailer.this.finish();
+                    }
+
+
+                } else {
+                    awesomeInfoDialog.hide();
                     Log.e("serverResponse", response.toString());
                     Toast.makeText(Add_Detailer.this, "Failed", Toast.LENGTH_SHORT).show();
                 }
@@ -237,13 +274,11 @@ public class Add_Detailer extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseData> call, Throwable t) {
                 Log.e("FailuerResponse", t.toString());
-                Toast.makeText(Add_Detailer.this, ""+ t.getMessage(), Toast.LENGTH_SHORT).show();
+                awesomeInfoDialog.hide();
+                Toast.makeText(Add_Detailer.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
-
-
-
 
 
     private void openImageDialog1() {
@@ -257,17 +292,17 @@ public class Add_Detailer extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getPackageManager()) != null){
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                     camerafile1 = null;
-                    try{
+                    try {
                         camerafile1 = createImageFile();
-                        Log.e("TAG", "dispatchTakePictureIntent1: "+camerafile1);
-                    }catch (IOException e){
-                        Log.e("TAG", "IOException: "+e );
+                        Log.e("TAG", "dispatchTakePictureIntent1: " + camerafile1);
+                    } catch (IOException e) {
+                        Log.e("TAG", "IOException: " + e);
                     }
                     if (camerafile1 != null) {
                         file_uri = FileProvider.getUriForFile(Add_Detailer.this, "org.bilal.dzone.nano_productions.fileprovider", camerafile1);
-                        Log.e("TAG", "shah uri: "+file_uri );
+                        Log.e("TAG", "shah uri: " + file_uri);
                         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, file_uri);
                         startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO1);
 
@@ -292,14 +327,11 @@ public class Add_Detailer extends AppCompatActivity {
     }
 
 
-
-
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_TAKE_PHOTO1 && resultCode == RESULT_OK){
-            if(file_uri != null){
+        if (requestCode == REQUEST_TAKE_PHOTO1 && resultCode == RESULT_OK) {
+            if (file_uri != null) {
                 try {
                     compressedfile1 = new Compressor(this)
                             .setQuality(50)
@@ -315,12 +347,11 @@ public class Add_Detailer extends AppCompatActivity {
 
                 } catch (IOException e) {
                     e.printStackTrace();
-                    Log.e("TAG", "IOException: "+e.toString());
+                    Log.e("TAG", "IOException: " + e.toString());
                 }
 
             }
-        }
-        else if (requestCode == GALLERY1 && resultCode == RESULT_OK){
+        } else if (requestCode == GALLERY1 && resultCode == RESULT_OK) {
             if (data != null) {
 
                 file_uri = data.getData();
@@ -345,12 +376,12 @@ public class Add_Detailer extends AppCompatActivity {
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
+        switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_IMAGE1:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openImageDialog1();
                 } else {
-                    Toast.makeText(this, "please enable permission mannuallly", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "please enable permission manually", Toast.LENGTH_SHORT).show();
                 }
                 break;
 
@@ -360,8 +391,9 @@ public class Add_Detailer extends AppCompatActivity {
 
     @NonNull
     private RequestBody createPartFromString(String val) {
-        return RequestBody.create(okhttp3.MultipartBody.FORM,  val);
+        return RequestBody.create(okhttp3.MultipartBody.FORM, val);
     }
+
     @NonNull
     private MultipartBody.Part prepareFilePart(String partName, File file) {
         // create RequestBody instance from file
@@ -374,13 +406,10 @@ public class Add_Detailer extends AppCompatActivity {
     }
 
 
-
-
-
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName =   timeStamp + "_";
+        String imageFileName = timeStamp + "_";
         File storageDir1 = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
@@ -391,22 +420,112 @@ public class Add_Detailer extends AppCompatActivity {
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
 
-        Log.e("TAG", "createImageFile: "+mCurrentPhotoPath);
+        Log.e("TAG", "createImageFile: " + mCurrentPhotoPath);
         return image;
     }
+
     private void delete(File file) {
         file.delete();
-        if(file.exists()){
+        if (file.exists()) {
             try {
                 file.getCanonicalFile().delete();
             } catch (IOException e) {
-                Log.e("TAG", "IOException: "+e.toString() );
+                Log.e("TAG", "IOException: " + e.toString());
             }
-            if(file.exists()){
+            if (file.exists()) {
                 getApplicationContext().deleteFile(file.getName());
             }
         }
     }
+
+
+    public void getLocation(final String Slocation) {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+
+                Geocoder gcdd = new Geocoder(getBaseContext(), Locale.getDefault());
+                List<Address> addressList = null;
+                try {
+                    addressList = gcdd.getFromLocationName(Slocation, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(Add_Detailer.this, "Address not Found", Toast.LENGTH_SHORT).show();
+                }
+
+                try {
+                    Address address = addressList.get(0);
+                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                    longitude = latLng.longitude;
+                    latitude = latLng.latitude;
+
+                    Log.e("latLang", latLng.toString());
+                } catch (Exception e) {
+                    Log.e("address", "address not found");
+                    latitude = 30.988731;
+                    longitude = 34.927487;
+
+                }
+
+
+            }
+        }, 3000);
+    }
+
+
+    public void getLocationAndSend(final String Slocation) {
+
+        awesomeInfoDialog = new AwesomeProgressDialog(Add_Detailer.this);
+        awesomeInfoDialog.setTitle("Adding Record!");
+        awesomeInfoDialog.setMessage("Please Wait..");
+        awesomeInfoDialog.setDialogBodyBackgroundColor(R.color.bottom_nav);
+        awesomeInfoDialog.setColoredCircle(R.color.dialogInfoBackgroundColor);
+        awesomeInfoDialog.setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white);
+        awesomeInfoDialog.setCancelable(false);
+        awesomeInfoDialog.show();
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                Geocoder gcdd = new Geocoder(getBaseContext(), Locale.getDefault());
+                List<Address> addressList = null;
+                try {
+                    addressList = gcdd.getFromLocationName(Slocation, 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    awesomeInfoDialog.hide();
+                    Toast.makeText(Add_Detailer.this, "catch", Toast.LENGTH_SHORT).show();
+                }
+
+
+                try {
+                    Address address = addressList.get(0);
+                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                    longitude = latLng.longitude;
+                    latitude = latLng.latitude;
+
+                    awesomeInfoDialog.hide();
+                    UploadCode();
+
+                    Log.e("latLang", latLng.toString());
+                } catch (Exception e) {
+                    Log.e("address", "address not found");
+                    latitude = 30.988731;
+                    longitude = 34.927487;
+
+                    awesomeInfoDialog.hide();
+                    UploadCode();
+
+                }
+
+
+            }
+        }, 3000);
+    }
+
 
 
 }

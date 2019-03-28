@@ -3,343 +3,485 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fff"
-   >
-
-
-
-    <LinearLayout
-        android:layout_marginTop="15dp"
-        android:weightSum="3"
-        android:layout_gravity="end"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <Button
-            android:backgroundTint="#000"
-            android:visibility="invisible"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_gravity="end"
-            android:textAllCaps="false"
-            android:padding="5dp"
-            android:drawableStart="@drawable/login"
-            android:text="Login"
-            android:background="@drawable/new_button_bg"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="30dp" />
-
-
-
-        <Button
-            android:drawableTint="#000"
-            android:textColor="#000"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:id="@+id/logout"
-            android:layout_gravity="end"
-            android:textAllCaps="false"
-            android:padding="5dp"
-            android:drawableStart="@drawable/login"
-            android:text="Logout"
-            android:background="@drawable/new_button_bg"
-            android:layout_width="80dp"
-            android:layout_height="30dp" />
+    android:orientation="vertical">
 
 
 
 
-
-        <Button
-            android:drawableTint="#000"
-            android:textColor="#000"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:id="@+id/login"
-            android:layout_gravity="end"
-            android:textAllCaps="false"
-            android:padding="5dp"
-            android:drawableStart="@drawable/login"
-            android:text="Login"
-            android:background="@drawable/new_button_bg"
-            android:layout_width="80dp"
-            android:layout_height="30dp" />
-
-        <Button
-            android:drawableTint="#000"
-            android:textColor="#000"
-            android:layout_marginEnd="5dp"
-            android:id="@+id/share"
-            android:layout_gravity="end"
-            android:textAllCaps="false"
-            android:padding="5dp"
-            android:drawableStart="@drawable/share"
-            android:text="Share"
-            android:background="@drawable/new_button_bg"
-            android:layout_width="80dp"
-            android:layout_height="30dp" />
-
-
-
-    </LinearLayout>
-
-
-
-    <ScrollView
-        android:scrollbars="none"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-
-
-    <ImageView
-        android:layout_marginTop="10dp"
-        android:layout_width="90dp"
-        android:layout_height="70dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/logo_new"
-        android:scaleType="centerInside"/>
-
-
-    <TextView
-        android:textColor="#000"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAllCaps="true"
-        android:textAlignment="center"
-        android:text="choose your industry"/>
+        app:titleTextColor="#000"
+        android:background="#F8F8F8">
 
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_gravity="start"
+            android:src="@drawable/logo_new"/>
+
+
+
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:textSize="18dp"
+            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NANOPRO"/>
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="3"
+                android:background="@drawable/new_button_bg"
+                android:backgroundTint="#000"
+                android:drawableStart="@drawable/login"
+                android:padding="5dp"
+                android:text="Login"
+                android:textAllCaps="false"
+                android:visibility="invisible" />
+
+
+            <Button
+                android:id="@+id/logout"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/new_button_bg"
+                android:drawableStart="@drawable/login"
+                android:drawableTint="#000"
+                android:padding="5dp"
+                android:text="Logout"
+                android:textAllCaps="false"
+                android:textColor="#000" />
+
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/new_button_bg"
+                android:drawableStart="@drawable/login"
+                android:drawableTint="#000"
+                android:padding="5dp"
+                android:text="Login"
+                android:textAllCaps="false"
+                android:textColor="#000" />
+
+            <Button
+                android:id="@+id/share"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/new_button_bg"
+                android:drawableStart="@drawable/share"
+                android:drawableTint="#000"
+                android:padding="5dp"
+                android:text="Share"
+                android:textAllCaps="false"
+                android:textColor="#000" />
+
+
+        </LinearLayout>
+
+
+
+
+
+
+    </android.support.v7.widget.Toolbar>
+
+
+
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="end"-->
+        <!--android:layout_marginTop="15dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:weightSum="3">-->
+
+
+        <!--<Button-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_gravity="end"-->
+            <!--android:layout_marginStart="10dp"-->
+            <!--android:layout_marginEnd="10dp"-->
+            <!--android:layout_weight="3"-->
+            <!--android:background="@drawable/new_button_bg"-->
+            <!--android:backgroundTint="#000"-->
+            <!--android:drawableStart="@drawable/login"-->
+            <!--android:padding="5dp"-->
+            <!--android:text="Login"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:visibility="invisible" />-->
+
+
+        <!--<Button-->
+            <!--android:id="@+id/logout"-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_gravity="end"-->
+            <!--android:layout_marginStart="10dp"-->
+            <!--android:layout_marginEnd="10dp"-->
+            <!--android:background="@drawable/new_button_bg"-->
+            <!--android:drawableStart="@drawable/login"-->
+            <!--android:drawableTint="#000"-->
+            <!--android:padding="5dp"-->
+            <!--android:text="Logout"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textColor="#000" />-->
+
+
+        <!--<Button-->
+            <!--android:id="@+id/login"-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_gravity="end"-->
+            <!--android:layout_marginStart="10dp"-->
+            <!--android:layout_marginEnd="10dp"-->
+            <!--android:background="@drawable/new_button_bg"-->
+            <!--android:drawableStart="@drawable/login"-->
+            <!--android:drawableTint="#000"-->
+            <!--android:padding="5dp"-->
+            <!--android:text="Login"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textColor="#000" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/share"-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_gravity="end"-->
+            <!--android:layout_marginEnd="5dp"-->
+            <!--android:background="@drawable/new_button_bg"-->
+            <!--android:drawableStart="@drawable/share"-->
+            <!--android:drawableTint="#000"-->
+            <!--android:padding="5dp"-->
+            <!--android:text="Share"-->
+            <!--android:textAllCaps="false"-->
+            <!--android:textColor="#000" />-->
+
+
+    <!--</LinearLayout>-->
 
 
     <LinearLayout
-        android:gravity="center_vertical"
-        android:layout_gravity="center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
 
-    <RelativeLayout
-        android:id="@+id/r_cars"
-        android:layout_marginTop="15dp"
-        android:layout_width="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_height="90dp">
-
-
-
-        <ImageView
+        <LinearLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/car_img"
-            android:layout_centerInParent="true"
-            android:scaleType="centerCrop"
-            android:padding="0dp"
-            android:layout_margin="0dp"
-            />
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
 
 
 
-        <ImageView
-            android:id="@+id/car"
-            android:layout_centerInParent="true"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:scaleType="centerInside"
-            android:layout_gravity="center"
-            android:src="@drawable/cars" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+
+
+                <TextView
+                    android:fontFamily="sans-serif-thin"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="28dp"
+                    android:textColor="#000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NANOPRO"/>
+
+
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="15dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/logo_new" />
+
+
+
+            </RelativeLayout>
+
+
+
+
+
+        </LinearLayout>
+
 
         <TextView
-            android:gravity="center_horizontal"
-            android:textColor="#fff"
-            android:textAlignment="center"
-            android:layout_below="@id/car"
-            android:text="AUTO"
-            android:id="@+id/cars_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-    </RelativeLayout>
-
-
-
-    <RelativeLayout
-        android:id="@+id/r_marine"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_height="90dp">
-
-
-        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="0dp"
-            android:padding="0dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/merine_img" />
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:text="choose your \nindustry"
+            android:textAllCaps="true"
+            android:textColor="#000"
+            android:textSize="26sp"
+            android:textStyle="bold" />
 
-
-
-        <ImageView
-            android:id="@+id/marine"
-            android:layout_centerInParent="true"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:scaleType="centerInside"
-            android:layout_gravity="center"
-            android:src="@drawable/merine" />
 
         <TextView
-            android:gravity="center_horizontal"
-            android:textColor="#fff"
-            android:textAlignment="center"
-            android:layout_below="@id/marine"
-            android:text="MARINE"
-            android:id="@+id/marine_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-    </RelativeLayout>
-
-
-
-
-    <RelativeLayout
-        android:id="@+id/r_aero"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_height="90dp">
-
-
-
-        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/aero_"
-            android:layout_centerInParent="true"
-            android:scaleType="centerCrop"
-            android:padding="0dp"
-            android:layout_margin="0dp"
-            />
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:text="auto marine aero industrial"
+            android:textAllCaps="true"
+            android:textColor="#999696"
+            android:textSize="18sp" />
 
 
-
-        <ImageView
-            android:id="@+id/aero"
-            android:layout_centerInParent="true"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:scaleType="centerInside"
-            android:layout_gravity="center"
-            android:src="@drawable/aero" />
-
-        <TextView
-            android:gravity="center_horizontal"
-            android:textColor="#fff"
-            android:textAlignment="center"
-            android:layout_below="@id/aero"
-            android:text="AERO"
-            android:id="@+id/aero_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-    </RelativeLayout>
-
-
-
-
-    <RelativeLayout
-        android:id="@+id/r_industy"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_height="90dp">
-
-
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/industrial_bg"
-            android:layout_centerInParent="true"
-            android:scaleType="centerCrop"
-            android:padding="0dp"
-            android:layout_margin="0dp"
-            />
-
-
-
-        <ImageView
-            android:id="@+id/industry"
-            android:layout_centerInParent="true"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:scaleType="centerInside"
-            android:layout_gravity="center"
-            android:src="@drawable/industrial" />
-
-        <TextView
-            android:gravity="center_horizontal"
-            android:textColor="#fff"
-            android:textAlignment="center"
-            android:layout_below="@id/industry"
-            android:text="INDUSTRIAL"
-            android:id="@+id/industry_txt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-    </RelativeLayout>
-
-
-
-
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_height="50dp">
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:weightSum="4">
 
 
-        </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/r_cars"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/new1" />
+
+
+                <!--<ImageView-->
+                <!--android:id="@+id/car"-->
+                <!--android:layout_width="30dp"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:scaleType="centerInside"-->
+                <!--android:src="@drawable/cars" />-->
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:layout_marginLeft="15dp"
+                    android:id="@+id/cars_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="8dp"
+                    android:text="AUTO"
+                    android:textColor="#fff" />
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/r_marine"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="0dp"
+                    android:padding="0dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/new2" />
+
+
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="8dp"
+                    android:text="Marine"
+                    android:textColor="#fff" />
+                <!--<ImageView-->
+                <!--android:id="@+id/marine"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:layout_width="30dp"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:scaleType="centerInside"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:src="@drawable/merine" />-->
+
+                <!--<TextView-->
+                <!--android:gravity="center_horizontal"-->
+                <!--android:textColor="#fff"-->
+                <!--android:textAlignment="center"-->
+                <!--android:layout_below="@id/marine"-->
+                <!--android:text="MARINE"-->
+                <!--android:id="@+id/marine_txt"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/r_aero"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="0dp"
+                    android:padding="0dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/new4" />
+
+
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="8dp"
+                    android:text="AERO"
+                    android:textColor="#fff" />
+
+                <!--<ImageView-->
+                <!--android:id="@+id/aero"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:layout_width="30dp"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:scaleType="centerInside"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:src="@drawable/aero" />-->
+
+                <!--<TextView-->
+                <!--android:gravity="center_horizontal"-->
+                <!--android:textColor="#fff"-->
+                <!--android:textAlignment="center"-->
+                <!--android:layout_below="@id/aero"-->
+                <!--android:text="AERO"-->
+                <!--android:id="@+id/aero_txt"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/r_industy"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="0dp"
+                    android:padding="0dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/new3" />
+
+
+                <TextView
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="8dp"
+                    android:text="industrial"
+                    android:textAllCaps="true"
+                    android:textColor="#fff" />
+
+                <!--<ImageView-->
+                <!--android:id="@+id/industry"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:layout_width="30dp"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:scaleType="centerInside"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:src="@drawable/industrial" />-->
+
+                <!--<TextView-->
+                <!--android:gravity="center_horizontal"-->
+                <!--android:textColor="#fff"-->
+                <!--android:textAlignment="center"-->
+                <!--android:layout_below="@id/industry"-->
+                <!--android:text="INDUSTRIAL"-->
+                <!--android:id="@+id/industry_txt"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
 
 
     </LinearLayout>
-
-
-
-    </LinearLayout>
-
-
-</ScrollView>
 
 
 </LinearLayout>

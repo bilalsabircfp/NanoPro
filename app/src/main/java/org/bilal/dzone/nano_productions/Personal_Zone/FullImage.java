@@ -1,22 +1,21 @@
-package org.bilal.dzone.nano_productions.Gallery;
+package org.bilal.dzone.nano_productions.Personal_Zone;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.github.chrisbanes.photoview.PhotoView;
 
 import org.bilal.dzone.nano_productions.R;
-import org.bilal.dzone.nano_productions.Search.FullScreen;
+import org.bilal.dzone.nano_productions.Utils.Url;
 
-public class FullScreenImage extends AppCompatActivity {
+public class FullImage extends AppCompatActivity {
 
     ImageView back;
+    String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +27,11 @@ public class FullScreenImage extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FullScreenImage.this.finish();
+                FullImage.this.finish();
             }
         });
 
-        String url = getIntent().getStringExtra("url");
+        url = getIntent().getStringExtra("url");
 //        Toast.makeText(this, url, Toast.LENGTH_SHORT).show();
 
         PhotoView photoView = findViewById(R.id.photo_view);

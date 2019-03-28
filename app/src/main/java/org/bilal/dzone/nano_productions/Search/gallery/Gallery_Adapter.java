@@ -12,15 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.bilal.dzone.nano_productions.Gallery.FullScreenImage;
 import org.bilal.dzone.nano_productions.Gallery.Gallery;
 import org.bilal.dzone.nano_productions.R;
-import org.bilal.dzone.nano_productions.Search.FullScreen;
-import org.bilal.dzone.nano_productions.Search.newsfeed.NewsFeed_Model;
+import org.bilal.dzone.nano_productions.Utils.Url;
 
 import java.util.ArrayList;
 
@@ -80,7 +77,7 @@ public class Gallery_Adapter extends RecyclerView.Adapter<Gallery_Adapter.RvView
 
         String imgUrl = modelClass.getImage();
         Glide.with(context)
-                .load("http://www.nano.nanopro-group.com/"+imgUrl)
+                .load(Url.BaseUrl + imgUrl)
                 .into(holder.pic);
 
 

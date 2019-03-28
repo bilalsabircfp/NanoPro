@@ -7,6 +7,7 @@ package org.bilal.dzone.nano_productions.Personal_Zone.Products;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import org.bilal.dzone.nano_productions.Personal_Zone.Products.SingleProduct.Single_Product;
 import org.bilal.dzone.nano_productions.R;
+import org.bilal.dzone.nano_productions.Utils.Url;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -113,8 +115,9 @@ public class Adapter_Class extends RecyclerView.Adapter<Adapter_Class.RvViewHold
         holder.information.setText(modelClass.getInformation());
 
         String imgUrl = modelClass.getImage();
+        Log.e("imageUrl", imgUrl);
         Glide.with(context)
-                .load("http://www.nano.nanopro-group.com/"+imgUrl)
+                .load(Url.BaseUrl + imgUrl)
                 .apply(new RequestOptions().placeholder(R.drawable.loading_small).error(R.drawable.ic_error))
                 .into(holder.pic);
 

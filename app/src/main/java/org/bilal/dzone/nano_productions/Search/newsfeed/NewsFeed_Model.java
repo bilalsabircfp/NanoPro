@@ -6,11 +6,13 @@ package org.bilal.dzone.nano_productions.Search.newsfeed;
 
 public class NewsFeed_Model {
 
-    String name, image, content, id, created_at, updated_at;
+    String name, title, role, image, content, id, created_at, updated_at;
 
 
-    public NewsFeed_Model(String name, String image, String content, String id, String created_at, String updated_at) {
+    public NewsFeed_Model(String name, String title, String role, String image, String content, String id, String created_at, String updated_at) {
         this.name = name;
+        this.title = title;
+        this.role = role;
         this.image = image;
         this.content = content;
         this.id = id;
@@ -25,6 +27,22 @@ public class NewsFeed_Model {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getImage() {

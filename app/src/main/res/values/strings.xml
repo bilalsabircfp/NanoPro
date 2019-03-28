@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name_">NanoPRO</string>
+    <string name="app_name_">NANOPRO</string>
     <string name="title_activity_bottom__nav">Bottom_Nav</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
@@ -13,5 +13,16 @@
     <integer name="btnpluspos">2</integer>
 
     <string name="internal_storage">internal storage</string>
+
+    <string name="app_Name">NANOPRO</string>
+
+
+    <string name="link1"><u>http://www.NANOPRO-Group.com/subscriptions</u></string>
+    <string name="link2"><u>http://www.NANOPRO-Group.com/importers</u></string>
+    <string name="link3">info@NANOPRO-Group.com</string>
+
+
+
+    <string name="test">Name here\nRole</string>
 
 </resources>

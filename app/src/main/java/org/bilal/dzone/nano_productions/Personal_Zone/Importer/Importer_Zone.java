@@ -237,7 +237,7 @@ public class Importer_Zone extends Fragment {
     }
 
 
-    String server_response = "0";
+    String server_response = "0", server_message;
 
     //server call
     private void Load_data() {
@@ -256,102 +256,109 @@ public class Importer_Zone extends Fragment {
                 try {
 
                     server_response = response.getString("success");
+                    server_message = response.getString("message");
 
-                    jsonObj = new JSONObject(response.toString());
-                    Log.e("JObject", response.toString());
-
-                    try {
-
-                        jsonArray = jsonObj.getJSONArray("detailers");
-                    } catch (JSONException e) {
-                        no_array = "no_array";
-                        Log.e("Error", "no array");
+                    if (server_message.equals("No Record Found")){
+                        Toast.makeText(getActivity(), server_message, Toast.LENGTH_SHORT).show();
                     }
+                    else {
 
+                        jsonObj = new JSONObject(response.toString());
+                        Log.e("JObject", response.toString());
 
-                    server_response = jsonObj.getString("success");
+                        try {
 
-                    Log.e("kka", server_response);
-
-                    JSONObject c;
-
-
-
-                    name = new String[(jsonArray.length())];
-                    phone_number = new String[(jsonArray.length())];
-                    detailer_id = new String[(jsonArray.length())];
-                    latitude = new String[(jsonArray.length())];
-                    longitude = new String[(jsonArray.length())];
-                    address = new String[(jsonArray.length())];
-                    email = new String[(jsonArray.length())];
-                    used_subscriptions = new String[(jsonArray.length())];
-                    detailer_subscriptions = new String[(jsonArray.length())];
-
-
-                    JSONObject StringObj = jsonObj.getJSONObject("subscriptions");
-
-                    String sub;
-                    sub = jsonObj.getString("subscriptions");
-                    if (sub.equals("No Records Found")) {
-                        Toast.makeText(getActivity(), "No record", Toast.LENGTH_SHORT).show();
-                    }
-
-                    remainingSubscriptions = StringObj.getString("remaining_subscriptions");
-                    detailerSubscriptions = StringObj.getString("importer_subscriptions");
-                    used_subs = StringObj.getString("used_subscriptions");
-
-                    Log.e("subscriptions", remainingSubscriptions + "\n" + detailerSubscriptions);
-
-
-                    if (server_response.equals("ture")) {
-                        for (int i = 0; i < jsonArray.length(); i++) {
-
-                            c = jsonArray.getJSONObject(i);
-
-                            //news feed array
-                            if (c.length() > 0) {
-
-                                name[i] = c.getString("name");
-                                phone_number[i] = c.getString("phone_number");
-                                email[i] = c.getString("email");
-                                detailer_id[i] = c.getString("detailer_id");
-                                latitude[i] = c.getString("latitude");
-                                longitude[i] = c.getString("longitude");
-                                address[i] = c.getString("address");
-                                used_subscriptions[i] = c.getString("used_subscriptions");
-                                detailer_subscriptions[i] = c.getString("detailer_subscriptions");
-
-                                Log.e("array1", name[i] + "\n" + phone_number[i]
-                                       );
-
-                            }
-
+                            jsonArray = jsonObj.getJSONArray("detailers");
+                        } catch (JSONException e) {
+                            no_array = "no_array";
+                            Log.e("Error", "no array");
                         }
 
 
-                        detailerArrayList.clear();
+                        server_response = jsonObj.getString("success");
 
-                        //setting values to array-list
-                        for (int k = 0; k < name.length; k++) {
-                            importerModelClass = new ImporterModelClass(name[k],
-                                    email[k],
-                                    phone_number[k],
-                                    detailer_id[k],
-                                    latitude[k],
-                                    longitude[k],
-                                    address[k], detailer_subscriptions[k],
-                                    used_subscriptions[k]);
-                            importerModelClass.setName(name[k]);
-                            importerModelClass.setEmail(email[k]);
-                            importerModelClass.setPhone_number(phone_number[k]);
-                            importerModelClass.setDetailer_id(detailer_id[k]);
-                            importerModelClass.setLatitude(latitude[k]);
-                            importerModelClass.setLongitude(longitude[k]);
-                            importerModelClass.setAddress(address[k]);
-                            importerModelClass.setDetailer_subscriptions(detailer_subscriptions[k]);
-                            importerModelClass.setUsed_subscriptions(used_subscriptions[k]);
+                        Log.e("kka", server_response);
 
-                            detailerArrayList.add(importerModelClass);
+                        JSONObject c;
+
+
+                        name = new String[(jsonArray.length())];
+                        phone_number = new String[(jsonArray.length())];
+                        detailer_id = new String[(jsonArray.length())];
+                        latitude = new String[(jsonArray.length())];
+                        longitude = new String[(jsonArray.length())];
+                        address = new String[(jsonArray.length())];
+                        email = new String[(jsonArray.length())];
+                        used_subscriptions = new String[(jsonArray.length())];
+                        detailer_subscriptions = new String[(jsonArray.length())];
+
+
+                        JSONObject StringObj = jsonObj.getJSONObject("subscriptions");
+
+                        String sub;
+                        sub = jsonObj.getString("subscriptions");
+                        if (sub.equals("No Records Found")) {
+                            Toast.makeText(getActivity(), "No record", Toast.LENGTH_SHORT).show();
+                        }
+
+                        remainingSubscriptions = StringObj.getString("remaining_subscriptions");
+                        detailerSubscriptions = StringObj.getString("importer_subscriptions");
+                        used_subs = StringObj.getString("used_subscriptions");
+
+                        Log.e("subscriptions", remainingSubscriptions + "\n" + detailerSubscriptions);
+
+
+                        if (server_response.equals("ture")) {
+                            for (int i = 0; i < jsonArray.length(); i++) {
+
+                                c = jsonArray.getJSONObject(i);
+
+                                //news feed array
+                                if (c.length() > 0) {
+
+                                    name[i] = c.getString("name");
+                                    phone_number[i] = c.getString("phone_number");
+                                    email[i] = c.getString("email");
+                                    detailer_id[i] = c.getString("detailer_id");
+                                    latitude[i] = c.getString("latitude");
+                                    longitude[i] = c.getString("longitude");
+                                    address[i] = c.getString("address");
+                                    used_subscriptions[i] = c.getString("used_subscriptions");
+                                    detailer_subscriptions[i] = c.getString("detailer_subscriptions");
+
+                                    Log.e("array1", name[i] + "\n" + phone_number[i]
+                                    );
+
+                                }
+
+                            }
+
+
+                            detailerArrayList.clear();
+
+                            //setting values to array-list
+                            for (int k = 0; k < name.length; k++) {
+                                importerModelClass = new ImporterModelClass(name[k],
+                                        email[k],
+                                        phone_number[k],
+                                        detailer_id[k],
+                                        latitude[k],
+                                        longitude[k],
+                                        address[k], detailer_subscriptions[k],
+                                        used_subscriptions[k]);
+                                importerModelClass.setName(name[k]);
+                                importerModelClass.setEmail(email[k]);
+                                importerModelClass.setPhone_number(phone_number[k]);
+                                importerModelClass.setDetailer_id(detailer_id[k]);
+                                importerModelClass.setLatitude(latitude[k]);
+                                importerModelClass.setLongitude(longitude[k]);
+                                importerModelClass.setAddress(address[k]);
+                                importerModelClass.setDetailer_subscriptions(detailer_subscriptions[k]);
+                                importerModelClass.setUsed_subscriptions(used_subscriptions[k]);
+
+                                detailerArrayList.add(importerModelClass);
+                            }
+
                         }
 
                     }
@@ -368,6 +375,8 @@ public class Importer_Zone extends Fragment {
 
                 //check if server is ok
                 if (server_check.equals("false")) {
+
+
 
                     awesomeInfoDialog.hide();
 
@@ -619,26 +628,57 @@ public class Importer_Zone extends Fragment {
         dialog.setContentView(R.layout.dialog_enlarge);
 
         Button cross, call;
-        cross = dialog.findViewById(R.id.cross);
+        TextView link1, link2, link3;
         call = dialog.findViewById(R.id.btn);
+        link1 = dialog.findViewById(R.id.link1);
+        link2 = dialog.findViewById(R.id.link2);
+        link3 = dialog.findViewById(R.id.link3);
+
+        link1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://www.NANOPRO-Group.com/subscriptions"));
+                startActivity(browserIntent);
+            }
+        });
+
+
+        link2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://www.NANOPRO-Group.com/importers"));
+                startActivity(browserIntent);
+            }
+        });
+
+
+        link3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("plain/text");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "info@NANOPRO-Group.com" });
+                startActivity(Intent.createChooser(intent, ""));
+            }
+        });
 
 
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                make_call("7515101");
-            }
-        });
-
-
-        cross.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
+//                make_call("7515101");
                 dialog.dismiss();
             }
         });
+
+
+
 
 
         dialog.show();
@@ -663,8 +703,9 @@ public class Importer_Zone extends Fragment {
 
         Button cross, submit; final EditText subs_;
         subs_ = dialog.findViewById(R.id.subs);
-        cross = dialog.findViewById(R.id.cross);
         submit = dialog.findViewById(R.id.btn);
+        TextView TVname = dialog.findViewById(R.id.name);
+        TVname.setText(name);
 
 
 
@@ -674,12 +715,15 @@ public class Importer_Zone extends Fragment {
 
                 newSubs = subs_.getText().toString().trim();
 
+                Log.e("subs", newSubs + "/" + remainingSubscriptions
+                        + "/" + detailerSubscriptions);
+
                 if (newSubs.equals("") || newSubs.equals("0")) {
 
                     Toast.makeText(getActivity(), "Cannot Be Empty", Toast.LENGTH_SHORT).show();
 
                 }
-                else if (Integer.parseInt(newSubs) > Integer.parseInt(detailerSubscriptions) ){
+                else if (Integer.parseInt(newSubs) > Integer.parseInt(remainingSubscriptions) ){
 
                     Toast.makeText(getActivity(), "You have"+" "+remainingSubscriptions +
                          " "+   "Subscriptions Remaining", Toast.LENGTH_SHORT).show();
@@ -708,13 +752,6 @@ public class Importer_Zone extends Fragment {
         });
 
 
-        cross.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                dialog.dismiss();
-            }
-        });
 
 
         dialog.show();
@@ -737,4 +774,35 @@ public class Importer_Zone extends Fragment {
         }
         adapter.notifyDataSetChanged();
     }
+
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!used_subs.equals("")) {
+            if (new Check_internet_connection(getActivity().getApplicationContext()).isNetworkAvailable()) {
+
+                awesomeInfoDialog = new AwesomeProgressDialog(getActivity());
+                awesomeInfoDialog.setTitle("Loading!");
+                awesomeInfoDialog.setMessage("Please Wait..");
+                awesomeInfoDialog.setDialogBodyBackgroundColor(R.color.bottom_nav);
+                awesomeInfoDialog.setColoredCircle(R.color.dialogInfoBackgroundColor);
+                awesomeInfoDialog.setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white);
+                awesomeInfoDialog.setCancelable(false);
+                awesomeInfoDialog.show();
+                Load_data();
+                swipeRefreshLayout.setRefreshing(false);
+
+            } else {
+
+                Toast.makeText(getActivity().getApplicationContext(),
+                        "Check your Internet Connection", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
 }

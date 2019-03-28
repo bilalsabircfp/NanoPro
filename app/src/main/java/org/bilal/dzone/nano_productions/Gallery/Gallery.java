@@ -64,7 +64,7 @@ public class Gallery extends AppCompatActivity {
         Log.e("unSplittedImages", unSplittedImages);
 
 
-        StringTokenizer stringTokenizer = new StringTokenizer(unSplittedImages, "|");
+        StringTokenizer stringTokenizer = new StringTokenizer(unSplittedImages, ",");
 
         while (stringTokenizer.hasMoreTokens()) {
 
@@ -89,7 +89,7 @@ public class Gallery extends AppCompatActivity {
 
 
                 Glide.with(Gallery.this)
-                        .load(ListSplittedImages.get(position) + "")
+                        .load(Url.BaseUrl + ListSplittedImages.get(position) + "")
                         .apply(new RequestOptions().placeholder(R.drawable.progress).error(R.drawable.ic_error))
                         .into(photoView);
 
@@ -214,7 +214,7 @@ public class Gallery extends AppCompatActivity {
                 if (pos >= 0) {
 
                     Glide.with(Gallery.this)
-                            .load(ListSplittedImages.get(pos) + "")
+                            .load(Url.BaseUrl + ListSplittedImages.get(pos) + "")
                             .apply(new RequestOptions().placeholder(R.drawable.progress).error(R.drawable.ic_error))
                             .into(photoView);
 
@@ -236,7 +236,7 @@ public class Gallery extends AppCompatActivity {
                 if (pos < max) {
 
                     Glide.with(Gallery.this)
-                            .load(ListSplittedImages.get(pos) + "")
+                            .load(Url.BaseUrl + ListSplittedImages.get(pos) + "")
                             .apply(new RequestOptions().placeholder(R.drawable.progress).error(R.drawable.ic_error))
                             .into(photoView);
 

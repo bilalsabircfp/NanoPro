@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "70379816646",
+    "firebase_url": "https://nanopro-d6e4f.firebaseio.com",
+    "project_id": "nanopro-d6e4f",
+    "storage_bucket": "nanopro-d6e4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70379816646:android:0281bebc3d2db25c",
+        "android_client_info": {
+          "package_name": "org.bilal.dzone.nano_productions"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "70379816646-t8f3var4b01k296b9tt00dsq40r3qd98.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.bilal.dzone.nano_productions",
+            "certificate_hash": "99431062160802a04067d961e6af7c5298653239"
+          }
+        },
+        {
+          "client_id": "70379816646-5mq96toj9j1n2m09op0sj4scl3ckbdhh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh8-RjBeFo21FZH-gfAWd-sKaWYrazriE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "70379816646-5mq96toj9j1n2m09op0sj4scl3ckbdhh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

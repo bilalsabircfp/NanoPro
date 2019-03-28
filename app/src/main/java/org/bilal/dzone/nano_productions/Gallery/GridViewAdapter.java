@@ -12,6 +12,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.bumptech.glide.Glide;
 
 import org.bilal.dzone.nano_productions.R;
+import org.bilal.dzone.nano_productions.Utils.Url;
 
 import java.util.ArrayList;
 
@@ -82,7 +83,7 @@ public class GridViewAdapter extends BaseAdapter {
         }
 
 
-        Glide.with(convertView).load(modelClasses.get(position)).into(viewholder.imageView);
+        Glide.with(convertView).load(Url.BaseUrl + modelClasses.get(position)).into(viewholder.imageView);
 
         Log.e("adapter", modelClasses.get(position));
 

@@ -23,6 +23,9 @@ import com.android.volley.toolbox.Volley;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeErrorDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.bilal.dzone.nano_productions.R;
 import org.bilal.dzone.nano_productions.Utils.Url;
@@ -48,7 +51,7 @@ public class Login_Activity extends AppCompatActivity {
     RadioButton detailer, customer;
     int checked = 0;
     ImageView back;
-
+    String FbToken;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +66,20 @@ public class Login_Activity extends AppCompatActivity {
         customer = findViewById(R.id.customer);
         detailer = findViewById(R.id.detailer);
         back = findViewById(R.id.imageView);
+
+
+
+
+        //get token firebase
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(Login_Activity.this,  new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                FbToken = instanceIdResult.getToken();
+                Log.e("Token",FbToken);
+            }
+        });
+
+
 
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +177,9 @@ public class Login_Activity extends AppCompatActivity {
         System.out.print(urlGetServerData);
 
         Map<String, String> postParam = new HashMap<String, String>();
+
+        postParam.put("fb_token", FbToken);
+
         if (user_type.equals("customer")) {
             postParam.put("phone_number", pass_);
             postParam.put("warranty_code", email_);

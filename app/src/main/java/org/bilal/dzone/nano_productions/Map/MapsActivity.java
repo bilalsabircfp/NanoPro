@@ -122,12 +122,12 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
                 all = marker.getSnippet();
                 all_info = all.split("%");
                 name_ = all_info[0];
-                num_ = all_info[1];
+                num_  = all_info[1];
                 email = all_info[2];
                 image = all_info[3];
 
 
-                marker_dialog(name_, num_, email,  "http://www.nano.nanopro-group.com/"+image);
+                marker_dialog(name_, num_, email,  Url.BaseUrl + image);
 
             }
         });
@@ -168,8 +168,7 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
         TextView tv_num = dialog.findViewById(R.id.email);
         TextView tv_blood = dialog.findViewById(R.id.number);
         ImageView img = dialog.findViewById(R.id.profile_image);
-        Button cross, call;
-        cross = dialog.findViewById(R.id.cross);
+        Button call;
         call = dialog.findViewById(R.id.call);
 
 
@@ -189,14 +188,6 @@ public class MapsActivity extends Fragment implements OnMapReadyCallback {
             }
         });
 
-
-        cross.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                dialog.dismiss();
-            }
-        });
 
 
         dialog.show();

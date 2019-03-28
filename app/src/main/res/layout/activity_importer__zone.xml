@@ -92,7 +92,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:background="@drawable/button_background_red"
+            android:background="@drawable/button_red"
             android:text="Enlarge"
             android:textAllCaps="false" />
 
@@ -225,9 +225,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
-            app:backgroundTint="#5e5a5a"
+            app:backgroundTint="#ee2b4c"
             app:fabSize="normal"
-            app:rippleColor="#5e5a5a"
+            app:rippleColor="#EC2D4E"
             app:srcCompat="@drawable/ic_add" />
     </FrameLayout>
 

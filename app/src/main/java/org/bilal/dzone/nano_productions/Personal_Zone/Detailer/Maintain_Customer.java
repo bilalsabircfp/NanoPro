@@ -246,22 +246,16 @@ public class Maintain_Customer extends AppCompatActivity {
 
                 //CUSTOM DIALOG///////////////////////////////
                 final Dialog dialog = new Dialog(Maintain_Customer.this);
-                dialog.setCanceledOnTouchOutside(false);
+                dialog.setCanceledOnTouchOutside(true);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
                 dialog.setContentView(R.layout.dialog_dob);
 
                 datePicker = dialog.findViewById(R.id.datePicker1);
                 Button dob = dialog.findViewById(R.id.btn);
-                Button btn_cross = dialog.findViewById(R.id.cross);
 
-                btn_cross.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
 
-                        dialog.dismiss();
-                    }
-                });
+//                datePicker.setMinDate(System.currentTimeMillis() - 1000);
 
 
                 dob.setOnClickListener(new View.OnClickListener() {

@@ -7,6 +7,7 @@
     android:fillViewport="true"
     android:focusable="false"
     android:overScrollMode="never"
+    android:background="#000"
     android:scrollbars="none">
 
 
@@ -149,9 +150,10 @@
 
 
             <ImageView
+                android:id="@+id/pimage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/cover2"
+                android:src="@drawable/products_txt"
                 android:layout_centerInParent="true"
                 android:scaleType="fitXY"
                 android:padding="0dp"
@@ -170,10 +172,9 @@
                 android:textColor="#fff"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:layout_below="@id/car"
                 android:text="2019 product line"
                 android:textAllCaps="true"
-                android:id="@+id/cars_txt"
+                android:id="@+id/p_txt"
                 android:layout_width="match_parent"
                 android:layout_height="30dp" />
 
@@ -238,11 +239,12 @@
 
 
             <ImageView
+                android:id="@+id/gimage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/cover1"
+                android:src="@drawable/gallery_text"
                 android:layout_centerInParent="true"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:padding="0dp"
                 android:layout_margin="0dp"
                 />
@@ -252,6 +254,7 @@
 
 
             <TextView
+                android:id="@+id/gtxt"
                 android:paddingLeft="10dp"
                 android:gravity="center_vertical"
                 android:background="#8e000000"
@@ -259,7 +262,6 @@
                 android:textColor="#fff"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:layout_below="@id/car"
                 android:text="Gallery"
                 android:textAllCaps="true"
                 android:layout_width="match_parent"
@@ -314,22 +316,30 @@
 
 
 
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#fff"/>
+
+
 
     <org.bilal.dzone.nano_productions.Personal_Zone.NonScrollListView
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
         android:focusable="false"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
+        android:background="#fff"
         android:id="@+id/lv_nonscroll_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:dividerHeight="5.0sp"
+        android:divider="#FFCECECE"
         >
     </org.bilal.dzone.nano_productions.Personal_Zone.NonScrollListView>
-    
 
 
-
-    </LinearLayout>
+</LinearLayout>
 
 
 </ScrollView>

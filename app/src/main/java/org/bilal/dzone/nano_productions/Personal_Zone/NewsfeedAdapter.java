@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import org.bilal.dzone.nano_productions.R;
+import org.bilal.dzone.nano_productions.Utils.Url;
 
 
 /**
@@ -20,15 +21,16 @@ import org.bilal.dzone.nano_productions.R;
 public class NewsfeedAdapter extends BaseAdapter {
 
     Activity con;
-    String[] title, content, image, time;
+    String[] title, content, image, time, name, role;
 
-    public NewsfeedAdapter(Activity con, String[] title, String[] content, String[] image,String[] time) {
+    public NewsfeedAdapter(Activity con, String[] title, String[] content, String[] image, String[] time, String[] name, String[] role) {
         this.con = con;
         this.title = title;
         this.content = content;
         this.image = image;
         this.time = time;
-
+        this.name = name;
+        this.role = role;
     }
 
     @Override
@@ -48,7 +50,7 @@ public class NewsfeedAdapter extends BaseAdapter {
 
     private class Viewholder {
 
-        TextView title, content, time;
+        TextView title, content, time, name, role;
         ImageView imageView;
 
     }
@@ -66,9 +68,11 @@ public class NewsfeedAdapter extends BaseAdapter {
 
 
             viewholder.time = (TextView) convertView.findViewById(R.id.time);
-            viewholder.title = (TextView) convertView.findViewById(R.id.name);
+            viewholder.name = (TextView) convertView.findViewById(R.id.name);
             viewholder.content = (TextView) convertView.findViewById(R.id.post);
             viewholder.imageView =  convertView.findViewById(R.id.profile_image);
+            viewholder.title = (TextView) convertView.findViewById(R.id.title);
+            viewholder.role = (TextView) convertView.findViewById(R.id.role);
 
             convertView.setTag(viewholder);
 
@@ -79,9 +83,11 @@ public class NewsfeedAdapter extends BaseAdapter {
 
 
         viewholder.time.setText(time[position]);
-        viewholder.title.setText(title[position]);
+        viewholder.title.setText(name[position]);
         viewholder.content.setText(content[position]);
-        Glide.with(convertView).load(image[position]).into(viewholder.imageView);
+        viewholder.name.setText(title[position]);
+        viewholder.role.setText(role[position]);
+        Glide.with(convertView).load(Url.BaseUrl + image[position]).into(viewholder.imageView);
 
 
 

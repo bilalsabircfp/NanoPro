@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="320dp"
-    android:layout_height="match_parent">
+    android:layout_width="260dp"
+    android:layout_gravity="center"
+    android:layout_height="wrap_content">
 
 
     <ScrollView
@@ -19,39 +20,6 @@
         android:layout_height="wrap_content">
 
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:textSize="19dp"
-                android:textStyle="bold"
-                android:textColor="#000"
-                android:paddingLeft="9dp"
-                android:gravity="center_vertical"
-                android:text="Select Date"
-                android:layout_margin="2dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="42dp"
-                android:id="@+id/textView" />
-
-
-            <Button
-                android:gravity="end|center_vertical"
-                android:layout_gravity="end"
-                android:layout_marginEnd="20dp"
-                android:id="@+id/cross"
-                android:textSize="30dp"
-                android:textStyle="bold"
-                android:background="@android:color/transparent"
-                android:textColor="#000"
-                android:text="X"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-
 
 
         <LinearLayout
@@ -64,7 +32,7 @@
 
             <DatePicker
                 android:id="@+id/datePicker1"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/btn"
                 android:layout_centerHorizontal="true" />
@@ -86,7 +54,7 @@
             android:text="Submit"
             android:textColor="#000"
             android:layout_width="wrap_content"
-            android:layout_height="50dp" />
+            android:layout_height="40dp" />
 
 
     </LinearLayout>

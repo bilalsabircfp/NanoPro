@@ -21,13 +21,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeErrorDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog;
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
+import com.bumptech.glide.Glide;
+import com.google.gson.JsonObject;
 
 import org.bilal.dzone.nano_productions.Gallery.albums.Album;
+import org.bilal.dzone.nano_productions.Login.Login_Activity;
+import org.bilal.dzone.nano_productions.Login.Login_Fragment;
 import org.bilal.dzone.nano_productions.Personal_Zone.Customer.Customer_Zone;
 import org.bilal.dzone.nano_productions.Personal_Zone.Detailer.Detailer_Zone;
+import org.bilal.dzone.nano_productions.Personal_Zone.Importer.Importer_Zone;
 import org.bilal.dzone.nano_productions.Personal_Zone.Products.Products;
 import org.bilal.dzone.nano_productions.R;
 import org.bilal.dzone.nano_productions.Search.FullScreen;
@@ -35,10 +46,13 @@ import org.bilal.dzone.nano_productions.Utils.Url;
 import org.bilal.dzone.nano_productions.json.Check_internet_connection;
 import org.bilal.dzone.nano_productions.json.JsonParser;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 
 public class PersonalFragment extends Fragment {
@@ -49,9 +63,9 @@ public class PersonalFragment extends Fragment {
     JSONObject jsonObj;
     JSONArray jsonArray, jsonArray2;
     String server_check, user_type;
-    String[] name_, image, content, time, title, image_, created_at, updated_at;
-    TextView img_txt1, img_txt2, img_txt3;
-    ImageView image1, back;
+    String[] name_, image, content, time, title, role;
+    TextView productTxt, galleryTxt;
+    ImageView productImage, galleryImage, back;
     final List<String[]> values = new LinkedList<String[]>();
     RelativeLayout cars;
     LinearLayout img1;
@@ -72,11 +86,12 @@ public class PersonalFragment extends Fragment {
         cars = v.findViewById(R.id.r_cars);
         p_zone = v.findViewById(R.id.pzone);
         p_zone.setFocusable(true);
-        img_txt1 = v.findViewById(R.id.text1);
         back = v.findViewById(R.id.imageView);
-
         img1 = v.findViewById(R.id.img1);
-
+        productImage = v.findViewById(R.id.pimage);
+        galleryImage = v.findViewById(R.id.gimage);
+        productTxt = v.findViewById(R.id.p_txt);
+        galleryTxt = v.findViewById(R.id.gtxt);
 
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -97,8 +112,6 @@ public class PersonalFragment extends Fragment {
         });
 
 
-
-
         nonScrollListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -107,7 +120,9 @@ public class PersonalFragment extends Fragment {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("title", name_[position]);
                 intent.putExtra("content", content[position]);
-                intent.putExtra("image",   image[position]);
+                intent.putExtra("image", image[position]);
+                intent.putExtra("name", title[position]);
+                intent.putExtra("role", role[position]);
                 getActivity().startActivity(intent);
 //                Toast.makeText(getActivity(), name_[position]+"", Toast.LENGTH_SHORT).show();
             }
@@ -132,11 +147,25 @@ public class PersonalFragment extends Fragment {
             public void onClick(View v) {
 
                 switch (user_type) {
-                    case "":
+                    case "": {
+                        Fragment fragment = new Login_Fragment();
+                        getFragmentManager().beginTransaction().replace(R.id.content, fragment).
+                                addToBackStack(null).commit();
                         Toast.makeText(getActivity(), "Login To Access Personal Zone", Toast.LENGTH_SHORT).show();
                         break;
+                    }
                     case "detailer": {
                         Fragment fragment = new Detailer_Zone();
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.content, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+
+                        break;
+                    }
+                    case "importer": {
+                        Fragment fragment = new Importer_Zone();
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.replace(R.id.content, fragment);
@@ -166,7 +195,15 @@ public class PersonalFragment extends Fragment {
                 values.clear();
             }
 
-            new Load_Data().execute();
+            awesomeInfoDialog = new AwesomeProgressDialog(getActivity());
+            awesomeInfoDialog.setTitle("Loading!");
+            awesomeInfoDialog.setMessage("Please Wait..");
+            awesomeInfoDialog.setDialogBodyBackgroundColor(R.color.bottom_nav);
+            awesomeInfoDialog.setColoredCircle(R.color.dialogInfoBackgroundColor);
+            awesomeInfoDialog.setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white);
+            awesomeInfoDialog.setCancelable(false);
+            awesomeInfoDialog.show();
+            Load_Data();
 
         } else {
 
@@ -195,47 +232,62 @@ public class PersonalFragment extends Fragment {
     }
 
 
-    String server_response = "0", server_response_text;
+    String server_response = "0";
+    JSONObject StringObj;
 
-    //ASYNTASK JSON//////////////////////////////////////////
-    public class Load_Data extends AsyncTask<String, Void, String> {
-
-
-        @Override
-        protected void onPreExecute() {
-
-            awesomeInfoDialog = new AwesomeProgressDialog(getActivity());
-            awesomeInfoDialog.setTitle("Loading!");
-            awesomeInfoDialog.setMessage("Please Wait..");
-            awesomeInfoDialog.setDialogBodyBackgroundColor(R.color.bottom_nav);
-            awesomeInfoDialog.setColoredCircle(R.color.dialogInfoBackgroundColor);
-            awesomeInfoDialog.setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white);
-            awesomeInfoDialog.setCancelable(false);
-            awesomeInfoDialog.show();
-
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            try {
-
-                JSONObject obj = new JSONObject();
+    //server call
+    private void Load_Data() {
+        String urlGetServerData = Url.BaseUrl + "personal-zone";
+        System.out.print(urlGetServerData);
 
 
-                String str_req = JsonParser.multipartFormRequestForFindFriends(Url.BaseUrl + "personal-zone/", "UTF-8", obj, null);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlGetServerData, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("response", response + "");
+                        awesomeInfoDialog.hide();
 
-                jsonObj = new JSONObject(str_req);
-                Log.e("JObject", str_req);
-                jsonArray = jsonObj.getJSONArray("news_feed");
+                        try {
+
+                            String SgalleryText, SgalleryImage, SproductImage, SproductText;
+
+
+                            jsonObj = new JSONObject(response.toString());
+                            Log.e("JObject", response.toString());
+                            jsonArray = jsonObj.getJSONArray("news_feed");
+                            Log.e("jsonArray", jsonArray.toString());
 //                jsonArray2 = jsonObj.getJSONArray("gallery_img");
 
-                JSONObject c;
 
-                name_ = new String[(jsonArray.length())];
-                image = new String[(jsonArray.length())];
-                time = new String[(jsonArray.length())];
-                content = new String[(jsonArray.length())];
+                            //get gallery, product and newsfeed image and text
+                            StringObj = jsonObj.getJSONObject("gallery_image");
+                            SgalleryText = StringObj.getString("text");
+                            SgalleryImage = StringObj.getString("image");
+
+                            galleryTxt.setText(SgalleryText);
+                            Glide.with(getActivity()).load(Url.BaseUrl + SgalleryImage)
+                                    .into(galleryImage);
+
+
+                            StringObj = jsonObj.getJSONObject("product_image");
+                            SproductText = StringObj.getString("text");
+                            SproductImage = StringObj.getString("image");
+
+                            productTxt.setText(SproductText);
+                            productImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                            Glide.with(getActivity()).load(Url.BaseUrl + SproductImage)
+                                    .into(productImage);
+
+
+                            JSONObject c;
+
+                            name_ = new String[(jsonArray.length())];
+                            image = new String[(jsonArray.length())];
+                            time = new String[(jsonArray.length())];
+                            content = new String[(jsonArray.length())];
+                            title = new String[(jsonArray.length())];
+                            role = new String[(jsonArray.length())];
 
 //                //2nd array
 //                title = new String[(jsonArray2.length())];
@@ -244,38 +296,40 @@ public class PersonalFragment extends Fragment {
 //                updated_at = new String[(jsonArray2.length())];
 
 
-                server_response = jsonObj.getString("success");
+                            server_response = jsonObj.getString("success");
 
 
-                if (server_response.equals("true")) {
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                            if (server_response.equals("true")) {
+                                for (int i = 0; i < jsonArray.length(); i++) {
 
-                        c = jsonArray.getJSONObject(i);
+                                    c = jsonArray.getJSONObject(i);
 
-                        //news feed array
-                        if (c.length() > 0) {
+                                    //news feed array
+                                    if (c.length() > 0) {
 
-                            name_[i] = c.getString("name");
-                            image[i] = c.getString("image");
-                            content[i] = c.getString("content");
-                            time[i] = c.getString("time");
-
-
-                            Log.e("array1", name_[i] + "\n" + image[i] + "\n" + content[i] + "\n" +
-                                    time[i]);
-
-                        }
-
-                    }
+                                        name_[i] = c.getString("name");
+                                        image[i] = c.getString("image");
+                                        content[i] = c.getString("content");
+                                        time[i] = c.getString("time");
+                                        title[i] = c.getString("title");
+                                        role[i] = c.getString("role");
 
 
-                    for (int k = 0; k < name_.length; k++) {
+                                        Log.e("array1", name_[i] + "\n" + image[i] + "\n" + content[i] + "\n" +
+                                                time[i]);
 
-                        values.add(new String[]{name_[k], content[k], time[k], image[k]});
-                    }
+                                    }
+
+                                }
 
 
-                    //fetch second array of cars
+                                for (int k = 0; k < name_.length; k++) {
+
+                                    values.add(new String[]{name_[k], content[k], time[k], image[k]});
+                                }
+
+
+                                //fetch second array of cars
 //                    for (int i = 0; i < jsonArray2.length(); i++) {
 //
 //                        c = jsonArray2.getJSONObject(i);
@@ -295,56 +349,49 @@ public class PersonalFragment extends Fragment {
 //                    }
 
 
-                }
-
-
-                server_check = "true";
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-
-                server_check = "false";
-            }
-
-
-            return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(String s) {
-
-            //check if server is ok
-            if (server_check.equals("false")) {
-
-                awesomeInfoDialog.hide();
-
-                new AwesomeErrorDialog(getActivity())
-                        .setTitle("Server Error!")
-                        .setMessage("No Response From Server..")
-                        .setDialogBodyBackgroundColor(R.color.bottom_nav)
-                        .setColoredCircle(R.color.dialogErrorBackgroundColor)
-                        .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
-                        .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
-                        .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
-                        .setButtonText(getString(R.string.dialog_ok_button))
-                        .setErrorButtonClick(new Closure() {
-                            @Override
-                            public void exec() {
-                                // click
                             }
-                        })
-                        .show();
-            } else {
 
 
-                if (server_response.equals("true")) {
+                            server_check = "true";
 
-                    awesomeInfoDialog.hide();
 
-                    //set product images and text
-                    if (image.length > 0) {
+                        } catch (Exception e) {
+                            e.printStackTrace();
+
+                            server_check = "false";
+                        }
+
+
+                        //check if server is ok
+                        if (server_check.equals("false")) {
+
+                            awesomeInfoDialog.hide();
+
+                            new AwesomeErrorDialog(getActivity())
+                                    .setTitle("Server Error!")
+                                    .setMessage("No Response From Server..")
+                                    .setDialogBodyBackgroundColor(R.color.bottom_nav)
+                                    .setColoredCircle(R.color.dialogErrorBackgroundColor)
+                                    .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
+                                    .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
+                                    .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
+                                    .setButtonText(getString(R.string.dialog_ok_button))
+                                    .setErrorButtonClick(new Closure() {
+                                        @Override
+                                        public void exec() {
+                                            // click
+                                        }
+                                    })
+                                    .show();
+                        } else {
+
+
+                            if (server_response.equals("true")) {
+
+                                awesomeInfoDialog.hide();
+
+                                //set product images and text
+                                if (image.length > 0) {
 
 //                        Glide.with(getActivity()).load(Url.BaseUrl + image_[0])
 //                                .apply(new RequestOptions().placeholder(R.drawable.ic_image).error(R.drawable.ic_error))
@@ -361,43 +408,71 @@ public class PersonalFragment extends Fragment {
 //                        img_txt3.setText(title[2]);
 
 
-                        nonScrollListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-                        nonScrollListView.setFocusable(false);
+                                    nonScrollListView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+                                    nonScrollListView.setFocusable(false);
 
-                        final NewsfeedAdapter adapter = new NewsfeedAdapter(getActivity(),
-                                name_, content, image, time);
-                        nonScrollListView.setAdapter(adapter);
+                                    final NewsfeedAdapter adapter = new NewsfeedAdapter(getActivity(),
+                                            title, content, image, time, name_, role);
+                                    nonScrollListView.setAdapter(adapter);
+
+                                }
+
+
+                            } else {
+
+                                awesomeInfoDialog.hide();
+
+                                new AwesomeErrorDialog(getActivity())
+                                        .setMessage("Request Timeout Slow Internet Connection!")
+                                        .setTitle("Timeout!")
+                                        .setDialogBodyBackgroundColor(R.color.bottom_nav)
+                                        .setColoredCircle(R.color.dialogErrorBackgroundColor)
+                                        .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
+                                        .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
+                                        .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
+                                        .setButtonText(getString(R.string.dialog_ok_button))
+                                        .setErrorButtonClick(new Closure() {
+                                            @Override
+                                            public void exec() {
+                                                // click
+                                            }
+                                        })
+                                        .show();
+
+                            }
+                        }
 
                     }
+                },
+                new Response.ErrorListener() {
 
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-                } else {
+                        awesomeInfoDialog.hide();
+                        System.out.println(error.toString());
 
-                    awesomeInfoDialog.hide();
+                        new AwesomeErrorDialog(getActivity())
+                                .setTitle("Server Error!")
+                                .setMessage("No Response From Server.")
+                                .setDialogBodyBackgroundColor(R.color.bottom_nav)
+                                .setColoredCircle(R.color.dialogErrorBackgroundColor)
+                                .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
+                                .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
+                                .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
+                                .setButtonText(getString(R.string.dialog_ok_button))
+                                .setErrorButtonClick(new Closure() {
+                                    @Override
+                                    public void exec() {
+                                        // click
+                                    }
+                                })
+                                .show();
+                    }
+                });
 
-                    new AwesomeErrorDialog(getActivity())
-                            .setMessage("Request Timeout Slow Internet Connection!")
-                            .setTitle("Timeout!")
-                            .setDialogBodyBackgroundColor(R.color.bottom_nav)
-                            .setColoredCircle(R.color.dialogErrorBackgroundColor)
-                            .setDialogIconAndColor(R.drawable.ic_dialog_error, R.color.white)
-                            .setCancelable(true).setButtonText(getString(R.string.dialog_ok_button))
-                            .setButtonBackgroundColor(R.color.dialogErrorBackgroundColor)
-                            .setButtonText(getString(R.string.dialog_ok_button))
-                            .setErrorButtonClick(new Closure() {
-                                @Override
-                                public void exec() {
-                                    // click
-                                }
-                            })
-                            .show();
-
-                }
-
-
-            }
-
-        }
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(jsonObjectRequest);
     }
 
 

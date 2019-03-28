@@ -15,20 +15,35 @@
 
         <LinearLayout
             android:layout_margin="10dp"
-            android:background="#d2d2d2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:background="@drawable/sliver_app_light_sharp"
             android:layout_weight="1">
-            
-            
+
+
+            <!--<LinearLayout-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="130dp"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:background="@drawable/sliver_app_light_sharp"-->
+                <!--android:layout_weight="1">-->
+
+
+
             <ImageView
                 android:layout_gravity="center_vertical"
                 android:layout_margin="5dp"
                 android:id="@+id/pimage"
-                android:scaleType="fitXY"
+                android:scaleType="centerInside"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="150dp"
                 android:src="@drawable/home"/>
+
+
+            <!--</LinearLayout>-->
+
             
         </LinearLayout>
 

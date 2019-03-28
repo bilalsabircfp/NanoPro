@@ -112,15 +112,16 @@ public class Detailer_Adapter extends BaseAdapter implements Filterable {
         } else if (mDisplayedValues.get(position).getColor().equals("silver") ||
                 mDisplayedValues.get(position).getColor().equals("Silver")) {
             viewholder.customer_app.setBackgroundResource(R.drawable.sliver_app);
-        } else if (mDisplayedValues.get(position).getColor().equals("green")) {
-            viewholder.customer_app.setBackgroundResource(R.drawable.sliver_app);
+        } else if (mDisplayedValues.get(position).getColor().equals("Blue") ||
+                mDisplayedValues.get(position).getColor().equals("blue")) {
+            viewholder.customer_app.setBackgroundResource(R.drawable.blue_app);
         } else if (mDisplayedValues.get(position).getColor().equals("black") ||
                 mDisplayedValues.get(position).getColor().equals("Black")) {
             viewholder.customer_app.setBackgroundResource(R.drawable.black_app);
         } else if (mDisplayedValues.get(position).getColor().equals("white")) {
             viewholder.customer_app.setBackgroundResource(R.drawable.sliver_app);
         }else
-            viewholder.customer_app.setBackgroundResource(R.drawable.blue_app);
+            viewholder.customer_app.setBackgroundResource(R.drawable.sliver_app);
 
 
         return convertView;
@@ -185,6 +186,7 @@ public class Detailer_Adapter extends BaseAdapter implements Filterable {
                                     ,mOriginalValues.get(i).getModel()
                                     ,mOriginalValues.get(i).getYear()
                                     ,mOriginalValues.get(i).getColor()
+                                    ,mOriginalValues.get(i).getRemarks()
                                     ,mOriginalValues.get(i).getTitle()
                                     ,mOriginalValues.get(i).getEdition()
                                     ,mOriginalValues.get(i).getEmail()

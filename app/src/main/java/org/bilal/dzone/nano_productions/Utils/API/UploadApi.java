@@ -20,4 +20,16 @@ public interface UploadApi {
     @POST(Url.upload_files)
     Call<ResponseData> uploadData(@PartMap Map<String, RequestBody> map,
                                   @Part List<MultipartBody.Part> fileList);
+
+
+    @Multipart
+    @POST(Url.upload_customer)
+    Call<ResponseData> uploadCustomer(@PartMap Map<String, RequestBody> map,
+                                  @Part List<MultipartBody.Part> fileList);
+
+
+    @Multipart
+    @POST(Url.edit_customer)
+    Call<ResponseData> updateCustomer(@PartMap Map<String, RequestBody> map,
+                                      @Part List<MultipartBody.Part> fileList);
 }

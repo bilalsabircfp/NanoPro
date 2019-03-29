@@ -88,8 +88,10 @@
             android:name="io.fabric.ApiKey"
             android:value="f6be19f0dd38c1a4b5d774d9fa906f8b7d108859" />
 
-        <activity android:name=".Personal_Zone.Importer.Add_Detailer" />
-        <activity android:name=".Personal_Zone.FullImage" />
+        <activity android:name=".Personal_Zone.Importer.Add_Detailer"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Personal_Zone.FullImage"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

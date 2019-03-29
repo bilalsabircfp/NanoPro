@@ -287,6 +287,7 @@
 
                 <EditText
                     android:id="@+id/name"
+                    android:inputType="textPersonName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
@@ -1141,7 +1142,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/button_background_red"
-                android:text="Add to list"
+                android:text="Submit"
                 android:textAllCaps="false" />
 
 

@@ -40,6 +40,7 @@ import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog
 import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure;
 import com.google.gson.Gson;
 
+import org.bilal.dzone.nano_productions.Personal_Zone.Detailer.Edit_Customer;
 import org.bilal.dzone.nano_productions.R;
 import org.bilal.dzone.nano_productions.Utils.Url;
 import org.bilal.dzone.nano_productions.json.Check_internet_connection;
@@ -134,21 +135,37 @@ public class Importer_Zone extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                listview_click(id, position);
 
-//                Intent intent = new Intent(getActivity(), Edit_Customer.class);
-//                intent.putExtra("name", name[position]);
-//                intent.putExtra("phone_number", phone_number[position]);
-//                intent.putExtra("done_date", done_date[position]);
-//                intent.putExtra("model", model[position]);
-//                intent.putExtra("year", year[position]);
-//                intent.putExtra("color", color[position]);
-//                intent.putExtra("title", title[position]);
-//                intent.putExtra("edition", edition[position]);
-//                intent.putExtra("email", email[position]);
-//                intent.putExtra("warranty_code", warranty_code[position]);
-//                intent.putExtra("license_plate_no", license_plate_no[position]);
-//                startActivity(intent);
+                if (id == 999111) {
+
+                    make_call(phone_number[position]);
+
+                } else if (id == 999222) {
+
+                    SubsDialog(name[position],
+                            email[position],
+                            phone_number[position],
+                            detailer_id[position],
+                            latitude[position],
+                            longitude[position],
+                            address[position], detailer_subscriptions[position]);
+
+                } else {
+
+                    Intent intent = new Intent(getActivity(), EditDetailer.class);
+                    intent.putExtra("name", name[position]);
+                    intent.putExtra("phone_number", phone_number[position]);
+                    intent.putExtra("address", address[position]);
+                    intent.putExtra("email", email[position]);
+                    intent.putExtra("detailer_id", detailer_id[position]);
+                    intent.putExtra("subs", detailer_subscriptions[position]);
+                    intent.putExtra("lat", latitude[position]);
+                    intent.putExtra("lan", longitude[position]);
+
+                    startActivity(intent);
+                }
+
+
             }
         });
 
@@ -206,34 +223,7 @@ public class Importer_Zone extends Fragment {
         });
 
 
-
         return v;
-    }
-
-
-    //listView.setOnItemClickListener handled here///////////////////////////
-    public void listview_click(long id, int position) {
-
-        if (id == 999111) {
-
-            make_call(phone_number[position]);
-
-        }
-        else if (id == 999222) {
-
-            SubsDialog( name[position],
-                     email[position],
-                      phone_number[position],
-                     detailer_id[position],
-                     latitude[position],
-                      longitude[position],
-                      address[position], detailer_subscriptions[position]);
-
-
-
-        }
-
-
     }
 
 
@@ -258,10 +248,9 @@ public class Importer_Zone extends Fragment {
                     server_response = response.getString("success");
                     server_message = response.getString("message");
 
-                    if (server_message.equals("No Record Found")){
+                    if (server_message.equals("No Record Found")) {
                         Toast.makeText(getActivity(), server_message, Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                    } else {
 
                         jsonObj = new JSONObject(response.toString());
                         Log.e("JObject", response.toString());
@@ -377,7 +366,6 @@ public class Importer_Zone extends Fragment {
                 if (server_check.equals("false")) {
 
 
-
                     awesomeInfoDialog.hide();
 
                     if (no_array.equals("") || no_array.equals("no_array")) {
@@ -435,7 +423,7 @@ public class Importer_Zone extends Fragment {
                                 , detailerArrayList);
                         listView.setAdapter(adapter);
 
-                        Log.e("listSize", detailerArrayList.size()+"");
+                        Log.e("listSize", detailerArrayList.size() + "");
 
                         // Add Text Change Listener to EditText
                         etSearch.addTextChangedListener(new TextWatcher() {
@@ -517,20 +505,16 @@ public class Importer_Zone extends Fragment {
     }
 
 
-
-
     public void SendData(String name,
                          String email,
-                         String  phone_number,
+                         String phone_number,
                          String detailer_id,
                          String latitude,
-                         String  longitude,
-                         String  address, String detailerSubscriptions) {
+                         String longitude,
+                         String address, String detailerSubscriptions) {
 
-        String urlGetServerData = Url.BaseUrl+"user/edit_detailer";
+        String urlGetServerData = Url.BaseUrl + "user/edit_detailer";
         System.out.print(urlGetServerData);
-
-        int dSubscriptions = Integer.parseInt(detailerSubscriptions) + Integer.parseInt(newSubs);
 
 
         Map<String, String> obj = new HashMap<String, String>();
@@ -541,10 +525,9 @@ public class Importer_Zone extends Fragment {
         obj.put("lat", latitude);
         obj.put("log", longitude);
         obj.put("address", address);
-        obj.put("subscription", dSubscriptions+"");
+        obj.put("subscription", detailerSubscriptions);
         obj.put("api_token", api_token);
         obj.put("id", detailer_id);
-
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, urlGetServerData,
@@ -569,7 +552,6 @@ public class Importer_Zone extends Fragment {
                             Load_data();
 
 
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -588,11 +570,6 @@ public class Importer_Zone extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(jsonObjectRequest);
     }
-
-
-
-
-
 
 
     public void make_call(String number) {
@@ -662,7 +639,7 @@ public class Importer_Zone extends Fragment {
 
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("plain/text");
-                intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "info@NANOPRO-Group.com" });
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"info@NANOPRO-Group.com"});
                 startActivity(Intent.createChooser(intent, ""));
             }
         });
@@ -678,21 +655,17 @@ public class Importer_Zone extends Fragment {
         });
 
 
-
-
-
         dialog.show();
     }
 
 
-
     public void SubsDialog(final String name,
                            final String email,
-                           final String  phone_number,
+                           final String phone_number,
                            final String detailer_id,
                            final String latitude,
-                           final String  longitude,
-                           final String  address, final String  detailerSubscriptions) {
+                           final String longitude,
+                           final String address, final String detailerSubscriptions) {
 
 
         dialog = new Dialog(getActivity());
@@ -701,12 +674,12 @@ public class Importer_Zone extends Fragment {
 
         dialog.setContentView(R.layout.dialog_subscription);
 
-        Button cross, submit; final EditText subs_;
+        Button cross, submit;
+        final EditText subs_;
         subs_ = dialog.findViewById(R.id.subs);
         submit = dialog.findViewById(R.id.btn);
         TextView TVname = dialog.findViewById(R.id.name);
         TVname.setText(name);
-
 
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -722,13 +695,11 @@ public class Importer_Zone extends Fragment {
 
                     Toast.makeText(getActivity(), "Cannot Be Empty", Toast.LENGTH_SHORT).show();
 
-                }
-                else if (Integer.parseInt(newSubs) > Integer.parseInt(remainingSubscriptions) ){
+                } else if (Integer.parseInt(newSubs) > Integer.parseInt(remainingSubscriptions)) {
 
-                    Toast.makeText(getActivity(), "You have"+" "+remainingSubscriptions +
-                         " "+   "Subscriptions Remaining", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                    Toast.makeText(getActivity(), "You have" + " " + remainingSubscriptions +
+                            " " + "Subscriptions Remaining", Toast.LENGTH_SHORT).show();
+                } else {
 
                     awesomeInfoDialog = new AwesomeProgressDialog(getActivity());
                     awesomeInfoDialog.setTitle("Adding Subscriptions..");
@@ -739,19 +710,19 @@ public class Importer_Zone extends Fragment {
                     awesomeInfoDialog.setCancelable(false);
                     awesomeInfoDialog.show();
 
+                    int addNewOldSubs = Integer.parseInt(newSubs) + Integer.parseInt(detailerSubscriptions);
+
                     SendData(name,
                             email,
                             phone_number,
                             detailer_id,
                             latitude,
                             longitude,
-                            address, detailerSubscriptions);
+                            address, addNewOldSubs + "");
                 }
 
             }
         });
-
-
 
 
         dialog.show();
@@ -774,8 +745,6 @@ public class Importer_Zone extends Fragment {
         }
         adapter.notifyDataSetChanged();
     }
-
-
 
 
     @Override

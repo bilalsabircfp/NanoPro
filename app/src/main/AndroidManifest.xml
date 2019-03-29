@@ -8,7 +8,6 @@
         android:normalScreens="true"
         android:smallScreens="true"
         android:xlargeScreens="true" />
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -18,8 +17,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <uses-feature android:name="android.hardware.camera" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -33,6 +34,7 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl, android:label">
+        <activity android:name=".Personal_Zone.Importer.EditDetailer"></activity>
         <activity
             android:name=".BottomNav.Bottom_Nav"
             android:screenOrientation="portrait">
@@ -68,7 +70,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Gallery.Gallery"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Search.FullScreen"
             android:screenOrientation="portrait" />
@@ -86,9 +88,8 @@
             android:name="io.fabric.ApiKey"
             android:value="f6be19f0dd38c1a4b5d774d9fa906f8b7d108859" />
 
-        <activity android:name=".Personal_Zone.Importer.Add_Detailer"/>
-        <activity android:name=".Personal_Zone.FullImage"/>
-
+        <activity android:name=".Personal_Zone.Importer.Add_Detailer" />
+        <activity android:name=".Personal_Zone.FullImage" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -100,7 +101,6 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-
         <service android:name=".Utils.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -110,9 +110,9 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/logo_new" />
-        <meta-data android:name="com.google.firebase.messaging.default_notification_color"
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@drawable/logo_new" />
-
     </application>
 
 </manifest>

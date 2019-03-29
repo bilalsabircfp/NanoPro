@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -55,7 +56,8 @@ public class Importer_Adapter extends BaseAdapter implements Filterable {
     private class Viewholder {
 
         TextView name, phone_number, subscriptions_;
-        Button call; FloatingActionButton add;
+        Button call;
+        FloatingActionButton add;
 
     }
 
@@ -77,12 +79,15 @@ public class Importer_Adapter extends BaseAdapter implements Filterable {
             viewholder.call = (Button) convertView.findViewById(R.id.btn);
             viewholder.add = (FloatingActionButton) convertView.findViewById(R.id.add);
 
+
             convertView.setTag(viewholder);
 
         } else {
 
             viewholder = (Viewholder) convertView.getTag();
         }
+
+        viewholder.add.setFocusable(false);
 
 
         viewholder.call.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +97,6 @@ public class Importer_Adapter extends BaseAdapter implements Filterable {
                 ((ListView) parent).performItemClick(v, position, 999111);
             }
         });
-
 
 
         viewholder.add.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +111,7 @@ public class Importer_Adapter extends BaseAdapter implements Filterable {
         viewholder.name.setText(mDisplayedValues.get(position).getName());
         viewholder.phone_number.setText(mDisplayedValues.get(position).getPhone_number());
         viewholder.subscriptions_.setText(mDisplayedValues.get(position).getUsed_subscriptions()
-        + " / " + mDisplayedValues.get(position).getDetailer_subscriptions());
+                + " / " + mDisplayedValues.get(position).getDetailer_subscriptions());
 
 
         return convertView;
@@ -159,7 +163,7 @@ public class Importer_Adapter extends BaseAdapter implements Filterable {
                                 || data6.toLowerCase().startsWith(constraint.toString())) {
 
                             FilteredArrList.add(new ImporterModelClass(mOriginalValues.get(i).getName()
-                                    ,mOriginalValues.get(i).getEmail(),
+                                    , mOriginalValues.get(i).getEmail(),
                                     mOriginalValues.get(i).getPhone_number(),
                                     mOriginalValues.get(i).getDetailer_id(),
                                     mOriginalValues.get(i).getLongitude(),

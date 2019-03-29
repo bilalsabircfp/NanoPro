@@ -6,28 +6,28 @@
         android:enabled="true"
         app:showAsAction="ifRoom"
         android:id="@+id/navigation_home"
-        android:icon="@drawable/home"
+        android:icon="@drawable/new_home"
         android:title="" />
 
     <item
         android:enabled="true"
         app:showAsAction="ifRoom"
         android:id="@+id/navigation_search"
-        android:icon="@drawable/search"
+        android:icon="@drawable/new_search"
         android:title="" />
 
     <item
         android:enabled="true"
         app:showAsAction="ifRoom"
         android:id="@+id/navigation_map"
-        android:icon="@drawable/map_"
+        android:icon="@drawable/new_map"
         android:title="" />
 
     <item
         android:enabled="true"
         app:showAsAction="ifRoom"
         android:id="@+id/navigation_use"
-        android:icon="@drawable/user"
+        android:icon="@drawable/new_user"
         android:title="" />
 
 </menu>

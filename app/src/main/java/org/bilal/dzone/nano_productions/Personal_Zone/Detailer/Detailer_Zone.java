@@ -104,17 +104,15 @@ public class Detailer_Zone extends Fragment {
         call = v.findViewById(R.id.call);
 
 
-
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (!addedByNumber.equals("")){
+                if (!addedByNumber.equals("")) {
                     make_call(addedByNumber);
                 }
             }
         });
-
 
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -148,28 +146,35 @@ public class Detailer_Zone extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                listview_click(id, position);
 
-                Intent intent = new Intent(getActivity(), Edit_Customer.class);
-                intent.putExtra("name", name[position]);
-                intent.putExtra("phone_number", phone_number[position]);
-                intent.putExtra("done_date", done_date[position]);
-                intent.putExtra("model", model[position]);
-                intent.putExtra("year", year[position]);
-                intent.putExtra("color", color[position]);
-                intent.putExtra("title", title[position]);
-                intent.putExtra("edition", edition[position]);
-                intent.putExtra("email", email[position]);
-                intent.putExtra("remarks", remarks[position]);
-                intent.putExtra("cust_id", cust_id[position]);
-                intent.putExtra("warranty_code", warranty_code[position]);
-                intent.putExtra("license_plate_no", license_plate_no[position]);
-                intent.putExtra("car_details_id", car_details_id[position]);
-                intent.putExtra("images", images[position]);
-                intent.putExtra("after_images", after_images[position]);
-                intent.putExtra("coating", coat[position]);
-                intent.putExtra("preparation", preparation[position]);
-                startActivity(intent);
+                if (id == 999111) {
+
+                    make_call(phone_number[position]);
+
+                } else {
+
+                    Intent intent = new Intent(getActivity(), Edit_Customer.class);
+                    intent.putExtra("name", name[position]);
+                    intent.putExtra("phone_number", phone_number[position]);
+                    intent.putExtra("done_date", done_date[position]);
+                    intent.putExtra("model", model[position]);
+                    intent.putExtra("year", year[position]);
+                    intent.putExtra("color", color[position]);
+                    intent.putExtra("title", title[position]);
+                    intent.putExtra("edition", edition[position]);
+                    intent.putExtra("email", email[position]);
+                    intent.putExtra("remarks", remarks[position]);
+                    intent.putExtra("cust_id", cust_id[position]);
+                    intent.putExtra("warranty_code", warranty_code[position]);
+                    intent.putExtra("license_plate_no", license_plate_no[position]);
+                    intent.putExtra("car_details_id", car_details_id[position]);
+                    intent.putExtra("images", images[position]);
+                    intent.putExtra("after_images", after_images[position]);
+                    intent.putExtra("coating", coat[position]);
+                    intent.putExtra("preparation", preparation[position]);
+                    startActivity(intent);
+
+                }
             }
         });
 
@@ -247,19 +252,6 @@ public class Detailer_Zone extends Fragment {
 
 
         return v;
-    }
-
-
-    //listView.setOnItemClickListener handled here///////////////////////////
-    public void listview_click(long id, int position) {
-
-        if (id == 999111) {
-
-            make_call(phone_number[position]);
-
-        }
-
-
     }
 
 
@@ -347,7 +339,7 @@ public class Detailer_Zone extends Fragment {
 
                     if (addedByName.equals("Admin")) {
                         address.setText("info@NANOPRO-Group.com");
-                    }else {
+                    } else {
                         address.setText(addedByEmail);
                     }
 
@@ -356,7 +348,7 @@ public class Detailer_Zone extends Fragment {
                     if (addedByName.equals("Admin")) {
                         profileImage.setImageResource(R.drawable.logo_new);
                     } else {
-                        Glide.with(getActivity()).load(Url.BaseUrl+addedByImage).into(profileImage);
+                        Glide.with(getActivity()).load(Url.BaseUrl + addedByImage).into(profileImage);
                     }
 
 

@@ -241,7 +241,7 @@ public class Add_Customer extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                Toast.makeText(Add_Customer.this, position + "", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(Add_Customer.this, position + "", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -545,7 +545,7 @@ public class Add_Customer extends AppCompatActivity {
                         awesomeInfoDialog.setCancelable(false);
                         awesomeInfoDialog.show();
                         UploadCode();
-                        Toast.makeText(Add_Customer.this, date, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Add_Customer.this, date, Toast.LENGTH_SHORT).show();
                         Log.e("TAG", "fileParts: " + fileParts.toString());
 
                     } else {
